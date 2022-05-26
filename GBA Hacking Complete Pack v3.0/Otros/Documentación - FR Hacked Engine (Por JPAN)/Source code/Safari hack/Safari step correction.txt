@@ -1,0 +1,104 @@
+.align 2
+.thumb
+
+/*this code is meant to solve the -1 step problem encountered after one
+step with a 0ed retire counter
+
+080a0f0c is gone, replaced with the following function
+but at 0x080a0f0c, we place load and bx, like so
+
+00 49 08 47 pointer
+
+*/
+New_safari_walking:	push {r4,r5,lr}
+			mov r4, #0x0	/*r4 is the "script to execute" byte*/
+			mov r0, #0x80
+			lsl r0, r0, #0x4
+			bl call_flag_check
+			cmp r0, #0x1
+			bne other_check
+			ldr r1, Safari_step
+			ldrh r0, [r1]
+			cmp r0, #0x0
+			beq other_check
+			sub r0, #0x1
+			strh r0, [r1]
+			cmp r0, #0x0
+			bne other_check
+			ldr r0, Safari_script
+			bl Call_Script_readier
+			mov r4, #0x1
+
+other_check:		ldr r5, new_counters
+			ldr r0, flagLong        /* as an added bonus, made 5 new step*/
+			bl call_flag_check	/*counters for you to enjoy.*/
+			cmp r0, #0x0	        /*4 are optional, one is always
+			beq next_medium		/*incremented*/
+			ldr r0, [r5, #0x4]
+			add r0, #0x1
+			cmp r0, #0x0		/*so it won't go round*/
+			beq next_medium
+			str r0, [r5, #0x4]
+
+next_medium:		ldr r0, flagMed        
+			bl call_flag_check	
+			cmp r0, #0x0	        
+			beq next_small		
+			ldrh r0, [r5, #0x8]
+			add r0, #0x1
+			mov r1, #0x1
+			lsl r1, r1, #0x10
+			cmp r0, r1
+			beq next_small
+			strh r0, [r5, #0x8]
+
+next_small:		ldr r0, flagSmall1        
+			bl call_flag_check	
+			cmp r0, #0x0	        
+			beq final_small		
+			ldrb r0, [r5, #0xA]
+			add r0, #0x1
+			mov r1, #0xff
+			cmp r0, r1
+			bgt final_small
+			strb r0, [r5, #0xA]
+
+final_small:		ldr r0, flagSmall2        
+			bl call_flag_check	
+			cmp r0, #0x0	        
+			beq final_Long		
+			ldrb r0, [r5, #0xB]
+			add r0, #0x1
+			mov r1, #0xff
+			cmp r0, r1
+			bgt final_Long
+			strb r0, [r5, #0xB]
+
+final_Long:		ldr r0, [r5]
+			add r0, #0x1
+			cmp r0, #0x0
+			beq end_code
+			str r0, [r5]
+end_code:		add r0, r4, #0x0
+			pop {r4,r5,pc}
+			
+.hword 0x000
+Safari_step: 	.word 0x02039996
+Safari_script:  .word 0x081BFBC5
+new_counters:	.word 0x0203f4e0
+
+flagLong:	.word 0x00000000
+flagMed:	.word 0x00000000
+flagSmall1:	.word 0x00000000
+flagSmall2:	.word 0x00000000
+
+
+call_flag_check:	ldr r1, flag_checker
+			bx r1
+
+flag_checker: .word 0x0806E6D1
+
+Call_Script_readier: 	ldr r1, Script_readier
+			bx r1
+Script_readier: .word 0x08069AE5
+

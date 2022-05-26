@@ -1,0 +1,11 @@
+.align 2
+.thumb 
+
+/*Special 0xD returns a pokemon Happiness value*/
+
+Special_0d:	ldr r0, new_addr
+		ldr r0 , [r0]
+		ldrb r0, [r0, #0x9]
+		bx lr
+new_addr: .word 0x0203f464
+

@@ -1,0 +1,22 @@
+.align 2
+.thumb
+
+/*Special 0x4d will check if the timer has
+reached a value stored in var 0x8010 (in 
+seconds) (can get up to 18 hours)
+returns 0x1 if true*/
+
+special_4d: 	push {lr}
+		ldr r1, timer_8
+		ldrh r0, [r1, #0x4]
+		ldr r1, var_8010
+		ldrh r1, [r1]
+		cmp r0, r1
+		blt place_0 
+		mov r0, #0x1
+		pop {pc}
+place_0:	mov r0, #0x0
+		pop {pc}
+.hword 0x0000
+timer_8: .word 0x04000108
+var_8010: .word 0x020370d8

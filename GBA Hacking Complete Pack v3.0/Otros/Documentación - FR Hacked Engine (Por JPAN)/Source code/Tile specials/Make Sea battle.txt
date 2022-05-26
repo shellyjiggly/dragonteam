@@ -1,0 +1,21 @@
+.align 2
+.thumb
+
+
+/*Special 0x98 will start a random water battle, such as those in the sea.
+Sister to the previous function, will start a water battle anywhere there is 
+a water pokemon data.*/
+
+Special_98: push {r4-r7, lr}
+	    mov r7, r8
+	    push {r7}
+	    sub SP, SP, #0x8
+	    ldr r0, water_data
+	    lsl r4, r0, #0x18
+	    lsr r4, r4, #0x18
+	    ldr r1, wild_generator2
+	    bx r1
+.hword 0x0000
+water_data: .word 0x22000410 /*the lake tile data*/
+wild_generator2: .word 0x0806cbe5
+

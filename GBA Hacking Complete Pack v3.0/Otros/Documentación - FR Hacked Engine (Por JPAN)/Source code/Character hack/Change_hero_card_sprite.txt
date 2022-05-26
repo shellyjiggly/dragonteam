@@ -1,0 +1,21 @@
+.thumb
+.align 2
+
+/*to replace the hero trainer number finder at 0x0810c374*/
+start:	PUSH    {LR}
+	CMP 	R1, #0x1
+	bne	end
+	push 	{r0}
+	ldr	r1, variable
+	add 	r0, r0, r1
+	bl call_var_load
+	pop {r1}
+	cmp r0, #0x0
+	bne end
+	mov r0, #0x87
+	add r0, r0, r1
+end:	pop {pc}
+call_var_load:	ldr r1, var_load
+		bx r1
+variable: 	.word 0x00004060
+var_load:	.word 0x0806E569

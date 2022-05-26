@@ -1,0 +1,110 @@
+.align 2
+.thumb
+
+/*third and final change for the number of overworlds is
+at 0x0805f2ca. In order to mantain the original functions
+from the game, slots 0ef->0ff are not able to hold original
+OW's, but 16 slots are nothing compared with the remainder
+
+get_ow_change:   ldr r1, get_new_ow	
+		 bx r1
+
+get_new_ow: pointer
+
+or, compiled
+00 00 00 49 08 47 Pointer
+
+to be placed at 0x0805f2de to complement the code
+ef_call:	mov r1, #0x0
+		ldr r2, end_check_addr
+		bx r2
+
+end_check_addr: pointer
+
+or,compiled 
+00 21 00 4a 10 47 Pointer
+
+this code also reflects the possibility of change on the
+hero OW, performing a simple check on the designated addresses.*/
+
+get_ow_addr:	push {r2-r4}
+		lsl r1, r0, #0x10
+		lsr r1, r1, #0x18
+		lsl r0, r0, #0x18
+		lsr r0, r0, #0x18
+		ldr r4, new_ow_table
+		cmp r1, #0xff
+		beq special_decrypter
+more_check:	cmp r1, #0xff
+		bgt go_old	/*to allow for a multi-sized Table table*/
+		cmp r1, #0x0
+		bne end_check
+		cmp r0, #0xef
+		bgt go_old
+		bl multi_check
+end_check:	lsl r1, r1, #0x2
+		add r3, r4, r1
+		ldr r2, [r3]
+		cmp r2, #0x0
+		bne location_real
+		ldr r2, [r4]
+location_real:	lsl r0, r0, #0x2
+		add r3, r2, r0
+		ldr r0, [r3]
+		cmp r0, #0x0
+		bne end_ow_change
+		ldr r3, [r4]
+		add r3, #0x40
+		ldr r0, [r3] 
+end_ow_change:	pop {r2-r4}
+		pop {r1}
+		bx r1
+special_decrypter:	cmp r0, #0xf /*change here for more variables usable*/
+			bgt more_check
+			ldr r1, var_4080
+			add r0, r1, r0
+			bl call_var_decrypt
+			ldrb r1, [r0, #0x1]
+			ldrb r0, [r0]
+			b end_check
+						
+new_ow_table:	.word /*0x081a2000*/ 0xffffffff
+var_4080:	.word /*0x00004080*/ 0xffffffff
+go_old:		pop {r2-r4}
+		ldr r1, loader_call
+		bx r1			
+
+/*this is the check that allows for trainer OW switch
+How it works: Vars 4054-59 must have a value. 0x0 for the
+default sprite, 0xyyyy for the new sprite*/
+multi_check: 	push {lr}
+		push {r0, r1}
+		cmp r0, #0xD
+		bgt no_change
+		cmp r0, #0x7
+		blt hero_change
+		sub r0, #0x7	
+hero_change:	ldr r1, var_Hero
+		add r0, r0, r1
+		bl call_var_decrypt
+		b end_multi_check
+no_change:	pop {r0,r1}
+		pop {pc}
+
+end_multi_check: ldrh r1, [r0]
+		cmp r1, #0x0
+		beq no_change
+		lsl r0, r1, #0x18
+		lsr r0, r0, #0x18
+		lsr r1, r1, #0x8
+		pop {r2,r3}
+		pop {pc}
+.hword 0x0000
+var_Hero: .word /*0x00004054*/0xffffffff
+loader_call: 	.word 0x0805f2d5 		
+/*to increase the palettes, simply repoint 0x083a5158 to a new location*/
+
+call_var_decrypt: ldr r2, var_decrypt
+		  bx r2
+var_decrypt:	.word 0x0806E455
+

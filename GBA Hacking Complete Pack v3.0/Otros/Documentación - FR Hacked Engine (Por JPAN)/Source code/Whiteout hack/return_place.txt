@@ -1,0 +1,40 @@
+.align 2
+.thumb 
+
+/*this code is meant to ovewrite the "choose warp" part of the 
+special 0xc8 (the blackout script).
+this code uses three consecutive variables to create that warp
+because this code is much smaller than the original, it will be
+inserted over it, starting at 0x080bfd54*/
+
+/*this will allow the code to compile correctly, but this output
+cannot replace the one in this folder, as it's too big and would 
+corrupt the package.*/
+.org 0xbfd54
+replacer_code:	ldr r0, var_405a
+		bl 0x6e568
+		lsl r1, r0, #0x18
+		lsr r0, r0, #0x8
+		lsr r1, r1, #0x18
+		strb r1, [r4]
+		strb r0, [r4, #0x1]
+		mov r0, #0xff
+		strb r0, [r4, #0x2]
+		ldr r0, var_405b
+		bl 0x6e568
+		lsl r0, r0, #0x10
+		lsr r0, r0, #0x10
+		strh r0, [r4, #0x4]
+		ldr r0, var_405c
+		bl 0x6e568
+		lsl r0, r0, #0x10
+		lsr r0, r0, #0x10
+		strh r0, [r4, #0x6]
+		b 0x0bfdf4
+.hword 0x0000
+var_405a: .word 0x0000405a
+var_405b: .word 0x0000405b
+var_405c: .word 0x0000405c
+
+/*Pokecenter script 0x1A8D97
+mother script (activated with 0x1) 0x1A8DD8*/

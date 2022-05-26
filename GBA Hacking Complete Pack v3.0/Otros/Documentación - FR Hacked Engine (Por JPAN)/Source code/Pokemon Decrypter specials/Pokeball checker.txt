@@ -1,0 +1,13 @@
+.thumb
+.align 2
+/*Special 0xb checks which pokeball was used
+to capture the pokemon. returns pokeball value*/
+
+Special_0b:	ldr r0, new_addr
+		ldr r0, [r0]
+		ldrb r0, [r0 , #0x3]
+		lsl r0, r0, #0x19
+		lsr r0, r0, #0x1c
+		bx lr
+
+new_addr: .word 0x0203f470

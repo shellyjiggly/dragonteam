@@ -1,0 +1,124 @@
+#dynamic 0x720000
+lock
+faceplayer
+#org @nurse_start
+special 0x187
+compare LASTRESULT 0x2
+if 0x1 goto @error_release
+preparemsg @heal_q '"Welcome to our POKÈMON CENTER!\pWo..."
+waitmsg
+multichoice 0x13 0x8 0x0 0x2
+copyvar 0x8000 LASTRESULT
+compare 0x8000 0x0
+if 0x1 goto @set_heal_poke
+compare 0x8000 0x1
+if 0x1 goto @go_away
+compare 0x8000 0x7F
+if 0x1 goto @go_away
+release
+end
+
+'---------------
+#org @error_release
+release
+end
+
+'---------------
+#org @set_heal_poke
+cmdc3 0xF
+preparemsg @will_heal '"Okay, I'll take your POKÈMON for a..."
+waitmsg
+call @heal_anime
+special 0x169
+goto @check_wireless
+
+'---------------
+#org @go_away
+msgbox @goodbye MSG_KEEPOPEN '"We hope to see you again!"
+release
+end
+
+'---------------
+#org @heal_anime
+applymovement LASTTALKED @put_poke
+waitmovement 0x0
+doanimation 0x19
+checkanimation 0x19
+applymovement LASTTALKED @give_poke
+waitmovement 0x0
+special 0x0
+return
+
+'---------------
+#org @check_wireless
+special2 LASTRESULT 0x1B1
+compare LASTRESULT 0x0
+if 0x1 goto @no_one
+special2 LASTRESULT 0x183
+copyvar 0x8008 LASTRESULT
+compare 0x8008 0x0
+if 0x1 goto @no_one
+compare 0x8008 0x1
+if 0x1 goto @wireless_active
+release
+end
+
+'---------------
+#org @no_one
+preparemsg @fully_healed '"Thank you for waiting.\nWe've rest..."
+waitmsg
+applymovement LASTTALKED @bow
+waitmovement 0x0
+msgbox @goodbye MSG_KEEPOPEN '"We hope to see you again!"
+release
+end
+
+'---------------
+#org @wireless_active
+checkflag 0x842
+if 0x1 goto @no_one
+msgbox @fully_healed MSG_KEEPOPEN '"Thank you for waiting.\nWe've rest..."
+setflag 0x842
+preparemsg @someone_plays '"It appears as if [buffer1] is play..."
+waitmsg
+applymovement LASTTALKED @bow
+waitmovement 0x0
+msgbox @goodbye MSG_KEEPOPEN '"We hope to see you again!"
+release
+end
+
+
+'---------
+' Strings
+'---------
+#org @heal_q
+= Welcome to our POKÈMON CENTER!\pWould you like me to heal your\nPOKÈMON back to perfect health?
+
+#org @will_heal
+= Okay, I'll take your POKÈMON for a\nfew seconds.
+
+#org @goodbye 
+= We hope to see you again!
+
+#org @fully_healed
+= Thank you for waiting.\nWe've restored your POKÈMON to\lfull health.
+
+#org @someone_plays
+= It appears as if [buffer1] is playing\nright now.\lGo for it!
+
+
+'-----------
+' Movements
+'-----------
+#org @put_poke
+#raw 0x2F 'Face Left (Delayed)
+#raw 0xFE 'End of Movements
+
+#org @give_poke
+#raw 0x2D 'Face Down (Delayed)
+#raw 0xFE 'End of Movements
+
+#org @bow
+#raw 0x5B 'mov5B
+#raw 0x1A 'Delay3
+#raw 0xFE 'End of Movements

@@ -1,0 +1,33 @@
+#dynamic 0x800000
+
+#org @inicio
+lock
+faceplayer
+checkflag 0x(flag)
+If 0x1 goto @inicio
+msgbox @empieza 0x6
+cry 0x(Cualquiera) 0x2
+waitcry
+wildbattle 0xnº de pkmn 0xlvl 0xobjeto 0x0 0x0 0x0
+msgbox @perder 0x6
+hidesprite 0xnº de persona en Advance Map
+setflag 0x(flag)
+release
+end
+
+#org @empieza
+Apretar Ctrl + T (Lo que dice cuando le hablamos)
+
+#org @perder
+Apretar Ctrl + T (Lo que dice cuando pierde)
+-------------------------------------------------------------------------------------------
+
+
+
+FLAG : 
+
+Desde la 0x200 hasta la 0x29F
+
+Desde la 0x500 hasta la 0x79F
+
+Desde la 0x1000 hasta la 0x109F

@@ -1,0 +1,32 @@
+.align 2
+.thumb
+
+/*
+replace what's there with this 
+67a12_addr:	ldr r5, my_new_addr
+		bx r5
+.hword 0x0000
+my_new_addr:	Pointer
+that is 01 4d 28 47 00 00 Pointer
+
+then, place this somewhere else
+*/
+a12_changes:	add r5, r0, #0x0
+		add r4, r1, #0x0
+		LDRB    R1, [R5,#1]
+		MOV     R0, #0x41
+		NEG     R0, R0
+		AND     R0, R1
+		STRB    R0, [R5,#1]
+		ldrb r0, [r5, #0x5]
+		ldrb r1, [r5, #0x1a]
+		lsl r1, r1, #0x8
+		orr r0, r1
+		ldr r1, exit_location2
+		mov lr, r1
+		ldr r1, loader_location2
+		bx r1
+.hword 0x0000
+exit_location2: .word 0x08067a27
+loader_location2: .word 0x0805F2C9
+

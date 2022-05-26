@@ -1,0 +1,18 @@
+.align 2
+.thumb
+
+/*Special 0x4f starts the timer with the 
+specific value stored at 0x0203f4dc*/
+
+special_4f: 	push {lr}
+		bl special_46
+		ldr r1, store_place2
+		mov r2, #0x0
+		strb r2, [r0, #0x6]
+		ldrh r2, [r1]
+		strh r2, [r0, #0x4]
+		mov r2, #0x84
+		strb r2, [r0, #0x6]
+		pop {pc}
+.hword 0x0000
+store_place2: .word 0x0203f4dc

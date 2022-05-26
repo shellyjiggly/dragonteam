@@ -1,0 +1,15 @@
+.align 2
+.thumb
+
+/*Special 0x81 is the loader for the Walking script hack. just load the pointer
+with the loadPointer command and this special will take care of the rest.*/
+
+Special_81: 	ldr r0, load_pointer
+		ldr r1, store_location
+		ldr r0, [r0]
+		str r0, [r1]
+		mov r0, lr
+		bx r0
+		
+load_pointer: .word 0x03000f14
+store_location: .word 0x0203f4f0

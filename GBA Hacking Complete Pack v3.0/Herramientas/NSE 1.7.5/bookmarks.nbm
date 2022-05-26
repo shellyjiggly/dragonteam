@@ -1,0 +1,192 @@
+﻿[BPRE]
+<Textbox>
+Tipo 1: &H41F1C8,&H471DEC,028020,!240,Image,Palette
+Tipo 2: &H470B0C,&H471E0C,028020,!260,Image,Palette
+Seleccion 0: &H470D6C,&H47190C,018018,Image,Palette
+Seleccion 1: &H470E8C,&H47192C,018018,Image,Palette
+Seleccion 2: &H47132C,&H4719AC,018018,Image,Palette
+Seleccion 3: &H47144C,&H4719CC,018018,Image,Palette
+Seleccion 4: &H47156C,&H4719EC,018018,Image,Palette
+Seleccion 5: &H4716AC,&H471A0C,018018,Image,Palette
+Seleccion 6: &H4717CC,&H471A2C,018018,Image,Palette
+Letras: &H232598,&H35B968,080080,Image
+</Textbox>
+<BackSprites>
+Heroe: &HE69EBC,&HE76EBC,040140,Image
+Heroina: &HE6C6BC,&H35B968,040140,Image
+Viejo Ciudad Verde: &HE70EBC,&HE76F34,040100,Image,Palette
+Pokelotodo: &HE6EEBC,Grayscale,040100,Image
+Brendan: &HE72EBC,Grayscale,040100,Image
+May: &HE74EBC,Grayscale,040100,Image
+</BackSprites>
+<Barco>
+Barco: &H469FD8,&H46A6d8,040038,Image,Palette
+Olas: &H46A6F8,&H46A6D8,020080,Image,Palette
+</Barco>
+<Interaccion del Heroe>
+Surf: &H396B88,+0,0200B8,Image
+Flechas: &H398BA8,+0,010080,Image
+Exclamaciones: &H3C6AC8,+0,0100F0,Image
+Vuelo: &H39D3C8,+0,040040,Image
+Vuelo Heroe: &H39DBC8,&H35B968,040080,Image
+Vuelo Heroina: &H39EBC8,&H35B968,040080,Image
+</Interaccion del Heroe>
+<Mapeados>
+Hierba Alta: &H399008,&H398FC8,010250,Image,Palette
+Flores: &H3A73E0,&HEA1B68,010050,Image,Palette
+</Mapeados>
+<Fosiles>
+Kabutops: &H3E0FA0,&H3E17A0,040040,Image,Palette
+Aerodactyl: &H3E0780,&H3E0F80,040040,Image,Palette
+</Fosiles>
+<Gente>
+Bill: &H45DD40,&H45E540,040040,Image,Palette
+Dalia: &H45E560,&H45ED60,040040,Image,Palette
+Oak: &H45ED80,&H45F580,040040,Image,Palette
+Sr. Fuji: &H45D520,&H45DD20,040040,Image,Palette
+</Gente>
+<Problemas de Estado>
+Problemas de Estado 1: &HD11E64,Grayscale,018028,Image
+Problemas de Estado 2: &HD124A4,Grayscale,018028,Image
+Problemas de Estado 3: &HD12684,Grayscale,018028,Image
+Problemas de Estado 4: &HD12864,Grayscale,018028,Image
+</Problemas de Estado>
+<Como te Llamas?>
+Como te llamas?: &HE985D8,Grayscale,028050,Image
+Simbolos: &HE98C18,Grayscale,028018,Image
+Selector de Letra 1: &HE98DF8,&H0,010010,Image
+Selector de Letra 2: &HE98E98,&H0,010010,Image
+Selector de Letra 3: &HE98F38,&H0,010010,Image
+Letras: &HE990F8,&H0,008008,Image
+</Como te Llamas?>
+<Batalla>
+Cajas de Batalla: &H71CC60,&HD093B0,040100,Image,Palette
+PokeBalls en Batalla: &HD12404,Grayscale,028008,Image
+Flechita: &HE990D8,&H,008008,Image
+</Batalla>
+<Otros>
+Ghost: &HE93B38,&HE93B14,040040,Image,Palette
+Icono Huevo: &HE7BB88,Grayscale,020040,Image
+Huevo Abriendose: &H25F862,Grayscale,020080,Image
+Pantalla CP: &H3CAFD0,Grayscale,020040,Image
+Mano PC: &H3D2BEC,&H,020080,Image
+Gimnasio Carmin: &H3CE810,Grayscale,010038,Image
+Select: &H452F7C,&H0,018010,Image
+Tipos de Pokemon: &HE961DC,&H0,080070,Image
+Desconocido: &HE98FD8,&H0,020010,Image
+</Otros>
+Puertaa Ciudad Arcoiris: &H3538A8,&H270498,010030,Image
+New Bookmark: &H353228,&H270498,010030,Image
+New Bookmark: &H3540C8,&H26D8A0,010030,Image
+New Bookmark: &H35BB68,&H35B968,010020,Image
+New Bookmark: &H35BB68,&H35B968,010020,Image
+[/BPRE]
+[AXVE]
+<Textboxes>
+Textbox 1: &HE9ADDC,&HE9AEFC,018018,Image,Palette
+Textbox 2: &HE9AF1C,&HE9B03C,018018,Image,Palette
+Textbox 3: &HE9B05C,&HE9B17C,018018,Image,Palette
+Textbox 4: &HE9B19C,&HE9B2BC,018018,Image,Palette
+Textbox 5: &HE9B2DC,&HE9B3FC,018018,Image,Palette
+Textbox 6: &HE9B41C,&HE9B53C,018018,Image,Palette
+Textbox 7: &HE9B55C,&HE9B67C,018018,Image,Palette
+Textbox 8: &HE9B69C,&HE9B7BC,018018,Image,Palette
+Textbox 9: &HE9B7DC,&HE9B8FC,018018,Image,Palette
+Textbox 10: &HE9B19C,&HE9BA3C,018018,Image,Palette
+Textbox 11: &HE9BA5C,&HE9BB7C,018018,Image,Palette
+Textbox 12: &HE9BB9C,&HE9BCBC,018018,Image,Palette
+Textbox 13: &HE9BCDC,&HE9BDFC,018018,Image,Palette
+Textbox 14: &HE9BE1C,&HE9BF3C,018018,Image,Palette
+Textbox 15: &HEA0128,&H1E66B2,020018,Image
+</Textboxes>
+<Character Interactions>
+Arrows: &H369088,+0,010080,Image
+Exclamations: &H39B308,+0,010030,Image
+</Character Interactions>
+<Enviornment>
+Grass: &H3694C8,&H3694A8,010250,Image,Palette
+Flowers: &H376D84,&HE94350,010030,Image,Palette
+</Enviornment>
+<People>
+Profeser Birch: &H39DC14,&H39E414,040040,Image,Palette
+</People>
+Badges: &H3B5AB8,Grayscale,080010,Image
+Bulbasaur: &HD2FD8C,&HD30024,040040,Image
+<Animaciones>
+Puerta1: &H308F1C,&H216F94,058010,Image
+</Animaciones>
+[/AXVE]
+[LINK]
+New Bookmark: &H35BB68,&H35B968,010020,Image
+[/LINK]
+[BPGS]
+<Problemas de Estado>
+Estado 1: &HD11E64,Grayscale,018028,Image
+Estado 2: &HD124A4,Grayscale,018028,Image
+Estado 3: &HD12684,Grayscale,018028,Image
+Estado 4: &HD12864,Grayscale,018028,Image
+</Problemas de Estado>
+[/BPGS]
+[BPRS]
+<Globos>
+!: &H3C21B8,&H3570D0,010030,Image
+!!: &H3C2338,&H3570D0,010030,Image
+X: &H3C24B8,&H3570D0,010030,Image
+^_^: &H3C2638,&H3570D0,010030,Image
+?: &H3C27B8,&H3570D0,010030,Image
+</Globos>
+<Backs>
+Heroe: &HE69EBC,&HE76EBC,040140,Image
+Heroína: &HE6C6BC,&HE76EBC,040140,Image
+Pokélotodo: &HE6EEBC,&HE76EBC,040100,Image
+Anciano: &HE70EBC,&HE76EBC,040100,Image
+Brendan: &HE72EBC,&HE76EBC,040140,Image
+May: &HE74EBC,&HE76EBC,040140,Image
+</Backs>
+<Iconos>
+?: &HE76F5C,Grayscale,020040,Image
+Huevo: &HE7BB88,Grayscale,020040,Image
+</Iconos>
+<Vuelo>
+Normal: &H398C10,&H3570D0,040038,Image
+Héroe: &H399410,&H3570D0,040038,Image
+Héroe 2: &H399C10,&H3570D0,040038,Image
+Heroína: &H39A410,&H3570D0,040038,Image
+Heroína 2: &H39AC10,&H3570D0,040038,Image
+</Vuelo>
+<Animaciones>
+Flor: &H3A2AD0,Grayscale,010050,Image
+</Animaciones>
+<Fósiles>
+Aerodactyl: &H3DA6A8,Grayscale,040040,Image
+Kabutops: &H3DAEC8,Grayscale,040040,Image
+</Fósiles>
+<Problemas de Estado>
+1: &HD11E64,Grayscale,018028,Image
+2: &HD124A4,Grayscale,018028,Image
+3: &HD12684,Grayscale,018028,Image
+4: &HD12864,Grayscale,018028,Image
+</Problemas de Estado>
+Animación Agua: &H3A2D64,&HEA1BE0,010840,Image
+<Cuadros textos>
+Txt-base: &H419E30,&H46A798,028020,Image
+Cuadro Tipo 1: &H469718,&H46A2B8,018018,Image
+Cuadro Tipo 2: &H469838,&H46A2D8,018018,Image
+Cuadro Tipo 3: &H469978,&H46A2F8,018018,Image
+Cuadro Tipo 4: &H469A98,&H46A318,018018,Image
+Cuadro Tipo 5: &H469BB8,&H46A338,018018,Image
+Cuadro Tipo 6: &H469CD8,&H46A358,018018,Image
+Cuadro Tipo 7: &H469DF8,&H46A378,018018,Image
+Cuadro Tipo 8: &H469F18,&H46A398,018018,Image
+Cuadro Tipo 9: &H46A058,&H46A3B8,018018,Image
+Cuadro Tipo 10: &H46A178,&H46A3D8,018018,Image
+Cuadro Tipo All: &H46A3F8,&H46A7F8,018018,Image
+</Cuadros textos>
+Barra PS 1: &HD11BE4,&HD11BA4,058008,Image
+Barra PS 2: &HD121A4,&HD11BA4,090008,Image
+New Bookmark: &H4694B8,&H46A7EE,028020,Image
+Barra Descriptora: &H450DB8,&H46A7EE,0A8008,Image
+Ani Hierba: &H394770,&H394730,010250,Image
+Exp1: &HD11D44,&HD11B84,048008,Image
+Puertas 1-5: &H34E7F0,&HEA1BA0,080080,Image
+[/BPRS]

@@ -1,0 +1,28 @@
+'---------------
+#dynamic 0x800000
+#org @start
+lock
+Bufferpartypokemon 0x0 0x0
+setvar 0x8004 0x0
+special 0x6
+special2 0x8005 0xa
+compare 0x8005 0x10 // 0x10 means it had the sicness, but not anymore
+if 0x1 goto @fine
+compare 0x8005 0x0  // zero means it never got the sickness
+if 0x1 goto @fine    
+buffernumber 0x1 0x8005
+msgbox @sick 0x6
+special 0x6
+release
+end
+#org @fine
+message @good 0x6
+special 0x6
+release
+end
+
+#org @sick
+= Your \v\h02 is sick.\nIt will take \v\h03 cycles to heal.
+
+#org @good
+= That's the healtiest \v\h02\nI've ever seen!

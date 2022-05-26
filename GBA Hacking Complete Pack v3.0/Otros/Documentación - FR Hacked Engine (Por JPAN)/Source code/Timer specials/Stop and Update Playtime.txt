@@ -1,0 +1,49 @@
+.align 2
+.thumb
+
+/*Special 0x4b Stops the timer and updates playing
+time.*/
+special_4b: 	push {r4,lr}
+		ldr r1, timer_6
+		mov r2, #0x0
+		strb r2, [r1, #0x6]
+		strb r2, [r1, #0x2]
+		ldrh r0, [r1, #0x4]
+		strh r2, [r1]
+		strh r2, [r1, #0x4]
+		ldr r1, player_data
+		mov r3, #0x0
+		ldr r1, [r1]
+make_time:	cmp r0, #0x3b
+		bgt make_minute
+		cmp r2, #0x3b
+		bgt make_hour
+		ldrb r4, [r1, #0x11]
+		add r4, r4, r0
+		cmp r4, #0x3c
+		blt cont_min
+		sub r4, #0x3c
+		add r2, #0x1
+cont_min:	strb r0, [r1, #0x11]
+		ldrb r4, [r1, #0x10]
+		add r4, r4, r2
+		cmp r4, #0x3c
+		blt cont_hour
+		sub r4, #0x3c
+		add r3, #0x1
+cont_hour:	strb r4, [r1, #0x10]
+		ldrb r4, [r1, #0xe]
+		add r4, r4, r3
+		strh r4, [r1, #0xe]
+		pop {r4,pc}
+make_minute:	add r2, #0x1
+		sub r0, #0x3c
+		b make_time
+make_hour:	sub r2, #0x3c
+		add r3, #0x1
+		b make_time
+		
+.hword 0x0000
+timer_6: .word 0x04000108
+player_data: .word 0x0300500c
+

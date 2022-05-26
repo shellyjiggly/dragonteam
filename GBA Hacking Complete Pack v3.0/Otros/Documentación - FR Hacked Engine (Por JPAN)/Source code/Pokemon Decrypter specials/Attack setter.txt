@@ -1,0 +1,68 @@
+.thumb
+.align 2
+
+/*Special 0x17 changes a pokemon attack 0x8005 is the attack slot, 0x8006 is the
+attack number. 0x0 deletes the attack and corrects its position.*/
+
+Special_17:	push {r0-r5, lr}
+		ldr r0, var9_8005
+		ldrh r1, [r0]
+		ldr r3, new_addr9
+		ldrh r0, [r0, #0x2]
+		ldr r3, [r3]
+		cmp r1, #0x3
+		bgt end_17
+		mov r2, #0xb1
+		lsl r2, r2, #0x1
+		cmp r0, r2
+		bgt end_17
+		cmp r0, #0x0
+		beq delete_n_fix
+		add r2, r3, #0x0
+		mov r5, #0x0
+check_slots:	ldrh r4, [r2]
+		cmp r4, #0x0
+		beq use_this_slot
+		add r2, #0x2
+		add r5, #0x1
+		cmp r5, #0x4
+		blt check_slots
+		b store_attk
+
+var9_8005: .word 0x020370c2
+new_addr9: .word 0x0203f468
+
+
+use_this_slot:	add r1, r5, #0x0
+store_attk:	add r2, r3, r1
+		add r2, r2, r1
+		strh r0, [r2]
+		ldr r5, attacks
+		mov r4, #0xc
+		mul r0, r4
+		add r5, r0, r5
+		add r5, #0x4
+		ldrb r4, [r5, #0x0]
+		add r3, #0x8
+		add r3, r3, r1
+		strb r4, [r3]
+end_17:		pop {r0-r5, pc}
+
+attacks: .word 0x08250c04
+
+delete_n_fix:	cmp r1, #0x3
+		beq finish_it
+		add r2, r3, r1
+		add r2, r2, r1
+		ldrh r0, [r2, #0x2]
+		strh r0, [r2, #0x0]
+		add r2, r3, r1
+		add r2, #0x8
+		ldrb r0, [r2, #0x1]
+		strb r0, [r2, #0x0]
+		add r1, #0x1
+		b delete_n_fix
+finish_it:	mov r0, #0x0
+		strh r0, [r3, #0x6]
+		strb r0, [r3, #0xb]
+		pop {r0-r5, pc}

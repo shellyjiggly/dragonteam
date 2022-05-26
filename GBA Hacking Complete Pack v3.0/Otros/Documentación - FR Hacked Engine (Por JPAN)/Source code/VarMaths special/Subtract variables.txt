@@ -1,0 +1,34 @@
+.align 2
+.thumb 
+
+/*Special 0x3f is the subtract two vars operation.
+2nd var will be subtracted from 1st var, the result
+put in the 1st var and returned to a given variable
+if the result was a negative value or 0*/
+
+special_3f: 	push {r1-r4, lr}
+		ldr r3, pointer2
+		ldrh r0, [r3]
+		ldrh r4, [r3, #0x2]
+		bl call_var_decrypt
+		add r3, r0, #0x0
+		add r0, r4, #0x0
+		add r4, r3, #0x0
+		bl call_var_decrypt
+		ldrh r2, [r0]
+		ldrh r1, [r4]
+		sub r1, r1, r2
+		mov r0, #0x0
+		cmp r0, r1
+		blt store_sub
+		mov r0, #0x1
+store_sub:	lsl r1, r1, #0x10
+		lsr r1, r1, #0x10
+		strh r1, [r4]	
+		pop {r1-r4, pc}
+
+pointer2: .word 0x0203f4d8
+
+call_var_decrypt: ldr r1, var_decrypt
+		  bx r1
+var_decrypt:	.word 0x0806E455

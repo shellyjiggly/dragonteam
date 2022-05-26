@@ -1,0 +1,124 @@
+#include stditems.rbh
+#include stdattacks.rbh
+'---------------
+#dynamic 0x800000
+#org @start
+lock
+call @give_me_some
+
+msgbox @first_test 0x6
+special 0x9f 
+waitstate
+compare 0x8004 0x6
+if 0x1 goto @end
+compare 0x8004 0x7f
+if 0x1 goto @end
+special 0x62
+special 0x9f 'to allow checking the party;
+waitstate
+
+msgbox @second_test 0x6
+setvar 0x8004 0xf
+special 0x62
+special 0x9f 'to allow checking the party;
+waitstate
+call @give_me_some
+
+msgbox @third_test 0x6
+setvar 0x8004 0x0
+special2 0x8009 0x63
+call @print_stats
+special 0x9f 
+waitstate
+compare 0x8004 0x6
+if 0x1 goto @end
+compare 0x8004 0x7f
+if 0x1 goto @end
+setvar 0x8005 0x7
+special 0x64
+special2 0x8009 0x63
+call @print_stats
+special 0x9f 'to allow checking the party;
+waitstate
+
+msgbox @fourth_test 0x6
+setvar 0x8004 0xf
+setvar 0x8005 0x7
+special 0x64
+special2 0x8009 0x63
+call @print_stats
+special 0x9f 'to allow checking the party;
+waitstate
+
+msgbox @fifth_test 0x6
+setvar 0x8004 0x0
+setvar 0x8006 0x0
+special2 0x8009 0x65
+call @print_stats
+special 0x9f 
+waitstate
+compare 0x8004 0x6
+if 0x1 goto @end
+compare 0x8004 0x7f
+if 0x1 goto @end
+setvar 0x8005 0xa
+special 0x66
+special2 0x8009 0x65
+call @print_stats
+special 0x9f 'to allow checking the party;
+waitstate
+
+msgbox @sixth_test 0x6
+setvar 0x8004 0xf
+special 0x66
+special 0x9f 'to allow checking the party;
+waitstate
+
+msgbox @seventh_test 0x6
+setvar 0x8006 0x1
+setvar 0x8004 0xf
+setvar 0x8005 0xff
+special 0x66
+special 0x9f 'to allow checking the party;
+waitstate
+goto @end
+
+#org @end
+release
+end
+
+#org @print_stats
+buffernumber 0x0 0x8009
+msgbox @buffered 0x6
+return
+
+#org @give_me_some
+setflag 0x828
+givepokemon 0x04 0x5 0x0 0x0 0x0 0x0
+givepokemon 0x01 0x5 0x0 0x0 0x0 0x0
+givepokemon 0x07 0x1 0x0 0x0 0x0 0x0
+return
+
+#org @buffered
+= \v\h02.
+
+#org @first_test
+= Test Deleting one pokemon. 
+
+#org @second_test
+= Test Delete All pokemon.
+
+#org @third_test
+= Test putting one pokemon to sleep.
+
+#org @fourth_test
+= Test putting all pokemon to sleep.
+
+#org @fifth_test
+= Test Damaging one pokemon. 
+
+#org @sixth_test
+= Test Damaging all pokemon. 
+
+#org @seventh_test
+= Test healing all pokemon.

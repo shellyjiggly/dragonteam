@@ -1,0 +1,20 @@
+.align 2
+.thumb
+
+/*special 0x89 is the Set Safari steps special. it allows you to set a specific
+ammount of steps until the safari handler is called. Remember this is a setter, so it
+does not add or subtract to the value, only replaces it.
+0x8004 is the amount of steps to place.
+*/
+
+special_89:	Push {lr}
+		ldr r0, var_8004
+		ldrh r0, [r0]
+		ldr r1, safari_steps
+		strh r0, [r1]
+		pop {pc}
+
+
+var_8004:	.word 0x020370c0
+safari_steps:	.word 0x02039996
+

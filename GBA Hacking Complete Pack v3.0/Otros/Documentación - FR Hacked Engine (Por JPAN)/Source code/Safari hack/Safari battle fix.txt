@@ -1,0 +1,57 @@
+.align 2
+.thumb
+
+/*stuff that needs to be altered in the safari zone code*/
+/*because of room issues, the stuff at 0xdd5bc will be repointed.
+Also, to mantain changes to a minimal, 0xdd5d8 should be changed to
+the pointer to the new function location.
+that is, place at 0xdd5bc 
+08 47
+*/
+
+saf_battle_box:	ldr r0, addr_3bc4
+		ldrb r0, [r0]
+		ldr r1, button_pressed
+		add r0, r0, r1
+		ldrb r0, [r0]
+		cmp r0, #0x0
+		beq Ball_toss
+		cmp r0, #0x1
+		beq Bait
+		cmp r0, #0x2
+		beq Rock_throw
+		b Run_away
+
+addr_3bc4: .word 0x02023bc4
+button_pressed: .word 0x02023ff8
+Ball_toss:	ldr r1, Balls
+		ldrb r2, [r1]
+		cmp r2, #0x0
+		bne real_ball
+		ldrb r2, [r1, #0x1]
+		cmp r2, #0x0
+		beq Rock_throw
+		sub r2, #0x1
+		strb r2, [r1, #0x1]
+		mov r2, #0x64
+		strb r2, [r1]
+		sub r1, #0x3
+		mov r2, #0x1
+		strb r2, [r1]
+real_ball:	mov r0, #0x1
+		mov r1, #0x5
+		b end_box
+Bait:		mov r0, #0x1
+		mov r1, #0x6
+		b end_box
+Rock_throw:	mov r0, #0x1
+		mov r1, #0x7
+		b end_box
+Run_away:	mov r0, #0x1
+		mov r1, #0x8
+end_box:	ldr r2, return_addr_1
+		bx r2
+.hword 0x0000
+Balls:	.word 0x02039994
+return_addr_1: .word 0x080DD607
+

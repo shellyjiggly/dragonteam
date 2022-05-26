@@ -1,0 +1,13 @@
+.align 2
+.thumb
+
+/*Special 0x51 is the make_shiny flag set*/
+special_051:	push {lr}
+		ldr r2, flags1
+		ldrb r1, [r2]
+		mov r0, #0x80
+		orr r1, r0
+		strb r1, [r2]
+		pop {pc}
+.hword 0x0000
+flags1:	.word 0x0203f480

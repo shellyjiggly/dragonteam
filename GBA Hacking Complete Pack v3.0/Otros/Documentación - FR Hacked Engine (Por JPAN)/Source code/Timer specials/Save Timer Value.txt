@@ -1,0 +1,14 @@
+.align 2
+.thumb
+
+
+/*Special 0x4e saves the value in the 
+Seconds timer to a specific memory address
+0x0203f4dc and stops it.*/
+
+special_4e: 	push {lr}
+		bl special_49
+		ldr r1, store_place
+		strh r0, [r1]
+		pop {pc}
+store_place: .word 0x0203f4dc

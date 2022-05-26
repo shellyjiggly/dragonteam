@@ -1,0 +1,20 @@
+.align 2
+.thumb
+
+/*special 0x61 loads the value at a given variable
+and stores it to 0x0203f4dc*/
+special_61:	push {lr}
+		ldr r0, var_8006_2
+		ldrh r0, [r0]
+		bl call_var_decrypt
+		ldr r1, store_place4
+		ldrh r0, [r0]
+		strh r0, [r1]
+		pop {pc}
+.hword 0x0000
+var_8006_2: .word 0x020370c4
+store_place4: .word 0x0203f4dc
+
+call_var_decrypt: ldr r1, var_decrypt
+		  bx r1
+var_decrypt:	.word 0x0806E455

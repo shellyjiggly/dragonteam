@@ -1,0 +1,32 @@
+.align 2
+.thumb
+
+/*Special 0x9c is a change to the old man battle.
+
+Allows for the old man battle script to be changed
+in terms of pokemon caught and level of that pokemon
+but the old-man sprite must be changed at the core
+level. it is located at 0xe70ec0 at tile molester
+
+The pokemon to be captured must be at 0x8004, with
+the lv in 0x8005
+
+Because of limitations on the original code, this 
+new version is unable to capture any of the truly
+legendary pokemon (like mewtwo or mew, deoxys, 
+celebi...) 
+oddly enough, the bird trio is allowed, but blissey
+isn't...ç
+*/
+
+New_Old_man: 	push {lr}
+		ldr r3, var_8004
+		ldrh r1, [r3]
+		ldr r0, enemy_slot
+		ldrh r2, [r3, #0x2]
+		ldr r3, carry_on
+		bx r3
+.hword 0x0000
+var_8004: .word 0x020370c0
+enemy_slot: .word 0x0202402c
+carry_on: .word 0x0807f891

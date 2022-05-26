@@ -1,0 +1,21 @@
+.align 2
+.thumb
+
+/*Special 0x57 clears the wild pokemon chance
+special above*/
+
+special_57:	push {lr}
+		ldr r2, flags7
+		mov r0, #0x0
+		str r0, [r2, #0x8]
+		strh r0, [r2, #0x4]
+		strb r0, [r2, #0x3]
+		strb r0, [r2, #0x6]
+		mov r0, #0xdf
+		ldrb r1, [r2]
+		and r0, r1
+		strb r0, [r2]
+		pop {pc}
+
+flags7: .word 0x0203f480
+

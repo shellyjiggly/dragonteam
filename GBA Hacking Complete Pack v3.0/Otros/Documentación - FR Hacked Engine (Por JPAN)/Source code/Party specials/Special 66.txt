@@ -1,0 +1,72 @@
+.thumb
+.align 2
+
+/*Special 0x66 is the Change HP pokemon special. Slot 0x8004 is the pokemon slot,
+0x8005 is the HP quantity and var 0x8006 must be 1 to add, anything else to
+subtract.*/
+
+
+Special_66:	push {r1-r4, lr}
+		ldr r1, var_8004
+		ldrh r0, [r1,#0x2]
+		ldrh r3, [r1, #0x4]
+		ldrh r1, [r1]
+		cmp r1, #0xf
+		beq apply_all
+		
+		cmp r1, #0x5
+		bgt end_64
+		
+		mov r2, #0x64
+		mul r2, r1
+		ldr r1, party_HP_address
+		add r1, r2, r1
+		ldrh r4, [r1]
+		cmp r3, #0x1
+		beq recover_one
+		
+		sub r0, r4, r0
+		cmp r0, #0x0
+		bge store_one
+		mov r0, #0x0
+		b store_one
+		
+recover_one:	add r0, r0, r4
+		ldrh r4, [r1, #0x2]
+		cmp r0, r4
+		ble store_one
+		add r0, r4, #0x0 
+store_one:	strh r0, [r1, #0x0]
+end_66:		pop {r1-r4, pc}
+
+apply_all:	mov r2, #0x6
+		ldr r1, party_HP_address
+		cmp r3, #0x1
+		beq add_loop
+loop:		ldrh r4, [r1, #0x0]
+		sub r3, r4, r0
+		cmp r3, #0x0
+		bge sub_fin
+		mov r3, #0x0
+sub_fin:	strh r3, [r1, #0x0]
+		sub r2, #0x1
+		add r1, #0x64
+		cmp r2, #0x0
+		bne loop
+		pop {r1-r4, pc}
+
+add_loop:	ldrh r4, [r1, #0x0]
+		add r3, r4, r0
+		ldrh r4, [r1, #0x2]
+		cmp r3, r4
+		ble add_fin
+		add r3, r4, #0x0
+add_fin:	strh r3, [r1, #0x0]
+		sub r2, #0x1
+		add r1, #0x64
+		cmp r2, #0x0
+		bne add_loop
+		pop {r1-r4, pc}
+.hword 0x0000
+var_8004: .word 0x020370c0
+party_HP_address: .word 0x020242dA

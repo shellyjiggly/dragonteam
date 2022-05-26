@@ -1,0 +1,24 @@
+.thumb
+.align 2
+/*Special 0x14 sets the pokeball the pokemon is kept in. item values of all balls stored
+in 0x8005. 0x0 does nothing*/
+Special_14:	push {r0-r3, lr}
+		ldr r0, var6_8005
+		ldrh r0, [r0]
+		cmp r0, #0x0
+		beq end_14
+		cmp r0, #0xc
+		bgt end_14
+		ldr r3, new_addr6
+		lsl r0, r0, #0x3
+		mov r1, #0x78
+		mvn r1, r1 
+		ldr r3, [r3]
+		ldrb r2, [r3, #0x3]
+		and r2, r1
+		orr r2, r0
+		strb r2, [r3, #0x3]
+end_14:		pop {r0-r3, pc}
+.hword 0x0000
+var6_8005: .word 0x020370c2
+new_addr6: .word 0x0203f470

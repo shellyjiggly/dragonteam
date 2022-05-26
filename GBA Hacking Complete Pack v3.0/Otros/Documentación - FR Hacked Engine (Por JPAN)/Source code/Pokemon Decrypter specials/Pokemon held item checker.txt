@@ -1,0 +1,11 @@
+.thumb
+.align 2
+/*Special 0xe returs the pokemon held item.
+the values returned are the ones from all item
+tables*/
+Special_0e:	ldr r0, new_addr
+		ldr r0 , [r0]
+		ldrh r0, [r0, #0x2]
+		bx lr
+new_addr: .word 0x0203f464
+

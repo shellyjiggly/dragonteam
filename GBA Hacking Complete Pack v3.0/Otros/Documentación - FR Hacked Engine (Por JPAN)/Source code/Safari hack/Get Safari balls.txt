@@ -1,0 +1,26 @@
+.align 2
+.thumb
+
+/*Special 0x86 is the check Safari ball quantity. Returns three variables:
+0x8004 has normal safari ball number
+0x8005 has the extra ball slot number
+returns the number as a full integer. max value is 0x63ff
+*/
+
+Special_86:	push {lr}
+		ldr r2, var_8004
+		ldr r1, safari_balls
+		ldrb r0, [r1]
+		strb r0, [r2]
+		ldrb r1, [r1, #0x1]
+		strb r1, [r2, #0x2]
+		mov r2, #0x64
+		mul r1, r2
+		add r0, r1, r0
+		pop {pc}
+		
+.hword 0x0000
+var_8004:	.word 0x020370c0
+safari_balls:	.word 0x02039994
+
+	

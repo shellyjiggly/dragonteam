@@ -1,0 +1,30 @@
+.align 2
+.thumb
+
+/*
+at 0x805e510
+other_replace:	ldr r1, size_fix_addr
+		bx  r1
+size_fix_addr:	.word Pointer
+
+as always, that is
+00 49 08 47 Pointer
+
+Then, at Pointer-1, place this
+*/
+
+size_fix:	push {r4, lr}
+		sub SP, SP, #0x8
+		add r4, r0, #0x0
+		ldrb r0, [r4, #0x5] 
+		ldrb r1, [r4, #0x1a]
+		lsl r1, r1, #0x8
+		orr r0, r1
+		ldr r1, exit_location4
+		mov lr, r1
+		ldr r1, loader_location4
+		bx r1
+.hword 0x0000
+exit_location4: .word 0x0805e51d 
+loader_location4: .word 0x0805F2C9
+

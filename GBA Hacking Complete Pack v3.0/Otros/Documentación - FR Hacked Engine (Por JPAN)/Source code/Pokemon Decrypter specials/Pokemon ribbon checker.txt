@@ -1,0 +1,30 @@
+.thumb
+.align 2
+
+/*Special 0x9 is the ribbon checker. Because ribbons aren't used for anything
+in FireRed, this code returns if a flag in the Ribbon area of a pokemon has been
+filled. Only flag 0xf has a purpose, its activated when a pokemon has become an
+hall of famer.*/
+
+Special_09: 	push {r1-r3, lr}
+	    	ldr r2, var_8005
+		ldrH r1, [r2, #0x0]
+		ldr r0, new_addr
+		cmp r1, #0x20
+		bge end_08
+		mov r3, #0x1
+		lsl r3, r1
+		add r0, #0x70
+		ldr r0, [r0 , #0x0]
+		ldr r0, [r0, #0x8]
+		and r0, r3
+		cmp r0, #0
+		beq end_09
+		mov r0, #0x1
+end_09:		pop {r1-r3, pc}
+
+/*returns 0x1 if flag is active,
+0 if not active or f400 if flag invalid*/
+
+var_8005: .word 0x020370c2
+new_addr: .word 0x0203f400

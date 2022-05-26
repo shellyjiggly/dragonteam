@@ -1,0 +1,217 @@
+.align 2
+.thumb
+
+/* at 0x08011444 place 
+
+code_0_changer: ldr r3, newcode
+		bx r3
+
+pointer_code_0
+
+that is 
+00 4b 18 47 pointer
+
+changer:	ldr r0, code_1
+		bx r0
+
+at 0x080114d0, that is 
+00 48 00 47 pointer_code_1
+
+and the same at 0801158c
+00 48 00 47 pointer_code_2
+
+and a last one at 08011624
+00 48 00 47 pointer_code_3
+
+then, the rest is to place where ever
+*/
+
+code_0:		mov r3, #0x0	/*at 0x08011444*/
+		str r3, [SP, #0xC]
+		add r5, r0, #0x0
+		push {r1-r7}
+		ldr r7, return_addr0
+		b make_trnr_lvl
+return_addr0: .word 0x0801144f
+
+code_1:		mov r3, #0x0
+		push {r1-r7}
+		ldr r7, return_addr1
+		b make_trnr_lvl
+
+return_addr1: .word 0x080114d9
+
+code_2:		mov r0, #0x0	/*at 0801158c*/
+		str r0, [SP, #0xc]
+		mov r3, #0x2
+		push {r1-r7}
+		ldr r7, return_addr2
+		b make_trnr_lvl
+
+return_addr2: .word 0x08011597
+
+code_3:		mov r3, #0x2
+		push {r1-r7}
+		ldr r7, return_addr3
+		b make_trnr_lvl
+
+return_addr3: .word 0x0801162d
+
+make_trnr_lvl:	ldr r0, var_4052
+		bl call_var_decrypt
+		ldrh r0, [r0]
+		mov lr, r7
+		lsl r1, r0, #0x14
+		lsr r1, r1, #0x1c
+		cmp r1, #0x0
+		beq old_school
+		cmp r1, #0xf
+		beq that_lvl
+		add r6, r0, #0x0   /*r6 = variable content*/
+		ldr r5, poke_number
+		ldrb r5, [r5]	   
+		ldr r7, party_addr 
+		add r0, r5, #0x0 /*from this point on, r0 = remaining*/
+		mov r1, #0x0	/*r1 = the biggest*/
+		mov r2, #0xff	/*r2 = smallest*/
+		mov r3, #0x0	/*r3 = sum of all levels*/
+calculoop:	ldrb r4, [r7]	/*r4 = temp*/
+		cmp r4, r1
+		blt smallest
+		add r1, r4, #0x0
+smallest:	cmp r4, r2
+		bgt just_add
+		add r2, r4, #0x0
+just_add:	add r3, r4, r3
+		sub r0, #0x1
+		add r7, #0x64
+		cmp r0, #0x0
+		bgt calculoop
+		lsl r0, r6, #0x14
+		lsr r0, r0, #0x1c
+		cmp r0, #0x1
+		beq biggest_only
+		cmp r0, #0x2
+		beq biggest_plus
+		cmp r0, #0x3		
+		beq biggest_minus
+		cmp r0, #0x4
+		beq smallest_only
+		cmp r0, #0x5
+		beq smallest_plus
+		cmp r0, #0x6		
+		beq smallest_minus
+		cmp r0, #0x7
+		beq average_only
+		cmp r0, #0x8
+		beq average_plus
+		cmp r0, #0x9		
+		beq average_minus
+		cmp r0, #0xa
+		b old_school
+.hword 0x0000
+var_4052: .word 0x00004052
+poke_number: .word 0x02024029
+party_addr: .word 0x020242d8
+
+old_school: 	pop {r1-r7}
+		b go_back		
+
+that_lvl:	lsl r0, r0, #0x18
+		lsr r0, r0, #0x18
+		b finalizing
+
+biggest_only: 	add r0, r1, #0x0
+		b finalizing	
+
+biggest_plus:	add r0, r1, #0x0
+		lsl r1, r6, #0x18
+		lsr r1, r1, #0x18
+		add r0, r0, r1
+		cmp r0, #0x64
+		bgt error_check_b
+		b finalizing
+				
+biggest_minus:	add r0, r1, #0x0
+		lsl r1, r6, #0x18
+		lsr r1, r1, #0x18
+		sub r0, r0, r1
+		cmp r0, #0x1
+		blt error_check_s
+		b finalizing
+		
+smallest_only:	add r0, r2, #0x0
+		b finalizing
+
+smallest_plus:	add r0, r2, #0x0
+		lsl r1, r6, #0x18
+		lsr r1, r1, #0x18
+		add r0, r0, r1
+		cmp r0, #0x64
+		bgt error_check_b
+		b finalizing
+
+smallest_minus: add r0, r2, #0x0
+		lsl r1, r6, #0x18
+		lsr r1, r1, #0x18
+		sub r0, r0, r1
+		cmp r0, #0x1
+		blt error_check_s
+		b finalizing
+
+average_only:	add r0, r3, #0x0
+		add r1, r5, #0x0
+		push {lr}
+		swi #0x6
+		pop {r3}
+		mov lr, r3
+		b finalizing
+
+average_plus:	add r0, r3, #0x0
+		add r1, r5, #0x0
+		push {lr}
+		swi #0x6
+		pop {r3}
+		mov lr, r3
+		lsl r1, r6, #0x18
+		lsr r1, r1, #0x18
+		add r0, r0, r1
+		cmp r0, #0x64
+		bgt error_check_b
+		b finalizing
+
+average_minus:	add r0, r3, #0x0
+		add r1, r5, #0x0
+		push {lr}
+		swi #0x6
+		pop {r3}
+		mov lr, r3
+		lsl r1, r6, #0x18
+		lsr r1, r1, #0x18
+		sub r0, r0, r1
+		cmp r0, #0x1
+		blt error_check_s
+		b finalizing
+
+error_check_b:	mov r0, #0x64
+		b finalizing
+
+error_check_s:  mov r0, #0x1
+finalizing:	pop {r1-r7}
+		add r2, r0, #0x0
+go_back:	cmp r3, #0x2
+		beq another_code 
+		add r0, r5, #0x0
+		add r3, r6, #0x0
+		ldr r6, make_poke
+		bx r6
+another_code:	add r0, r4, #0x0
+		add r3, r6, #0x0
+		ldr r6, make_poke
+		bx r6
+.hword 0x0000
+make_poke: .word 0x0803da55
+
+call_var_decrypt: ldr r4, var_decrypt
+		  bx r4
+var_decrypt:	.word 0x0806E455

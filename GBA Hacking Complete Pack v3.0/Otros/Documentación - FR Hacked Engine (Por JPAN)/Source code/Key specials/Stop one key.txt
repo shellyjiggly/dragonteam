@@ -1,0 +1,26 @@
+.align 2
+.thumb
+
+/*this code makes sure the game ignores certain keys.
+Special c9 receives:
+0x8004 is the keys to set
+returns nothing
+
+There is no clear code. If you want the game to accept those keys again, you need to use
+this code with 0x0000 on 0x8004, thus preventing the game from destroying any keys
+*/
+
+Special_cA:		push {r0-r2, lr}
+			ldr r0, key_store_addr
+			ldr r2, var_8004
+			ldrh r1, [r2]
+			strh r1, [r0, #0x10]
+			ldrb r1, [r0]
+			mov r2, #0x2
+			orr r1, r2
+			strb r1, [r0]
+			pop {r0-r2, pc}
+
+key_store_addr:	.word 0x0203f4ec
+var_8004: .word 0x020370c0
+

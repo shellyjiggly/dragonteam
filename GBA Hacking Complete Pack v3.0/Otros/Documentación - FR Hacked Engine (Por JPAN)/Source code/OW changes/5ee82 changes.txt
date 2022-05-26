@@ -1,0 +1,42 @@
+.align 2
+.thumb
+
+/*place bx r1 at 0x0805ee84,
+08 47
+
+and at 0805EFE4, replace pointer for routine pointer
+
+finally, place this whererver
+*/
+
+Correct_opening: ldr r6, OW_memory_location
+		 add r6, r6, r0
+		 mov r0, #0x0
+		 str r0, [SP, #0x20]
+		 ldrb r0, [r6, #0x5] 
+		 ldrb r1, [r6, #0x1a]
+		 lsl r1, r1, #0x8
+		 orr r0, r1
+		 bl call_loader
+		 add r5, r0, #0x0
+		 ldrh r2, [r5, #0x6]
+		 add r4, SP, #0x18
+		 ldr r0, [r4, #0x4]
+		 lsr r0, r0, #0x10
+		 lsl r0, r0, #0x10
+		 orr r0, r2
+		 str r0, [r4, #0x4]
+		 ldrb r0, [r6, #0x5] 
+		 ldrb r1, [r6, #0x1a]
+		 lsl r1, r1, #0x8
+		 orr r0, r1
+		 ldr r1, exit_location5
+		 bx r1
+
+call_loader:	ldr r1, loader_location5
+		bx r1
+
+OW_memory_location: .word 0x02036e38
+exit_location5: .word 0x0805eea3 
+loader_location5: .word 0x0805F2C9
+

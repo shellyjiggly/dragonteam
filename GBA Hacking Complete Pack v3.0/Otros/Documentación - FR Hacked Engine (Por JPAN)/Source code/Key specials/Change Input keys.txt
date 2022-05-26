@@ -1,0 +1,109 @@
+.align 2
+.thumb
+
+/*
+This code will be replacing the two lines at 0x80005e8, the Key loader
+This will, at an end, allow for us to input keys of our own, to create several 
+key-manipulation techniques, such as key inibition, key replacement and key disabling.
+
+to apply, place a bx r0 (00 47) at 0x080005ec and replace the pointer at 0x08000624 to
+this routine's one.
+
+Stuff this will do:
+type of change will depend on 0203f4ec contents.
+bit set -> effect
+
+0 -> change value to and with, so it makes the game believe a certain key is pressed.
+       This key value is placed at 0x0203f4ee.
+1 -> makes sure a key is not detected. However, that key is allways detected by the key
+       specials. allows you to delete the access to the help menu, or start, etc.
+2 -> if the player is in the OW, forces the script at 0203f4f4 to run when a key in 
+       the position 0x0203f4f
+
+*/
+
+Key_wrecker_start:	push {r4-r7} 
+			ldr r0, key_addr
+			ldrh r0, [r0]
+			ldr r4, switches
+			ldrb r1, [r4]
+			cmp r1, #0x0
+			beq nothing_to_do
+			bl check_for_script
+			bl check_for_forced
+			bl check_for_cancel
+nothing_to_do:		pop {r4-r7}
+			add r1, r0, #0x0
+			ldr r0, return_place
+			bx r0
+.hword 0x0000
+key_addr: .word 0x04000130
+switches: .word 0x0203f4ec
+return_place:	.word 0x080005ef
+
+check_for_script:	push {r0-r1,lr}
+			mov r2, #0x4	/*check for flag*/
+			and r2, r1
+			cmp r2, #0x0
+			beq end_all
+
+			ldr r5, script_on	/*check if a script is executing*/
+			ldrb r3, [r5]
+			cmp r3, #0x1
+			beq end_all
+
+			ldrh r2, [r4, #0x2]	/*check if the keys are pressed*/
+			and r2, r0
+			cmp r2, #0x0
+			bne end_all
+			
+			ldr r3, first_function	/*checks if we are in the OW*/
+			ldr r2, [r3]
+			ldr r3, OW_function
+			cmp r2, r3
+			bne end_all
+			
+			mov r2, #0x1	/*if all is ok, run script*/
+			strb r2, [r5]
+			ldr  r0, [r4, #0x8]
+			bl script_executer
+end_all:		pop {r0-r1,pc}
+
+script_on: .word 0x03000f9c
+first_function: .word 0x03005090
+OW_function: .word 0x08079e0d
+
+check_for_forced:	push {lr}
+			mov r2, #0x1	/*check for flag*/
+			and r2, r1
+			cmp r2, #0x0
+			beq end_all_2
+			ldrb r2, [r4, #0x1] /*check if it should apply it*/
+			cmp r2, #0x0
+			beq end_all_2
+			
+			sub r2, #0x1
+			strb r2, [r4, #0x1] /*updates counter*/
+			sub r4, #0xE
+			ldrh r2, [r4]	/*gets keymap to force*/
+			add r4, #0xe
+			mvn r2, r2
+			and r0, r2	/*keys changed*/
+end_all_2:		pop {pc}
+
+
+check_for_cancel:	push {lr}
+			mov r2, #0x2	/*check for flag*/
+			and r2, r1
+			cmp r2, #0x0
+			beq end_all_3
+			
+			ldr r2, [r4, #0x10] /*loads key to ignore*/
+			orr r0, r2	/*ignored*/
+end_all_3:		pop {pc}
+
+script_executer:	ldr r1, exe_addr
+			bx r1
+
+exe_addr: .word 0x08069AE5
+

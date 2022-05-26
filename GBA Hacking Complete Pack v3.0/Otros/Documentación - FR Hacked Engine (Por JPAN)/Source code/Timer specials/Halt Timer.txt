@@ -1,0 +1,14 @@
+.align 2
+.thumb
+
+/*Special 0x47 Halts the timer*/
+
+special_47: 	push {lr}
+		ldr r0, timer_2
+		mov r1, #0x04
+		strb r1, [r0, #0x6]
+		mov r1, #0x03
+		strb r1, [r0, #0x2]
+		pop {pc}
+.hword 0x0000
+timer_2: .word 0x04000108

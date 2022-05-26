@@ -1,0 +1,31 @@
+.align 2
+.thumb
+
+/*Special 0x41 is the divison operation.
+stored result in the 1st var. If the content of the
+2nd var is 0, the 1st var will be unaltered. Returns
+the remainder.*/
+
+special_41: 	push {r1-r4, lr}
+		ldr r3, pointer4
+		ldrh r0, [r3]
+		ldrh r4, [r3, #0x2]
+		bl call_var_decrypt
+		add r3, r0, #0x0
+		add r0, r4, #0x0
+		add r4, r3, #0x0
+		bl call_var_decrypt
+		ldrh r1, [r0]
+		ldrh r0, [r4]
+		cmp r1, #0x0
+		beq div_0
+		swi #0x6
+		strh r0, [r4]
+		lsl r0, r1, #0x10
+		lsr r0, r0, #0x10	
+div_0:		pop {r1-r4, pc}
+pointer4: .word 0x0203f4d8
+
+call_var_decrypt: ldr r1, var_decrypt
+		  bx r1
+var_decrypt:	.word 0x0806E455

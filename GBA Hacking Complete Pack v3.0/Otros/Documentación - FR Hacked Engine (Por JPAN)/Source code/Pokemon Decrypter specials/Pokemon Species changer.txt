@@ -1,0 +1,18 @@
+.thumb
+.align 2
+
+/*Special 0x16 changes a pokemon species 0x8005 is the species to change to*/
+Special_16:	push {r0-r1, lr}
+		ldr r0, var8_8005
+		ldrh r0, [r0]
+		mov r1, #0x67
+		lsl r1, r1, #0x2
+		cmp r0, r1
+		bge end_16 
+		ldr r1, new_addr8
+		ldr r1 , [r1]
+		strh r0, [r1]
+end_16:		pop {r0-r1, pc} 
+.hword 0x0000
+var8_8005: .word 0x020370c2
+new_addr8: .word 0x0203f464

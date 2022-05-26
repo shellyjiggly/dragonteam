@@ -1,0 +1,16 @@
+.align 2
+.thumb
+
+/*Special 0x49 Stops the timer and returns the time*/
+
+special_49: 	push {lr}
+		ldr r1, timer_4
+		mov r2, #0x0
+		strb r2, [r1, #0x6]
+		strb r2, [r1, #0x2]
+		ldrh r0, [r1, #0x4]
+		strh r2, [r1]
+		strh r2, [r1, #0x4]		
+		pop {pc}
+.hword 0x0000
+timer_4: .word 0x04000108

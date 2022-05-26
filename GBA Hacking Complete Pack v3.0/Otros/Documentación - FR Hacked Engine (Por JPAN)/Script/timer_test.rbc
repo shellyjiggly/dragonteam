@@ -1,0 +1,28 @@
+#dynamic 0x800000
+#org @start
+lock
+special 0x46
+special2 0x8009 0x4a
+call @print_stats
+special2 0x8009 0x4a
+call @print_stats
+special 0x47
+special2 0x8009 0x4a
+call @print_stats
+special2 0x8009 0x4a 
+call @print_stats
+special 0x48
+special2 0x8009 0x4a 
+call @print_stats
+special2 0x8009 0x4a 
+call @print_stats
+release
+end
+
+#org @print_stats
+buffernumber 0x0 0x8009
+msgbox @buffered 0x6
+return
+
+#org @buffered
+= \v\h02.

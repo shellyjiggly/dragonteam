@@ -1,0 +1,22 @@
+#dynamic 0x800000
+#org @comienzo
+checkflag 0xflag (una flag libre)
+if 0x1 goto @despues
+lock
+faceplayer
+textcolor 0x0
+msgbox @mensaje1 0x6
+givepokemon 0xpokemon 0xnivel hex 0xobjeto 0x0 0x0 0x0
+setflag 0xflag anterior
+release
+end
+
+#org @despues
+textcolor 0x0
+msgbox @mensaje2 0x6
+release
+end
+#org @mensaje1
+ctrl + t( antes de dartelo)
+#org @mensaje2
+ctrl + t(despues de dartelo

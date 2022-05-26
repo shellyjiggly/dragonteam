@@ -1,0 +1,4 @@
+Rubikon 1.3 hecho por Kyoufu Kawa y traducido por Lugiale.
+--------------------------------------------------------------
+Usage: rkc.exe [/noshowlog] /o romfile rbcfile [rbcfile...]
+Outfile defaults to rkc.bin

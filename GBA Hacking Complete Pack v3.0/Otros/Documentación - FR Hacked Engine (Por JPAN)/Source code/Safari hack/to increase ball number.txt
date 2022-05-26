@@ -1,0 +1,8 @@
+change at 080a0ef6 to either delete all or none balls
+same at 080a0ed6
+at 080a0f4d, change ldrb to ldrh (00 88)
+add extra line to the ball to rock throw script to print a change of ball number
+change the ball compare number in the safari battle fix to allow to change ball number
+
+PS: there are indicaters in the ROM and game that 2v2 wild battles were programmed into 
+the game

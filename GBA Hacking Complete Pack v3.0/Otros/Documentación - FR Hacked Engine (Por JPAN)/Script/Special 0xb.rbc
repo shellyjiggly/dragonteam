@@ -1,0 +1,26 @@
+'---------------
+#dynamic 0x800000
+#org @start
+lock
+Bufferpartypokemon 0x0 0x0
+setvar 0x8004 0x0
+special 0x6
+special2 0x8005 0xb
+compare 0x8005 0x0 
+if 0x1 goto @none   
+bufferitem 0x1 0x8005
+msgbox @ball 0x6
+special 0x6
+release
+end
+#org @none
+message @hatched 0x6
+special 0x6
+release
+end
+
+#org @ball
+= Your \v\h02 is kept in a\n\v\h03.
+
+#org @hatched
+= You hatched your \v\h02?\nI'm impressed!

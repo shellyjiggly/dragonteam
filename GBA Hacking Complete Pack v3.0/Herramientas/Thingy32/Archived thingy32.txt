@@ -1,0 +1,488 @@
+		Archived Version News from thingy32's readme.txt
+
+version 0.14:
+    Many things new! 1st, added a HUGE optimisation which should help a lot for normal
+cursor movement.
+    Next, added Home/End support.
+    Next, added mouse positioning support. This means that you can click to change the
+cursor position. Next version will feature the ability to select and do
+right-click operations.(This feature by request)
+    Last(but not least) a French translation has been released! Thanks to Card Master
+and his group Terminus Traduction. Note: The translation is not perfect since French takes
+more space than English. If this is a major issue to French speakers, I would like to hear
+about it. The main problem is a command button in the Bookmarks dialog, although the text
+is mostly legible still.version 0.13A:
+	Added international support! I have the Spanish version available
+now. (Thanks, Bokudono and HyruleKnight!)
+
+version 0.13:
+	OK, double-byte line and section breaks are fully implemented. That only
+took two days and it wouldn't have taken that long except there were a couple of
+off by 1 errors that I didn't fix until tonight. Enjoy! This should be about
+the last version for a good long while. I'm done with this project for now 
+and I'm going to go faster on my translation(Romancing SaGa 3, Dragoon-X edition)
+
+version 0.12:
+	To quote thingy original(0.9):
+	- Command line support! Use:
+             "thingy <filename> <tablefile> <table2 [optional]>"
+             Create a nice [shortcut] so your fingers don't fall off!
+	(used to be batch file, but we all used shortcuts anyway, didn't we?)
+Please note that since I'm using thingy's original code to parse the files
+you can NOT use files with spaces. I'm very sorry about this, but it is
+unavoidable. Underscore and long filenames work fine, just spaces mess it up. 
+Please note that using dos format(ex: Final Fantasy IV.tbl --> FinalF~1.tbl) 
+works fine too.
+	Fixed bad dumping bug. Version 0.11 probably will not dump at all.
+This is the primary reason I'm releasing version 0.12.
+	Ok, I am releasing double byte end line/sections as a *partial feature*
+This means that its not all in, but I will complete it very soon. The only thing
+wrong with it is that double byte end *sections* is not in at all, and extra '*'
+appear with endlines. This is 'who cares?' in the view, but it makes dumps a 
+little annoying; there is a '*' at the beginning of every line with double byte.
+	Very minor: Added ability to double-click book/dump/insertmark listbox
+in lieu of selecting a bookmark and then clicking OK.
+	Minor #2: Added text files(*.txt) to Open Dialog after hours wasted using
+text files as test data.(and some more types too; see if you can find 'em...)
+
+version 0.11:
+	Added vertical sizing. Now you can size the window up and see more data
+appear! Two notes: the font size is off ever so slightly, so you will notice some
+open area at the bottom at very large heights(+700 pixels). Also, when sizing
+down, the text box will stop sizing if your cursor
+is in the area that has been sized down. This is due to the way text boxes
+handle cursor positioning. Don't ask ^^
+Added handling of *triple* byte values. Now things like
+		CC11FF=Buy_Compaq 
+work where before the longest that would work was
+		DD33=Boycott_Compaq
+(two bytes). This was a request; Hexecute is better at this than thingy
+because they allow up to 10 bytes per value. But people like thingy[32] better
+for some reason...Please note the up/down cursor positioning is a little buggy if
+you choose to use triple bytes. Also, everything is likely to be a little
+slower the more improvements like this I make.
+	Added the ability to hide the hex display label. I don't know if anybody
+wants this but I'm not a hacker and thus don't like to stare at useless codes if
+I don't have to. Besides, now I can tile 3 or 4 thingys vertically on the screen.
+VERY useful since the dual table file loading is buggy(not my fault :).
+
+version 0.10:
+	I never thought I'd be working on this program again because I was so sick of it,
+but I have fixed the cursor positioning bug! In brief the problem was caused because I 
+positioned the cursor(like you're supposed to in pure DOS) and then the TEXT BOX positioned
+the cursor, so everything was moved TWICE and the cursor was always off by 1 either way.
+Note that I have several ideas for upgrades, so 0.11 may be a little more interesting.
+
+version 0.09:
+	I have fixed some bugs and some design features even though I was supposed to
+turn the project over to Necrosaro...sorry! Anyway, there is now a label for continue
+search, the Edit form is a lot less buggy, and the clickable labels are not buggy anymore.
+
+version 0.08:????????
+version 0.07:
+	everything is in there now: I have also improved the speed of the cursor positioning
+function but alas I cannot figure out how to fix the positioning bug. Necrosaro will have
+to figure it out when I turn the project back over to him. The only two things left that
+I want to do are
+1)Add coloring to the table side via a rich text box(
+2)Make a Spanish version. (I'm going to contact someone who is native Spanish speaker and 
+ask them to translate the strings)
+
+version 0.06:????????
+version 0.05: First version with readme.txt
+	everything except dumping and inserting works now. 
+	The pesky cursor positioning bug is still around with full force, 
+but you can work around it using the 'C' key which just pushes the PgUp/PgDown keys 
+in succession. The only keys not buggy are 1)PgUp 2)PgDown 3)Right. The others skip 1 line 
+too far. Very annoying.
+
+
+
+		Archived Comments from the Tombstone of Thingy32
+
+'1999:
+    '27 Aug: Just started, high hopes are had by all. Mainly I've got the form looking like it's probably supposed
+'to and I'm ready to start Form_Load!(The resizing is also aptly handled, although I may upgrade it later)
+'On a similar, note, I will probably upgrade the program at some unspecified date to MDI. This will almost certainly be after
+'everything has been working for quite some time, however. That's a long way off.
+    '28 Aug. Finished the LoadFiles sub before my sister kicked me off. I also pasted in and altered ReadTableFile(slightly). It may still
+'need work but I'm not going to touch it until I get the other stuff pasted in.
+    '29 Aug. Working on actually getting the thing(y32) to run. I won't include most of the needed code that I'll need to write eventually.
+'Later:It's working!! However, I'm not completely sure that it's working right(all the codes were interpreted #)
+    '30/31 Aug. Fixed the bug and wrote ansi.tbl as a default. It's working right now, but there is no scrolling and I found that my idea
+'of making more data visible with a bigger window is unrealistic without much more code.
+    '01 Sep:Now I'm adding the interface and maybe the supporting functions. I'll type my results later. Oh yeah, BTW I had to write my
+'own Swap function since I couldn't find VB's(if it has one)
+    'Later:OK, Everything's in except for the functions that do things. I'm revising draw1 to DisplayLine and I'm stuck on figuring out
+'how to insert the text into txtTable because of the variable length lines. I think I'll have to count the number of vbCrLfs or something like
+'that.
+    '02 Sep: I converted DisplayLine(draw1) but the code isn't working correctly...maybe I'm not selecting the right
+'number of characters or something. Also I'm going to start drawing the rest of the interface;
+'jump and search and a position label that actually updates
+    '04 Sep: I haven't actually started doing anything yet, but here's an update for 02&03: I got the position label updating, but have decided NOT
+'to implement command buttons; I'm sticking with keyboard driven like the original(this may change). DisplayLine WORKS now! The only
+'things that are shaky are placement of the cursor(which gets messed up anyway with the repeatkey) which I plan to fix, and moving up;
+'I think the original code doesn't work right because of the way I changed the DisplayLine code
+'Later: Things are actually a little worse than they were after I 'fixed' the code; whenever you change position to the left|right, the cursor
+'jumps 4 spaces the first keypress.
+    '05 Sep: OK, things are working a little better now, mainly because I ditched the update string part, now all DisplayLine does is set
+'the cursor position. Works much better, but the cursor positioning is still buggy. Fortunately, however, I have found that the bugs cancel
+'themselves out. i.e. press right, you'll be off by 1|2, the press up and it will fix the off by 1|2 but you may be up too far...Anyway,
+'I'm going to implement jump now.
+    '06 Sep: Well, I have implemented Jump code with much pain&suffering...OK, not really but I did have to rewrite the code form ground up
+'Not very much fun but it looks great! Anyway, I'm going to add scroll bar positioning(at least part of it) and then compile it and send it off
+'to Necrosaro.
+'Later: OK it's all ready. I've added scroll bar syncing but you still can't jump using the scroll bar. I'll do that later; it shouldn't be *too* hard
+'but I think my custom scroll bar(that's why there's a .ocx file with the program) is a little buggy anyway with the dragging...
+    '07 Sep: I've implemented scroll bar based jumping and had to debug it a little since scroll bars have a maximum 32767 height and I also
+'found a small bug already present if the file was too big so I fixed that. I was also trying to fake a tooltip that appeared when you dragged
+'the scrollbox but the label I was using would not come to the top--it was behind everything else. So I gave it up...for now! wa ha ha
+'Anyway, I going to try debugging that weird off by 2 error that I'm running into with the cursor.
+    '08 Sep: Nothing much today except that I've officially given up on the off by 2 error. It is not present in the right key and page up/page down
+'keys so the cheap work-around is to press Pgup/PgDown to find your true cursor position. I started fixing the only-read-3-bookmarks bug
+'and incidentally expanded hexx() to support longs; it only supported integers before. Also I moved tt(1 to100) as integer into hexx
+'rather than them being global(which I hate heh heh)
+    '9/9/99: Ok, I've offiicialy added a correct cursor position key(and a corresponding label to click; the position label): 'c': it runs
+'displaydata without changing the x or y, which is the only way I can figure out how to fix the bug. So that's the work around.
+'Now I'm going to try to figure out why the second table file doesn't work(I haven't tested it up till now)
+'It's depressing fixing bugs, do you know that? I hate it and would rather be writing new code. It's not so bad correcting bugs that you wrote
+'in yourself but stuff that you know should be working because you didn't write it--that's bad. Oh well.
+'Yes!! I figured out what was wrong. hexx(String) as Integer was mistyped it should have been as Long. So it overflowed. The problem
+'was, I had 'error' checking to catch the Cancelerrors from the Common Dialog Boxes, and therefore VB didn't tell me about
+'the error, so I had no clue that was what wasr restricting the bookmarks to 4 hex digits. The 2nd table file should work correctly now too.
+'Later: Yeah there was as stupid bug due to cut&paste where I basically loaded the first table file twice as tbl and tbl2. Boy I feel stupid now
+'Later still: have been fixing general bugs and stuff(actually I got absorbed in reading the romanji version of the items in Romancing Saga 1,
+'my test table file/ROM set). I suspect I still have some bugs because some codes from table 1 showed up in table 2 and vice versa.
+'maybe the working table values should be cleaned out each time we switch table files. Well, that's it for tonight. I don't think I'll even compile
+'a new version.
+    '10 Sep: Well, I have found that some of the bugs I found are present in thingy original so no need to fix *those* :). Anyway, I'm going to
+'start coding the select/replace now--this will probably entail yet another form. Or maybe I'll change everything so that it loads the *whole*
+'file at start, or maybe I'll clean up DisplayLine and the code that calls it...actually I'll wait to optimize when I'm done with the rest of the program
+    '11 Sep: No work today(typed on 12 Sep :)
+    '12 Sep: Still hard at work finishing the edit function--there are more shared variables than I had hoped; I may have to put them in a separate
+'module(which I may have to create anyway depending on how widely used those edit functions are in other stuff like dump, etc.)
+    '15 Sep: later: I have not been updating this comment block too much because I have been updating the frmEdit's comments--see them for
+'recent happenings. However, as far as I can tell, the edit code is now working(almost) perfectly as well as looking extremely cool!
+'(I can't see why the Windows Standard frowns on appearing/disappearing controls). The only known bug is that the last key that the user
+'typed appears as the first character in the text box in addition to the hex which is *supposed* to be there; I haven't really tried to stop that,
+'since it's somewhat trivial. Other things of note is that(as usual) the behavior of the edit module is somewhat strange according to the
+'Windows Standard with the text box acting 'funny' like appearing from nowhere(which I think is cool BTW), then disappearing when you
+'finish inputting the hex code and the other text box's cursor
+'disappears completely(which is good because it wouldn't be in the right place anyway)
+    '16 Sep: yes, I am finally going to compile another version of this; I'm not sure *which* version because I'm confused BTW, new items
+'since yesterday include 1) a Select label and 2) a secret click event on the status label that displays various application properties like
+'version number and comments, etc.
+    '19 Sep: not much work the last couple of days: I am starting on finddd, the function that gets the string to search for from the user.
+'HOWEVER, since the code is basically identical to the edit code, I am going to come up with a sneaky way to use the form twice--no use
+'duplicating code you know. I suspect this will involve writing 2(two) writepos functions--edit will call writepos and search will call writepos2
+'Also, I'll probably add a Boolean to flip between the two modes, just in case.
+    '20 Sep: Finished search code; I'm going to compile another version tonight and start dispersing it; I need to talk to Necrosaro about
+'taking over the project pretty soon since I think I only have dump and insert left to go. (checked it) Yup, dump and insert. Amazing!
+    '21 Sep: No new code today just some debugging of frmEdit. Plus I'm compiling 0.5 today.
+    '22 Sep: I'm starting to re-tool the Jump box so that it also supports dumping and inserting.
+    '23 Sep:Dumping interface in, but no actual dump yet. Insert interface is almost in the same state
+    '24 Sep: Starting on td, the dump func. BTW, I have noticed a number of unused functions,  namely td2, tdbak, and pointers. I am NOT
+'implementing these since they have no apparent method of activation. Necrosaro can implement them later if he wants.
+'Later: dumping (basic, I haven't tested any fancy options) works fine as far as I can tell. But Dad is a-grumping to get on the e-mail so I'll put
+'in tInsert(as I had to rename it) later...hmm. Oh, I'll just use a testdump that I dump and then re-insert it straight back in!(After changing some)
+    '25 Sep: Well, I'm on the last sub of the original(that is actually used), and I've noticed that this headstone is getting pretty long so I guess
+'it's time I'm done with this program anyway. Hope necrosaro can fix that cursor positioning bug if I don't clean it out in the wash...
+'Well I have good news and bad news: the good news is that tInsert works perfectly as far as I can tell. The bad news is that I have NO
+'repeat NO idea how to run the insertion procedure so I don't see that it's working. I'll send it to Necrosaro and let him puzzle with it.
+'He designed the procedure :)
+'Hey just noticed I need to fix up the window styles of all the dialogs so you can't size them etc. oh yeah and the re-used forms need the
+'title bar caption to change...Later: Fixed that; it was easy.
+    '26 Sep:Still cleaning up: I;m going to fix up DisplayLine and convert txtHex to lblHex(so people will know they can't edit it)
+'OK. DisplayLine fixed up; I have come to the sad and unavoidable conclusion that the cursor positioning bug will never be fixed by me,
+'however. boohoo
+'Now I'm about to try out the RichTextBox component for replacing txtTable(so I can do colors). This is not
+'to say I'm *for sure* going to switch but It's probable...
+    '27 Sep:Beginning switch to RichTextBox(rtfTable). Later: Have decided against it due to unavoidable performance issues. I have however
+'left DisplayDataColor and the KeyDown/Press subs in there so implement at your own risk...make a RichText called rtfTable and have at it!
+'I'll soon be turning this project over to necrosaro, as soon as I find out if someone's willing to trans the text to Spanish.
+    '07 Oct: I have fixed some bugs in frmEdit and the labels of frmThingy and added a 'Re search' label which I forgot. I should have let
+'this project drop but I have actively been using thingy and I just *had* to fix those bugs '-'<--that's a bug-your-friends smiley it doesn't really mean anything.
+    '30 Dec: I have resumed the project because no one else has, and besides it's public now that Necrosaro doesn't want to develop
+'it any more. I am hot on the track of the 'off by 2' error(as I used to call it). I *think* (and I may be completely and totally wrong)
+'that it's caused by me moving the cursor with code, then the textbox acting on the keypress and moving the cursor itself. Very annoying,
+'but I'm coming up with a hack to get around it. In other news, I've started thinking about upgrades *above* thingy original, namely:
+'1. Load whole file into memory since we're in Windows. Hope you don't want to hack anything bigger than ~32 MB :)
+'2. Add vertical sizing; this is something I considered unfeasible at start, but once I fix the cursor bug, I'll consider it.
+'3. Fix the table replacement input bug where you type the first letter of a two-letter value, and unless the first letter is also some other table
+'value thingy ignores you. (Example: XX=ka; you type 'k' and thingy ignores you unless XX=k is in the table also. Then it recognizes the 'k',
+'then when you type 'a', it converts 'k' to 'ka')
+'4. Possibly, based on an informal poll at CTC msgboard, make another version that uses DisplayData and DisplayLine much closer to the
+'original thingy's code. That means no text boxes/labels, just .Print and changing .forecolor and .backcolor a lot, which should flicker a lot
+'too. I don't know what the demand for this is. Note no horizontal scroll bars available either; you'll have to size the window to see stuff that's
+'too long.
+    'Last day of the century(maybe millenium): NEWS I have fixed(or almost thereof) the cursor positioning bug!! More on how and why later
+'(we're watching movies again so I can't think)
+'YESS! Bug fixed completely!!!! (Movie's over now, but we're staying up to midnight so I'm
+'back at it) I finally figured out that some code I had moved to fix the problem should have stayed where it was. Now it works!! Well, I'm
+'going to call it a release even though it may be kind of dinky, but you(the reader) have not been slaving under a delirium for the last 3 days
+'trying to fix this.
+'Well, here's the explanation of why things went bad: I assumed that I was on my own with cursor control if I checked the keyCode in
+'txtTable_keyDown() and then acted on it. I was wrong, so every time *I* moved the cursor, txtTable moved it too. Thus you jumped
+'back and forth constantly 2 spaces. Now, I thought(when I found this) that I could just let the text box do the work for me and I would
+'sit back and just read the keys and update the pointing value. Alas, I was wrong because of pesky values in the table that have multiple
+'characters(e.g. 4E=Cecil <the classic>) so the solution I developed was to detect what key was pressed and subtract the space that the
+'*text box* would move on its own and then position the cursor accordingly. See DisplayLine: the select case block for details.
+'More updates of things to do:
+'5. Fix the jump code so it auto jumps to the nearest LINE, not throwing off the cursor label reading so much.
+'6.Fix the down code so the cursor doesn't slip to the absolute end--below the last line of text.
+
+'2000:
+    '01 Jan: I'm going to begin implementing vertical sizing abilities today: just the replacement of 20 with a variable; no code. Also, I will
+'probably begin cleaning up my messy, outdated and/or useless comments in the code.(Not, however in the tombstone ^u^) Later: OK Done
+'quitting to translate.
+    '02 Jan: OK, vertical sizing is nearly complete; I still have to tweak the font height(which I just guessed and then revised...no code behind
+'it). Also, note that if you resize the window so that your cursor would dissappear, the program crashes because the text isn't there any more!
+'Tough. The only way you should be sizing is up anyway. :)
+'Later: I added a new feature in about 10 minutes: Hiding the hex display label. All it does is make it
+'invisible and move the scroll bar and text box all the way to the left.
+'Later still: I have received a request from someone(can't remember -_-) to add triple hex support...so I'm looking into it.
+    '03 Jan: I have done a lot of work on triple-byte reading, but I started testing it and found that DisplayData is really buggy. I don't know
+'why yet; I've got to step through it slowly and carefully. But once this problem is solved, everything should be
+'OK EXCEPT for the daku options in the dumping because I ddin't understand how the code works so I just guessed. Someone needs to
+'issue a detailed bug report on this to me ^^.
+    '04 Jan: OK, triples are working on the display with one minor bug, which will not prevent .11's release ^_^. The cursor positioning
+'when pressing up/down is INcorrect AFTER triples on any given line. The cursor stays on the line it started instead. I'll release it and then
+'fix in 0.12 I think. I'm going to compile very soon. Also, I'm going to start implementing a command line parser for next version..."so your
+'fingers won't fall off from typing" -- Necrosaro, readme.txt for thingy
+    '07 Jan: Took a little while off. In the meantime I've had a request for double-byte line/section breaks. I don't know if I can do these but
+'I'm willing to try. Later: Command line parsing is done. It appears to be working except that filenames with spaces cannot be used.
+    '08 Jan: Added a funny message in reponse to txtTable_Click which shouldn't be happening. Also I began investigating double-byte
+'line/section breaks.
+    '10 & 9 Jan: I have been plugging away at double-byte breaks. They need a lot of new vars and besides I've had one or two false starts.
+    '12 Jan:Well, the code's all in but I won't test till tomorrow.
+    '13 Jan:After much testing. Heehee...I actually tested the dumping function since I added triple byte handline ^~^ There *were* bugs
+'in the dumping after triple byte was added...so version 0.12 is a must upgrade. ^^ In light of this fact I'm going to release 0.12 today with
+'just end line in, but not end section. In addition, there is a small bug that triggers because I set the second byte as a valid table entry(which
+'is also true for single byte ends). The thing is, with *single* bytes, they always get caught with the end line checking, but the second byte
+'doesn't. Since it's NOT a valid firstbyte for endline, but it IS a valid table entry it gets printed right after the real endline. This makes for
+'slightly annoying dumps--there is a * at the beginning of each line. I need to 1. add checking to catch secondbytes and shortcircuit anything
+'or 2. better yet, increment the pointer position at the time the double-byte is caught...problem is, I'm not sure how to do that yet
+    '14 Jan: OK, all bugs fixed for end lines!! Now I have to c&p the end sections without making any typos. A little later: OK, everything
+'is in except 1(one) line in td, which determines that we should stop dumping when we hit a endsection. later: Well, that's done! It didn't take
+'too long, but a lot of thinking...now for testing. Tested: Well, the dumping isn't working right--It adds an extra \ before everything and
+'cuts off one character after the <END>--off by 1 errors I think.
+    '15 Jan: OK, all fixed. Actually it was the fact that the variable names were stupid.(no details here grr) I'm going to compile! This should
+'be last version for a while. I'm going to put it into sleeping. (or whatever it's called)
+    '23 Jan: I added international support to thingy32. I will be asking the people at CTC to proof my Spanish before I create a Spanish
+'version, however. (I used lots of constants as opposed to doing the code necessary for .rc support.) Later: Spanish is in.
+    '13 Feb: Well, so much for sleeping. I'm trying to add mouse support this time, divided into three categories:
+'1. Cursor positioning: basic, do this first
+'2. Selection using the mouse: leading into
+'3: Right click support and ability to use shortcut keys/labels to execute the different functions that use selection.
+'Note that I probably WILL NEVER add the ability to select more than what's on the screen at the time, it would just be too complicated.
+    '16 Feb: I have not added comments for the last few days because I wanted to get this working...it's BIG because it simplifies the code so much.
+'I have created a cursor position lookup table which basically means that I save the cursor's position for each data character as we loop through
+'DisplayData. Then it just takes a simple 2D array lookup inside DisplayLine!! Amazing. Plus the 2D lookup array is very easily searchable.
+'The mouse click code shouldn't take too much more. Also I'm going to add primitive Home/End support, primitive because End will goto the *end*
+'of the line, not the beginning of the last character. Oh, well.
+'Part 2: I discovered a bug that occurs with a double at the end of a line when lines do not start at 0. This condition only occurs 1. when the user
+'has paged to the end of the file and the file isn't evenly divisible by 16. 2.A bookmark that isn't evenly divisible by 16 has been jumped to. This was
+'too common, so I changed the code so that Bookmarks only save the *line* of the position, not the actual position. You're still on your own
+'if you go to the end of the file, though. Besides I think most ROMs are divisible by 16; I was reading a text file. Oh, yeah. Home/End is in plus the last
+'bugs in DisplayLine that were introduced with the lookup method are squashed.
+    '17 Feb: After much fiddling, I have fixed something which I have got two requests for today: showing the position of the
+'hex cursor. I had no idea this was so important(even go so far as to provide a 'hide hex' function), but I have got it working
+'with not much trouble. Also, I have got the necessary code in for selecting *except* the ability to save the end select points
+'and use them to Edit/Dump/Insert. Shouldn't be too hard.
+    '18 Feb: OK, it's all ready to go for version 0.15! Mouse selection support is in, but no right-click menu because I deemed it not necessary for
+'the amount of work it would take. Besides, Copy support is already inherent in text boxes.
+    '22 Feb: Fixed 3 bugs: 1. Crashing err encountered with doubles/triples at end of line due to the optimisation 2. Jump code was -1(F instead of 0)
+'3. used y instead of SelY when figuring the end of the cursor position. Not a problem unless you select more than one line.
+    '29 Feb: Or is 1 Mar?? Anyway, fixed a bug that has been bugging me FOREVER. Basically you don't want a vbCrLf at the end of the text box text
+'because you get an extra line. So I put an If around the code that did that to prevent the last loop from doing it. Easy! Does this make 0.15C??
+    '3 Mar: Fixed a bug dealing with hard-coded twip values not working on a large-font system. Also moved the code
+'that prints your data position to a separate sub so I only have to update 1. Plus relsearch is moving along...slowly.
+    '4 Mar: Bug report:
+'2. When using bookmarks to an adress ending in F makes Thingy32 to crash.
+'Fixed. An off by one error unnoticed for a long time.
+'3. Maybe I'm doing it wrong, but the insertion doesn't seems to work. Haven't tried yet in Thingy.
+''??
+'4. The use of ` for manual hex has trouble with Spanish keyboards. I guess just allowing another key will fix it.
+''Use @...Fixed.
+'5. Enter can't be used to make new lines. I understand it's due to Windows, but could there be another way of doing it?
+''?? if this is in frmEdit, just type * or ** and it will automake the newline code.(not sure about ** though)
+'Also TODO: Take out text box and let Form_ grab keys in frmEdit.
+    '16 Mar: Wow! I haven't written anything for the longest time. Since 0.16 was released in fact. Well, nothing much has changed except I have added the
+'input part of the rel search code. I'm just going to start on the actual search code.
+    '19 Mar: Well, I have fixed a couple of small bugs in frmEdit where the search didn't do when you clicked the 'X' button, and where you couldn't do anything
+'*but* click the 'X' button to finish when using relative search(the option buttons didn't redirect the keystrokes) Also, the RelSearch code is almost done.
+'I'm still debugging it though...shouldn't take too long since I'm mainly past the part that I've changed any(mainly problems with 1. not declaring the vars which is
+'easy to fix and 2. Changing the pointer code and forgetting things like the Preserve part of ReDim Preserve ^^.
+'   Later: necrosaro mailed me with a fixed tInsert function! Yeah! Now Insertion is fixed. Also he had an idea to let the hex lines be any width instead of just
+'16. I'll have to think how to do that...it'll be a little complicated because then new lines may not line up by Fs any more.
+'   Still later: Oops. Forgot to implement in Search the same bulletproof method used in Jump to set your cursor to the found address.
+'Well, it's in nowNDA.
+'Well, that's it for today. It looks like I've got RelSearch working. Now all I want to do is fix the buff thing in *table* searching and maybe
+'implement necro's suggestion in the l/r sizing of the hex box.
+'   20 Mar:YESS! Fixed that awful bug described in readme.txt and frmEdit's comments. Basically now you can type in any string and if
+'it *ever* matches, it'll convert. Please note that in debug mode at least, I've found the code is a little slow with keypeat.
+'(haven't tested this before, thus true of thingy original too) Anyway, I cut out some unnecessary variables in frmEdit around since
+'who knows when. Now to start on necrosaro's sizing suggestion(visual section first). Note that if I keep adding options at this rate, I'll
+'need an frmOptions and thingy32.ini(which you couldn't hack ^^). Oh, I'm adding a keyboard way to switch to relsearch: F4.
+'   21 Mar: Note to self: wildcard and ReSearch are not working. After using ReSearch, normal Search is messed up. Also, caption for switch label is wrong.
+'But optimised the code so you don't refresh hex if bShowHex = False. The switch label is wrong because Form_Activate is NOT called with the relsearch code.
+'   22 Mar: Search is debugged completely, I hope. Also found tiny bug(not worth fixing) in cursor positioning when you press left at the beginning of the top line.
+'The data scrolls all right, but the cursor is too far over by one character. The next leftkey press just aligns the cursor with the next to last char on the line, after
+'which no more bad behaviour is evident. Like I said, not worth fixing since it's due to the way the text box handles arrow keys. On to horizontal sizing!
+'Later: Fixed a small bug(off by 1) in scroll bar jumping. The horizontal visual sizing is in, including HideHex. I'm leaving the data part for tomorrow.
+'   23 Mar: Finished some final testing on relsearch. It works even on very large files. OK, VERY easy to implement the data part; about 10 lines of code
+'plus replace all 16,17,18s in code. Had to do some debugging since I missed the 17s and 18s first time around. Also I didn't redim the PosTable array until
+'*after* updating the scroll bar. This led to problems because occasionally when updated the .max value, it call _Change, which calls DisplayData which crashes
+'if the cursor is on the last char because then the PosTable(x,y) is out of bounds. Anyway, this version is ready to GO! I'll e-mail Bokudono andCard Master
+'first, though to get the translation of the new things. Also I've got to contact Jair to make sure I don't have distribute both C and VB source of relsearch code.
+'23 Apr: Just noticed I've only taken one month off programming this ^^. Anyway, features slated for this release:
+'1)Convert code in SmartScrollBar to local code so the ocx doesn't have to included anymore. Maybe this will fix some bugs.
+'2)Fix relsearch EOF bug reported by Card_Master
+'3)Possibly add option that asks you if you want to overwrite the current table after a relsearch based on the relsearch's results. But this might be
+'annoying if you've already got a table and you overwrite it by mistake(especially after every search). Note: Overwriting would be in memory only, never to disk.
+'Little later: Can't find EOF bug with relsearch :(
+'Litte later: Fixed the Scrollbar so it's now standalone. Removed dependencies on SmartScrollBar and RichTextBox(which I should have done long ago)
+'Only remaining dependency(aside from VB5+ runtimes) is CommonDialog.
+    '02 May: FIX double endlines/sections! DisplayLine miscounts the value when you do say 22FD and you have 22 FF in the ROM. Those should be two
+'separate values! anyway, it caused a 'crash' for me. Also, add a 'reload table' option so you can reload tables at runtime.
+    '06-14 May:
+'1. Fix from 02 May(got sidetracked).
+    'Fixed!
+'2.Fix extraccion y insercion
+'    a. Add a count of the bytes to be inserted (as in Script Inserter) to make sure one does not overwrite other bytes.
+'   Done.
+'   b.Fixed non-bookmark insertion. It was not working due to necrosaro's buggy code(but don't tell him that)
+'3.Add a popup menu from an 'Options' label with
+    'a.Load New File/Table -- Table is done; File is done. Both very easy to implement
+    'b.Reload current table -- Done--x2 for easiness
+    'c.Bookmarks|Dumpmarks|Insertmarks. -- Done
+'4.Add a thing at the beginning of dumps that tells what the start/end addresses were.
+    'Done.
+'5. Test above ^_^ Also add menus and lblOption to international language init sequence.
+'    a. Also, poll CTC to see whether to get rid of the old-school jump window or keep both. <--Decided against
+'   b. Mail Bokudono and Card_Master to get a translation of the new var...oh, make new vars! ^^
+'17 May: remember to reset dump/insert menus on re-loading table file...check
+'18 May: Need to find out whether people prefer start&end addresses or start+offset style. Right now the code
+'uses start+offset(no fault of mi...well, yes it is ^^). I think I'll chang it to start&end because it's more like the dump
+'Later: BIG 0.18 update is done! Yahoo(™®)!
+'20 May: Made new vars. This thing is ready to send to the translators. ORHGDHG.! No it's not! I forgot the menus. ug
+'Later: TODO: 1.Add \ switch for cmdline params DONE
+'2. Add new constants to language startup for menus.
+'3. Make an Esperanto translation? ... Later. Hehe
+'27 May: This just in from Bongo` (the one who makes DirectHex that hates thingy32): faster double/triple support and
+'faster search mode frm his QB/VB code. Here is the improved dbl/trpl support: (loading, then using in DisplayData)
+'¡This someday used will be! (if we can spend 16MB + 64K + .250K RAM):
+'Dim jmmp(2 To 10) As String        ' 2 to 10 because jmmp(1) = " Location " and jmmp(11) = " Bookmark "
+'Dim jmpam
+'Dim chr(255) As String        ' Standard 1 byte table values
+'Dim dblchr(255, 255) As String       ' This way is faster to load and dispaly than the regular thingy way.
+'Dim tplchr(255, 255, 255) As String      ' And if you want three byte code this is it.
+'
+'
+'Public Sub Table_Load()
+'
+''This is how I load my bookmarks jmmp$ = name ( label)
+''and jmpam = val of the saved address
+'
+'Open file2$ For Input As #2
+'j = 1
+'Do
+'Line Input #2, tabl$
+'If Left$(tabl$, 1) = "(" Then
+'If InStr(tabl$, ")") > 0 Then
+'j = j + 1
+'jmmp$(j) = Mid$(tabl$, InStr(tabl$, ")") + 1, Len(tabl$))
+'jmpam(j) = Val("&H" + Mid$(tabl$, 2, InStr(tabl$, ")") - 3) + "&")
+'If j = 10 Then Exit Do Else
+'If EOF(2) Then Exit Do Else
+'Else
+'End If
+'End If
+'Loop Until EOF(2)
+'Close #2
+'
+'
+'Open file2$ For Input As #2
+'Do
+'Line Input #2, tex$
+'If Mid$(tex$, 7, 1) = "=" Then
+'n1 = Val("&H" + Left$(tex$, 2))
+'n2 = Val("&H" + Mid$(tex$, 3, 2))
+'n3 = Val("&H" + Mid$(tex$, 5, 2))
+'tplchr(n1, n2, n3) = Mid$(tex$, 8, Len(tex$))
+'ElseIf Mid$(tex$, 5, 1) = "=" Then
+'n1 = Val("&H" + Left$(tex$, 2))
+'n2 = Val("&H" + Mid$(tex$, 3, 2))
+'dblchr(n1, n2) = Mid$(tex$, 6, Len(tex$))
+'ElseIf Mid$(tex$, 3, 1) = "=" Then
+'n = Val("&H" + Left$(tex$, 2))
+'char(n) = Mid$(tex$, 4, Len(tex$))
+'End If
+'Loop Until EOF(2)
+'Close #2
+'
+'
+'In order to dispaly that text, you would do the test like this..
+'
+''tex$ = the buffer holding the data from the file
+'tex$ = Space$(16 * 20 + 1)
+'
+'For p = 1 To 20
+'
+'For I = 1 To 16
+'hexx$ = String$(2 - Len(Hex$(Asc(Mid$(tex$, I + 16 * (p - 3), 1)))), "0") + Hex$(Asc(Mid$(tex$, I + 16 * (p - 3), 1))) ' This gets you the sinlge byte desired and converst the 'F' to '0F' for you.
+'hexx2$ = Hex$(Asc(Mid$(texx$, I + 16 * (p - 3) + 1, 1)))
+'hexx3$ = Hex$(Asc(Mid$(texx$, I + 16 * (p - 3) + 2, 1)))
+'
+'
+'hx = Val("&H" + hexx$) 'this converts them to be indexed
+'hx2 = Val("&H" + hexx2$) ' same thing
+'hx3 = Val("&H" + hexx3$) ' and for 3 byte codes
+'
+'Do
+'tpl = 0
+'dbl = 0
+'
+'If tplchr$(hx, hx2, hx3) <> "" Then tpl = 1
+'If tpl = 1 Then
+'I = I + 2
+'If x = (I - 2) Or x = (I - 1) Or x = I Then
+'If y = p Then SetCursor
+'End If
+'Print dblchr$(hx, hx2);: Exit Do
+'End If
+'
+'If dblchr$(hx, hx2) <> "" Then dbl = 1
+'If dbl = 1 Then
+'I = I + 1
+'If x = (I - 1) Or x = I Then
+'If y = p Then SetCursor
+'End If
+'Print dblchr$(hx, hx2);: Exit Do
+'End If
+'
+'If chr$(hx) <> "" Then
+'Print chr$(hx);: Exit Do
+'End If
+'
+'If x = I Then
+'If y = p Then SetCursor
+'Print "#";: Exit Do
+'
+'Loop
+'Next I
+'Next p
+'28 May: Bongo` wrote again and said that Thingy32 still doesn't work for him. When he dbl-clicks the filename, the
+'CommDlg acts like he pressed Cancel. No telling what it is causing it. Later: He got it working by using command line.
+'31 May:Tweaked dumping a lil so that each <end> gets an extra line beneath it.
+'10 Jul: Well, it's been a long time! Sheex just sent in a fix for the 'error no espera' problem. That's good. Then
+'Momie Mauve(not sure of spelling) requested Speeed! So I'm seeing what everybody else thinks ^_^
+'Bongo` is the speed demon anyway. I never claimed my progs were fast. BTW, no code today, just commentary
+'14 Jul: Well, I implemented the reading from strData rather than file. THERE'S NO SPEEED GAIN@#@)%& That is all.
+'Eons later, Nathan gets an urge to code after a long dormancy...he should be studying Spanish but it's not happening.
+'17 Sep:More research on Thingy32's speed related to loading entire file to memory. There *does* seem to be a speed gain--I loaded
+'guid ole Tales of Phantasia and it was distinctly zippy. Acted like Herakles 1 which is a measly 64K. So who knows? Further investigation
+'is needed. --Shortly afterwards -- Results are inconclusive...Star Ocean on .18 is ALSO distinctly zippy so why is Momie complaining?
+'Because Thingy32 *is* slow, given the right circumstances. But what are they? Oh, well. I'm looking into optimizing double handling without ruining DisplayData
+'TODO: Optimize doubles 2. Figure out dakuten/handakuten handling(done)
+'18 Sep: Whoohoo! Fixed /han/dakuten handling, plus figured out how it works! It turns out it was stupid typo from the conversion from QBasic to VB.

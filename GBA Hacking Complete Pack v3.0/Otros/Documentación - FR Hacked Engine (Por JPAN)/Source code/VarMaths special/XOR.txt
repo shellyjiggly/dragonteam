@@ -1,0 +1,25 @@
+.align 2
+.thumb
+
+/*Special 0x44 is the Logical XOR operation. 
+returns 1st ^^ 2nd. Doesn't change the originals*/
+special_44: 	push {r1-r4, lr}
+		ldr r3, pointer7
+		ldrh r0, [r3]
+		ldrh r4, [r3, #0x2]
+		bl call_var_decrypt
+		add r3, r0, #0x0
+		add r0, r4, #0x0
+		add r4, r3, #0x0
+		bl call_var_decrypt
+		ldrh r0, [r0]
+		ldrh r2, [r4]
+		EOR r0, r2
+		pop {r1-r4, pc}
+.hword 0x0000
+pointer7: .word 0x0203f4d8
+
+call_var_decrypt: ldr r1, var_decrypt
+		  bx r1
+var_decrypt:	.word 0x0806E455
+

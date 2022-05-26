@@ -1,0 +1,18 @@
+.align 2
+.thumb
+
+/*Special 0x55 clears the Permanent status special*/
+
+special_55:	push {lr}
+		ldr r2, flags5
+		mov r0, #0x0
+		strb r0, [r2, #0x1]
+		strb r0, [r2, #0x2]
+		mov r0, #0xfb
+		ldrb r1, [r2]
+		and r0, r1
+		strb r0, [r2]
+		pop {pc}
+	
+flags5: .word 0x0203f480
+

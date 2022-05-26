@@ -1,0 +1,21 @@
+//Loads and displays the pokemon from the rom
+//Version 1.0
+
+//Firered Pokemon English
+[BPRE]
+imax(376)
+fmax(0)
+Append(8)
+Multiply(I#)
+Add(&h3D4294)
+Read(mem(0), 3)
+Flip(3)
+
+Append(8)
+Multiply(I#)
+Add(&H3D4298)
+Read(mem(0), 3)
+Flip(3)
+
+Image(mem(2), mem(0), 00180018) 
+[/BPRE]

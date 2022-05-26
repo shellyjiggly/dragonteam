@@ -1,0 +1,29 @@
+.align 2
+.thumb
+
+/*
+replace what's there with this 
+67f92_addr:	ldr r5, my_new_addr
+		bx r5
+.hword 0x0000
+my_new_addr:	Pointer
+
+01 4d 28 47 00 00 Pointer
+
+then, this
+*/
+
+more_changers:	add r5, r0, #0x0
+		mov r4, #0x0
+		ldrb r0, [r5, #0x5] 
+		ldrb r1, [r5, #0x1a]
+		lsl r1, r1, #0x8
+		orr r0, r1
+		ldr r1, exit_location3
+		mov lr, r1
+		ldr r1, loader_location3
+		bx r1
+
+exit_location3: .word 0x08067f9d 
+loader_location3: .word 0x0805F2C9
+

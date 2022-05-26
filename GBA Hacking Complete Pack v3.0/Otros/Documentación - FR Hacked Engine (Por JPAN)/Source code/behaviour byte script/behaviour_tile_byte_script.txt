@@ -1,0 +1,71 @@
+.align 2
+.thumb
+
+/*this code is meant to substitute the memory-filling, inefficient and 
+unexpansible GameFreaks behaviourbyte+surf scripts. this code is the one
+responsible for when you click A in front of a tile, the tile doing something.
+This code enables all tiles to have a default script, even grass. Because of the
+new workings of this function, some scripts need to be changed:
+TV screen will now work sideways, to fix add a checkfacing
+Same thing with the town map
+Surf will not ask you for the badge.
+Same thing with Waterfall. just add a checkflag to them, that's what the old code
+did anyway.*/
+
+/*to be placed at 0x0806d1f0*/
+Byte_table:	lsl r1, r1, #0x18
+		lsr r0, r1, #0x16
+		ldr r1, behaviour_table
+		add r0, r0, r1
+		ldr r0, [r0]
+		mov pc, lr
+
+behaviour_table: .word 0x00000000 /*1024 byte table to be stored somewhere else*/
+/*from 0x3fe bytes to 0x10... 4 more bytes and I would replace the function
+with the table*/
+
+/*
+table entries
+81 --> 1a7606 (bookshelf)
+82 --> 1a760f (market shelves)
+83 --> 1a6955 (pc script)
+
+84
+85 --> 1a6c32 (town map)
+86 --> 1A764E (tv script)
+87 --> 1A76E7 (pokecenter)
+
+88 --> 1A76DE (pokemart)
+89 --> 1A7657 (cabinet)
+8a --> 1A7660 (cooking range)
+8b --> 1A7669 (dresser)
+
+8c --> 1A7672 (snacks)
+8d --> 1BBFD8 (wireless)
+8e --> 1BB8A7 (not available)
+8f --> 1A7702 (questionaire)
+
+90 --> 1a7618 (fridge)
+91 --> 1A76F0 (indigo plateu)
+92 --> 1A76F9 (indigo plateau 2)
+93 --> 1a763c (blueprint)
+
+94 --> 1A767B (pokemon pictures)
+95 --> 1A7684 (complex machine)
+96 --> 1A768D (telephone)
+97 --> 1A762A (complex numbers)
+
+98 --> 1A7696 (ads)
+99 --> 1A769F (tasty food)
+9a --> 1A76A8 (trash can)
+9b --> 1A76B1 (cup)
+
+9c (removed)
+9d (removed)
+9e --> 1A76CC (lights)
+9f --> 1A76D5 (tools)
+
+A0 --> 1a7633 (random machine)
+A1 --> 1A7621 (consoles)
+a2 --> 1A7645 (robbery)
+a3 --> 1C549C (timer)*/

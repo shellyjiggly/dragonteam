@@ -1,0 +1,53 @@
+.align 2
+.thumb
+
+/*the original code is at 080d77d0
+insert 07 49 08 47 there and at d77f0, place the pointer
+*/
+		ldr r1, switched_ball
+		ldrb r0, [r1]
+		cmp r0, #0x0
+		beq not_string
+		mov r0, #0x0
+		strb r0, [r1]
+		ldr r0, Change_charges	/*for now, we'll keep this as one string*/
+		b return_print
+		.hword 0x0000
+not_string:	mov r1, #0x8d
+		lsl r1, r1, #0x1
+		add r1, #0x1		
+		cmp r1, r6
+		bne old_print
+		ldr r1, button_pressed2
+		ldrb r0, [r1]
+		cmp r0, #0x0
+		bne old_print
+		mov r0, #0x2
+		strb r0, [r1]
+		ldr r0, Ball_missing_text
+		b return_print
+
+switched_ball: .word 0x02039991
+button_pressed2: .word 0x02023ff8
+Change_charges: .word 0x00000000
+
+old_print:	LDR     R1, Lines_table
+		ADD     R0, R6, #0
+		SUB     R0, #0xC
+				
+		LSL     R0, R0, #2
+		ADD     R0, R0, R1
+		LDR     R0, [R0]
+return_print: 	ldr r1, print_old_addr
+		bx r1
+
+Lines_table:	.word 0x083FDF3C
+Ball_missing_text: .word 0x00000000
+print_old_addr: .word 0x080d77df
+/*at 0x080a0f9e, repoint the B upwards to 0x080a0f56 (0xda instead of what is there, 0x7)
+
+also, text printed in battle uses \v\h1d as the player name
+*/
+
+
+

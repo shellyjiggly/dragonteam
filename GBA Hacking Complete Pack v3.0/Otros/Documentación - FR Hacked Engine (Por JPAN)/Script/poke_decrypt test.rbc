@@ -1,0 +1,171 @@
+#include stditems.rbh
+#include stdattacks.rbh
+'---------------
+#dynamic 0x800000
+#org @start
+lock
+setflag 0x828
+givepokemon 0x04 0x1 0x0 0x0 0x0 0x0
+setvar 0x8004 0x0
+special 0x6
+
+msgbox @first_test 0x6
+'read before set
+setvar 0x8005 0x1
+special2 0x8009 0x7
+call @print_stats
+
+'set and read after set -> result == 100
+setvar 0x8006 0x64
+special 0xf
+special2 0x8009 0x7
+call @print_stats
+
+'set and read after set -> result == 4
+setvar 0x8006 0x160
+special 0xf
+special2 0x8009 0x7
+call @print_stats
+
+msgbox @second_test 0x6
+'read original ATK IV
+setvar 0x8005 0x1
+special2 0x8009 0x8
+call @print_stats
+
+'set the Atk Iv to the max -> result == 31
+setvar 0x8006 0x1f
+special 0x10
+special2 0x8009 0x8
+call @print_stats
+
+msgbox @third_test 0x6
+'reads 4th flag
+setvar 0x8005 0x3
+special2 0x8009 0x9
+call @print_stats
+
+'sets and reads the 4th flag
+setvar 0x8005 0x3
+special 0x11
+special2 0x8009 0x9
+call @print_stats
+
+'clears and prints the 4th flag
+setvar 0x8005 0x103
+special 0x11
+setvar 0x8005 0x3
+special2 0x8009 0x9
+call @print_stats
+
+msgbox @fourth_test 0x6
+'read pokerus stats, planned for 0
+special2 0x8009 0xa
+call @print_stats
+
+'set pokerus stats, times 9
+setvar 0x8005 0x9
+special 0x12
+special2 0x8009 0xa
+call @print_stats
+
+msgbox @fifth_test 0x6
+'print ball
+special2 0x8009 0xb
+call @print_stats
+'change to masterball
+setvar 0x8005 0x1
+special 0x14
+special2 0x8009 0xb
+call @print_stats
+
+msgbox @sixth_test 0x6
+'print happiness -> supposed to be 0
+special2 0x8009 0xd
+call @print_stats
+'sets happiness and reads it -> supposed to be 255
+setvar 0x8005 0xff
+special 0x13
+special2 0x8009 0xd
+call @print_stats
+'sets happiness and reads it -> supposed to be 50
+setvar 0x8005 0x1cd
+special 0x13
+special2 0x8009 0xd
+call @print_stats
+
+msgbox @seventh_test 0x6
+special2 0x8009 0xe
+call @print_stats
+'changes the item to masterball
+setvar 0x8005 0x1
+special 0x15
+special2 0x8009 0xe
+call @print_stats
+'supposed to not change the item
+setvar 0x8005 0x10
+special 0x15
+special2 0x8009 0xe
+call @print_stats
+
+msgbox @eigth_test 0x6
+special2 0x8009 0xc
+call @print_stats
+
+msgbox @nineth_test 0x6
+special2 0x8009 0x18 
+call @print_stats
+'changes the charmander to a bulbasaur
+setvar 0x8005 0x1
+special 0x16
+special2 0x8009 0x18 
+call @print_stats
+
+msgbox @tenth_test 0x6
+setvar 0x8005 0x2
+setvar 0x8006 ATK_FLAMEWHEEL
+special 0x17
+setvar 0x8005 0x1
+setvar 0x8006 0x0
+special 0x17
+
+special 0x6
+release
+end
+#org @print_stats
+buffernumber 0x0 0x8009
+msgbox @buffered 0x6
+return
+
+#org @buffered
+= \v\h02.
+
+#org @first_test
+= Test EV read\set.
+
+#org @second_test
+= Test IV read\set.
+
+#org @third_test
+= Test Ribbon read\set.
+
+#org @fourth_test
+= Test Pokerus.
+
+#org @fifth_test
+= Ball test. 
+
+#org @sixth_test
+= Happiness test. 
+
+#org @seventh_test
+= Held item test.
+
+#org @eigth_test
+= Location test.
+
+#org @nineth_test
+= Species test
+
+#org @tenth_test
+= Attack test.

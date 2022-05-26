@@ -1,0 +1,14 @@
+.align 2
+.thumb
+
+/*Special 0x88 is the get safari pedometer special
+returns to a given variable the number of remaining steps*/
+
+
+special_88:	push {lr}
+		ldr r0, safari_steps
+		ldrh r0, [r0]
+		pop {pc}
+
+safari_steps:	.word 0x02039996
+

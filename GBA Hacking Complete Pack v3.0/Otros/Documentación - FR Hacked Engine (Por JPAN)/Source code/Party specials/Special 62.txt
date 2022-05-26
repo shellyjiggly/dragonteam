@@ -1,0 +1,84 @@
+.thumb
+.align 2
+
+/*Special 0x62 destroys a pokemon in your party
+what it does is move all other pokemon from your party up one level until it 
+gets to the last, that is replaced by 0's
+0x8004 is the pokemon slot to delete, f erases entire party.
+returns 0 if no pokemon was left, the number of pokemon if any remained.
+It will delete any pokemon, even if your last*/
+
+special_62: 	push {r1-r7, lr}
+		mov r0, #0x0
+		ldr r7, var_8004
+		ldr r6, party_addr
+		ldr r5, poke_quantity
+		ldrh r7, [r7]
+		cmp r7, #0xf
+		beq delete_all
+		
+		cmp r7, #0x5
+		bgt end_62
+
+		cmp r7, #0x0
+		blt end_62
+		
+		ldrb r4, [r5]
+		cmp r7, r4
+		bge end_62
+		
+		mov r4, #0x5
+		sub r4, r4, r7
+
+make_address:	cmp r7, #0x0
+		beq made_address
+		add r6, #0x64
+		sub r7, #0x1
+		b make_address
+	
+made_address:	add r7, r4, #0x0
+		add r4, r6, #0x0
+		add r4, #0x64
+
+copy_loop:	cmp r7, #0x0
+		beq erase_loop
+		add r0, r4, #0x0
+		add r1, r6, #0x0
+		mov r2, #0x64
+		swi #0xb
+		sub r7, #0x1
+		add r6, #0x64
+		add r4, #0x64
+		b copy_loop
+erase_loop:	mov r0, #0x6
+		mov r1, #0x0
+		mov r2, #0x0
+		mov r3, #0x0
+		mov r4, #0x0 
+erase_last:	stmia r6!, {r1-r4}
+		sub r0, #0x1
+		cmp r0, #0x0
+		bne erase_last
+		str r6, [r1]
+		ldrb r0, [r5]
+		sub r0, #0x1
+		strb r0, [r5]
+end_62:		pop {r1-r7, pc}
+
+delete_all:	mov r0, #0x4b
+		mov r1, #0x0
+		mov r2, #0x0
+		mov r3, #0x0
+		mov r4, #0x0 
+continue:	stmia r6!, {r1-r4}
+		sub r0, #0x2
+		cmp r0, #0x1
+		bne continue
+		stmia r6!, {r1,r2}
+		mov r0, #0x0
+		strb r0, [r5]
+		pop {r1-r7, pc}
+
+var_8004: .word 0x020370c0
+poke_quantity: .word 0x02024029
+party_addr: .word 0x02024284

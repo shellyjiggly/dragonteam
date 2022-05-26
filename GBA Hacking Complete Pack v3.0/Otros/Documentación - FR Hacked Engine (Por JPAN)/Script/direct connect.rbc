@@ -1,0 +1,777 @@
+'---------------
+#org 0x1BBB9C
+special 0x187
+compare LASTRESULT 0x2
+if 0x1 goto 0x8@error
+special 0x188
+lock
+faceplayer
+checkflag 0x829
+if 0x0 goto 0x8@link_1
+special2 LASTRESULT 0x1AE
+compare LASTRESULT 0x1
+if 0x1 goto 0x8@link_2
+special2 LASTRESULT 0x16A
+compare LASTRESULT 0x0
+if 0x1 goto 0x8@link_3
+preparemsg 0x8@link_4 '"Welcome to the POKÈMON WIRELESS\nC..."
+waitmsg
+pause 0xF
+goto 0x8@link_5
+
+'---------------
+#org 0x@error
+release
+end
+
+'---------------
+#org 0x@link_1
+msgbox 0x8@link_1_1 MSG_KEEPOPEN '"I'm terribly sorry.\nThe POKÈMON W..."
+release
+end
+
+'---------------
+#org 0x@link_2
+special 0x1F
+special 0x199
+msgbox 0x8@link_2_1 MSG_KEEPOPEN '"You have at least one POKÈMON\ntha..."
+release
+end
+
+'---------------
+#org 0x@link_3
+preparemsg 0x8@link_3_1 '"Welcome to the POKÈMON CABLE\nCLUB..."
+waitmsg
+pause 0xF
+goto 0x8@link_3_2
+
+'---------------
+#org 0x@link_5
+checkflag 0x2BB
+if 0x0 goto 0x8@link_5_1
+multichoice 0x0 0x0 0x2F 0x0
+copyvar 0x8000 LASTRESULT
+compare 0x8000 0x0
+if 0x1 goto 0x8@link_5_2
+compare 0x8000 0x1
+if 0x1 goto 0x8@link_5_3
+compare 0x8000 0x2
+if 0x1 goto 0x8@link_5_5
+compare 0x8000 0x3
+if 0x1 goto 0x8@link_5_4
+compare 0x8000 0x7F
+if 0x1 goto 0x8@link_5_4
+end
+
+'---------------
+#org 0x@link_3_2
+setvar 0x8004 0x0
+multichoice 0x0 0x0 0x27 0x0
+copyvar 0x8000 LASTRESULT
+compare 0x8000 0x0
+if 0x1 goto 0x8@link_3_2_1
+compare 0x8000 0x1
+if 0x1 goto 0x8@link_3_2_2
+compare 0x8000 0x2
+if 0x1 goto 0x8@link_5_4
+compare 0x8000 0x7F
+if 0x1 goto 0x8@link_5_4
+end
+
+'---------------
+#org 0x@link_5_1
+multichoice 0x0 0x0 0x32 0x0
+copyvar 0x8000 LASTRESULT
+compare 0x8000 0x0
+if 0x1 goto 0x8@link_5_2
+compare 0x8000 0x1
+if 0x1 goto 0x8@link_5_3
+compare 0x8000 0x2
+if 0x1 goto 0x8@link_5_4
+compare 0x8000 0x7F
+if 0x1 goto 0x8@link_5_4
+end
+
+'---------------
+#org 0x@link_5_2
+msgbox 0x81BD317 MSG_YESNO '"Would you like to trade POKÈMON?"
+compare LASTRESULT 0x0
+if 0x1 goto 0x8@link_5_4
+call 0x8@link_5_2_1
+compare LASTRESULT 0x0
+if 0x1 goto 0x8@link_5_4
+setvar 0x8004 0x3
+goto 0x8@link_5_2_2
+
+'---------------
+#org 0x@link_5_3
+preparemsg 0x8@link_5_3_2 '"Which Battle Mode would you like\n..."
+waitmsg
+multichoice 0x0 0x0 0x11 0x0
+copyvar 0x8000 LASTRESULT
+compare 0x8000 0x0
+if 0x1 goto 0x8@link_5_3_1
+compare 0x8000 0x1
+if 0x1 goto 0x8@link_5_3_3
+compare 0x8000 0x2
+if 0x1 goto 0x8@link_5_3_4
+compare 0x8000 0x3
+if 0x1 goto 0x8@link_5_3_5
+compare 0x8000 0x4
+if 0x1 goto 0x8@link_5_4
+compare 0x8000 0x7F
+if 0x1 goto 0x8@link_5_4
+end
+
+'---------------
+#org 0x@link_5_5
+msgbox 0x8@link_5_5_1 MSG_YESNO '"Would you like to use the\nBERRY C..."
+compare LASTRESULT 0x0
+if 0x1 goto 0x8@link_5_4
+special 0x19B
+compare LASTRESULT 0x0
+if 0x1 goto 0x8@link_5_5_2
+setvar 0x8004 0x5
+goto 0x8@link_5_2_2
+
+'---------------
+#org 0x@link_5_4
+special 0x1F
+special 0x199
+msgbox 0x8@link_5_4_1 MSG_KEEPOPEN '"Please do visit again."
+release
+end
+
+'---------------
+#org 0x@link_3_2_1
+copyvar 0x8007 LASTTALKED
+call 0x8@link_5_2_1
+compare LASTRESULT 0x0
+if 0x1 goto 0x8@link_5_4
+call 0x8@link_3_2_1_2
+compare LASTRESULT 0x0
+if 0x1 goto 0x8@link_5_4
+preparemsg 0x8@link_3_2_1_1 '"Please wait.\n[.] [.] B Button: Ca..."
+waitmsg
+special 0x198
+textcolor 0x3
+special 0x1D
+waitstate
+call 0x8@link_3_2_1_3
+compare LASTRESULT 0x1
+if 0x1 goto 0x8@link_3_2_1_4
+compare LASTRESULT 0x2
+if 0x1 goto 0x8@link_3_2_1_5
+compare LASTRESULT 0x3
+if 0x1 goto 0x8@link_3_2_1_6
+compare LASTRESULT 0x4
+if 0x1 goto 0x8@link_3_2_1_7
+compare LASTRESULT 0x5
+if 0x1 goto 0x8@link_5_4
+compare LASTRESULT 0x6
+if 0x1 goto 0x8@link_3_2_1_8
+compare LASTRESULT 0x7
+if 0x1 goto 0x8@link_3_2_1_9
+compare LASTRESULT 0x9
+if 0x1 goto 0x8@link_3_2_1_10
+end
+
+'---------------
+#org 0x@link_3_2_2
+copyvar 0x8007 LASTTALKED
+goto 0x8@link_3_2_2_1
+
+'---------------
+#org 0x@link_5_2_1
+special2 LASTRESULT 0x83
+compare LASTRESULT 0x2
+if 0x0 goto 0x8@link_5_2_1_1
+special2 LASTRESULT 0x153
+compare LASTRESULT 0x1
+if 0x1 goto 0x8@link_5_2_1_2
+setvar LASTRESULT 0x1
+return
+
+'---------------
+#org 0x@link_5_2_2
+call 0x8@link_3_2_1_2
+compare LASTRESULT 0x0
+if 0x1 goto 0x8@link_5_4
+copyvar 0x8000 0x8004
+compare 0x8000 0x3
+if 0x1 goto 0x8@link_5_2_2_1
+compare 0x8000 0x0
+if 0x1 goto 0x8@link_5_2_2_1
+compare 0x8000 0x1
+if 0x1 goto 0x8@link_5_2_2_1
+compare 0x8000 0x2
+if 0x1 goto 0x8@link_5_2_2_2
+compare 0x8000 0x5
+if 0x1 goto 0x8@link_5_2_2_2
+end
+
+'---------------
+#org 0x@link_5_3_1
+setvar 0x8004 0x0
+goto 0x8@link_5_2_2
+
+'---------------
+#org 0x@link_5_3_3
+special 0x3D
+compare LASTRESULT 0x0
+if 0x5 goto 0x8@link_5_3_3_1
+setvar 0x8004 0x1
+goto 0x8@link_5_2_2
+
+'---------------
+#org 0x@link_5_3_4
+setvar 0x8004 0x2
+goto 0x8@link_5_2_2
+
+'---------------
+#org 0x@link_5_3_5
+msgbox 0x8@link_5_3_5_1 MSG_KEEPOPEN '"There are three Battle Modes.\pSIN..."
+goto 0x8@link_5_3
+
+'---------------
+#org 0x@link_5_5_2
+msgbox 0x8@link_5_5_2_1 MSG_KEEPOPEN '"To use the BERRY CRUSH service,\ny..."
+goto 0x8@link_5
+
+'---------------
+#org 0x@link_3_2_1_2
+special 0x5D
+waitstate
+return
+
+'---------------
+#org 0x@link_3_2_1_3
+copyvar 0x8012 0x8013
+return
+
+'---------------
+#org 0x@link_3_2_1_4
+setvar 0x8004 0x3
+copyvar 0x406F 0x8004
+preparemsg2 0x81BC590 '"Please enter."
+waitmsg
+call 0x81BC034
+special 0x8E
+sound 0x1E
+pause 0x3C
+applymovement LASTTALKED 0x81BB88F
+waitmovement 0x0
+closeonkeypress
+applymovement MOVE_PLAYER 0x81BB898
+waitmovement 0x0
+setdooropened 0x9 0x1
+doorchange
+applymovement MOVE_PLAYER 0x81BB89C
+waitmovement 0x0
+spriteinvisible 0xFF 0x0 0x0
+setdoorclosed 0x9 0x1
+doorchange
+release
+special 0x1
+warp3 0x0 0x1 0xFF 0x5 0x8
+special 0x2
+waitstate
+end
+
+'---------------
+#org 0x@link_3_2_1_5
+special 0x1F
+special 0x199
+msgbox 0x81BC5C0 MSG_KEEPOPEN '"Someone is not ready to link.\pPle..."
+release
+end
+
+'---------------
+#org 0x@link_3_2_1_6
+special 0x1F
+special 0x199
+msgbox 0x81BC64E MSG_KEEPOPEN '"The link partners appear to have\n..."
+release
+end
+
+'---------------
+#org 0x@link_3_2_1_7
+special 0x1F
+special 0x199
+msgbox 0x81BC6A1 MSG_KEEPOPEN '"The number of participants is\ninc..."
+release
+end
+
+'---------------
+#org 0x@link_3_2_1_8
+special 0x1F
+special 0x199
+msgbox 0x81BC615 MSG_KEEPOPEN '"Sorry, we have a link error[.]\nPl..."
+release
+end
+
+'---------------
+#org 0x@link_3_2_1_9
+special 0x1F
+special 0x199
+msgbox 0x81BC95C MSG_KEEPOPEN '"I'm awfully sorry.\pWe're not set ..."
+release
+end
+
+'---------------
+#org 0x@link_3_2_1_10
+special 0x1F
+special 0x199
+msgbox 0x81BC9C0 MSG_KEEPOPEN '"The other TRAINER is not ready."
+release
+end
+
+'---------------
+#org 0x@link_3_2_2_1
+preparemsg 0x8@link_5_3_2 '"Which Battle Mode would you like\n..."
+waitmsg
+multichoice 0x0 0x0 0x11 0x0
+copyvar 0x8000 LASTRESULT
+compare 0x8000 0x0
+if 0x1 goto 0x81BB50F
+compare 0x8000 0x1
+if 0x1 goto 0x81BB51A
+compare 0x8000 0x2
+if 0x1 goto 0x81BB541
+compare 0x8000 0x3
+if 0x1 goto 0x81BB501
+compare 0x8000 0x4
+if 0x1 goto 0x8@link_5_4
+compare 0x8000 0x7F
+if 0x1 goto 0x8@link_5_4
+end
+
+'---------------
+#org 0x@link_5_2_1_1
+msgbox 0x81BC442 MSG_KEEPOPEN '"For trading, you must have at\nlea..."
+setvar LASTRESULT 0x0
+return
+
+'---------------
+#org 0x@link_5_2_1_2
+msgbox 0x81BC47C MSG_KEEPOPEN '"A POKÈMON holding the [buffer1]\nB..."
+setvar LASTRESULT 0x0
+return
+
+'---------------
+#org 0x@link_5_2_2_1
+textcolor 0x3
+preparemsg 0x81BD51B '"Please decide which of you two\nwi..."
+waitmsg
+call 0x8@link_3_2_1_3
+multichoice 0xD 0x6 0x3F 0x0
+copyvar 0x8000 LASTRESULT
+compare 0x8000 0x0
+if 0x1 goto 0x81BBE28
+compare 0x8000 0x1
+if 0x1 goto 0x81BBE00
+compare 0x8000 0x2
+if 0x1 goto 0x8@link_5_4
+compare 0x8000 0x7F
+if 0x1 goto 0x8@link_5_4
+end
+
+'---------------
+#org 0x@link_5_2_2_2
+textcolor 0x3
+preparemsg 0x81BD582 '"Please decide which of you four\nw..."
+waitmsg
+call 0x8@link_3_2_1_3
+multichoice 0xD 0x6 0x3F 0x0
+copyvar 0x8000 LASTRESULT
+compare 0x8000 0x0
+if 0x1 goto 0x81BBEBC
+compare 0x8000 0x1
+if 0x1 goto 0x81BBE94
+compare 0x8000 0x2
+if 0x1 goto 0x8@link_5_4
+compare 0x8000 0x7F
+if 0x1 goto 0x8@link_5_4
+end
+
+'---------------
+#org 0x@link_5_2_2_2
+textcolor 0x3
+preparemsg 0x81BD5F1 '"Please decide which of you will\nb..."
+waitmsg
+call 0x8@link_3_2_1_3
+multichoice 0xD 0x6 0x3F 0x0
+copyvar 0x8000 LASTRESULT
+compare 0x8000 0x0
+if 0x1 goto 0x81BBF50
+compare 0x8000 0x1
+if 0x1 goto 0x81BBF28
+compare 0x8000 0x2
+if 0x1 goto 0x8@link_5_4
+compare 0x8000 0x7F
+if 0x1 goto 0x8@link_5_4
+end
+
+'---------------
+#org 0x@link_5_3_3_1
+msgbox 0x81BC409 MSG_KEEPOPEN '"For a DOUBLE BATTLE, you must\nhav..."
+goto 0x8@link_5_3
+
+'---------------
+#org 0x1BC034
+setmaptile 0x9 0x3 0x2C5 0x0
+return
+
+'---------------
+#org 0x1BB50F
+setvar 0x8004 0x1
+goto 0x81BB54C
+
+'---------------
+#org 0x1BB51A
+special 0x3D
+compare LASTRESULT 0x0
+if 0x5 goto 0x81BB533
+setvar 0x8004 0x2
+goto 0x81BB54C
+
+'---------------
+#org 0x1BB541
+setvar 0x8004 0x5
+goto 0x81BB54C
+
+'---------------
+#org 0x1BB501
+msgbox 0x8@link_5_3_5_1 MSG_KEEPOPEN '"There are three Battle Modes.\pSIN..."
+goto 0x8@link_3_2_2_1
+
+'---------------
+#org 0x1BBE28
+call 0x81BBF80
+compare LASTRESULT 0x1
+if 0x1 goto 0x81BBF88
+compare LASTRESULT 0x5
+if 0x1 goto 0x8@link_5_2_2_1
+compare LASTRESULT 0x8
+if 0x1 goto 0x81BBE28
+release
+return
+
+'---------------
+#org 0x1BBE00
+call 0x81BBF78
+compare LASTRESULT 0x1
+if 0x1 goto 0x81BBF88
+compare LASTRESULT 0x5
+if 0x1 goto 0x8@link_5_2_2_1
+compare LASTRESULT 0x8
+if 0x1 goto 0x81BBE00
+release
+return
+
+'---------------
+#org 0x1BBEBC
+call 0x81BBF80
+compare LASTRESULT 0x1
+if 0x1 goto 0x81BBF88
+compare LASTRESULT 0x5
+if 0x1 goto 0x8@link_5_2_2_2
+compare LASTRESULT 0x8
+if 0x1 goto 0x81BBEBC
+release
+return
+
+'---------------
+#org 0x1BBE94
+call 0x81BBF78
+compare LASTRESULT 0x1
+if 0x1 goto 0x81BBF88
+compare LASTRESULT 0x5
+if 0x1 goto 0x8@link_5_2_2_2
+compare LASTRESULT 0x8
+if 0x1 goto 0x81BBE94
+release
+return
+
+'---------------
+#org 0x1BBF50
+call 0x81BBF80
+compare LASTRESULT 0x1
+if 0x1 goto 0x81BBF88
+compare LASTRESULT 0x5
+if 0x1 goto 0x8@link_5_2_2_2
+compare LASTRESULT 0x8
+if 0x1 goto 0x81BBF50
+release
+return
+
+'---------------
+#org 0x1BBF28
+call 0x81BBF78
+compare LASTRESULT 0x1
+if 0x1 goto 0x81BBF88
+compare LASTRESULT 0x5
+if 0x1 goto 0x8@link_5_2_2_2
+compare LASTRESULT 0x8
+if 0x1 goto 0x81BBF28
+release
+return
+
+'---------------
+#org 0x1BB54C
+call 0x8@link_3_2_1_2
+compare LASTRESULT 0x0
+if 0x1 goto 0x8@link_5_4
+preparemsg 0x8@link_3_2_1_1 '"Please wait.\n[.] [.] B Button: Ca..."
+waitmsg
+special 0x198
+textcolor 0x3
+special 0x1C
+waitstate
+call 0x8@link_3_2_1_3
+compare LASTRESULT 0x1
+if 0x1 goto 0x81BB5B3
+compare LASTRESULT 0x2
+if 0x1 goto 0x8@link_3_2_1_5
+compare LASTRESULT 0x3
+if 0x1 goto 0x8@link_3_2_1_6
+compare LASTRESULT 0x4
+if 0x1 goto 0x81BB63C
+compare LASTRESULT 0x5
+if 0x1 goto 0x8@link_5_4
+compare LASTRESULT 0x6
+if 0x1 goto 0x8@link_3_2_1_8
+end
+
+'---------------
+#org 0x1BB533
+msgbox 0x81BC409 MSG_KEEPOPEN '"For a DOUBLE BATTLE, you must\nhav..."
+goto 0x8@link_3_2_2_1
+
+'---------------
+#org 0x1BBF80
+special 0x198
+special 0x16C
+waitstate
+return
+
+'---------------
+#org 0x1BBF88
+preparemsg2 0x81BC59E '"I'll direct you to your room now."
+waitmsg
+pause 0x3C
+closeonkeypress
+copyvar 0x8007 LASTTALKED
+call 0x81BC034
+special 0x8E
+sound 0x1E
+pause 0x3C
+applymovement LASTTALKED 0x81BB88F
+waitmovement 0x0
+closeonkeypress
+applymovement MOVE_PLAYER 0x81BB898
+waitmovement 0x0
+setdooropened 0x9 0x1
+doorchange
+applymovement MOVE_PLAYER 0x81BB89C
+waitmovement 0x0
+spriteinvisible 0xFF 0x0 0x0
+setdoorclosed 0x9 0x1
+doorchange
+release
+waitstate
+end
+
+'---------------
+#org 0x1BBF78
+special 0x198
+special 0x16B
+waitstate
+return
+
+'---------------
+#org 0x1BB5B3
+special 0x0
+special 0x27
+special 0x14B
+copyvar 0x406F 0x8004
+preparemsg2 0x81BC590 '"Please enter."
+waitmsg
+call 0x81BC034
+special 0x8E
+sound 0x1E
+pause 0x3C
+applymovement LASTTALKED 0x81BB88F
+waitmovement 0x0
+closeonkeypress
+applymovement MOVE_PLAYER 0x81BB898
+waitmovement 0x0
+setdooropened 0x9 0x1
+doorchange
+applymovement MOVE_PLAYER 0x81BB89C
+waitmovement 0x0
+spriteinvisible 0xFF 0x0 0x0
+setdoorclosed 0x9 0x1
+doorchange
+release
+compare 0x8004 0x5
+if 0x1 goto 0x81BB62C
+special 0x1
+warp 0x0 0x0 0xFF 0x6 0x8
+special 0x2
+waitstate
+end
+
+'---------------
+#org 0x1BB63C
+copyvar 0x8000 0x8004
+compare 0x8000 0x1
+if 0x1 goto 0x81BB68A
+compare 0x8000 0x2
+if 0x1 goto 0x81BB679
+compare 0x8000 0x5
+if 0x1 goto 0x81BB668
+goto 0x8@link_3_2_1_7
+
+'---------------
+#org 0x1BB62C
+special 0x1
+warp 0x0 0x3 0xFF 0x5 0x8
+special 0x2
+waitstate
+end
+
+'---------------
+#org 0x1BB68A
+special 0x1F
+msgbox 0x81BC6CA MSG_KEEPOPEN '"The SINGLE BATTLE Mode can't be\np..."
+goto 0x81BB69B
+
+'---------------
+#org 0x1BB679
+special 0x1F
+msgbox 0x81BC700 MSG_KEEPOPEN '"The DOUBLE BATTLE Mode can't be\np..."
+goto 0x81BB69B
+
+'---------------
+#org 0x1BB668
+special 0x1F
+msgbox 0x81BC736 MSG_KEEPOPEN '"There must be four players to play..."
+goto 0x81BB69B
+
+'---------------
+#org 0x1BB69B
+special 0x1F
+special 0x199
+msgbox 0x81BC76B MSG_KEEPOPEN '"Please confirm the number of\nplay..."
+release
+end
+
+
+'---------
+' Strings
+'---------
+#org 0x@link_4
+= Welcome to the POKÈMON WIRELESS\nCLUB DIRECT CORNER.\pYou may interact directly with\nyour friends here.\pWhich room would you like to\nenter?
+
+#org 0x@link_1_1
+= I'm terribly sorry.\nThe POKÈMON WIRELESS CLUB is\lundergoing adjustments now.
+
+#org 0x@link_2_1
+= You have at least one POKÈMON\nthat can't be taken.
+
+#org 0x@link_3_1
+= Welcome to the POKÈMON CABLE\nCLUB.\pWhich of our services do you wish\nto use?
+
+#org 0x1BD317
+= Would you like to trade POKÈMON?
+
+#org 0x@link_5_3_2
+= Which Battle Mode would you like\nto play?
+
+#org 0x@link_5_5_1
+= Would you like to use the\nBERRY CRUSH System?
+
+#org 0x@link_5_4_1
+= Please do visit again.
+
+#org 0x@link_3_2_1_1
+= Please wait.\n[.] [.] B Button: Cancel
+
+#org 0x@link_5_3_5_1
+= There are three Battle Modes.\pSINGLE BATTLE is for two TRAINERS\nwith one or more POKÈMON each.\pEach TRAINER can have one POKÈMON\nin battle at a time.\pDOUBLE BATTLE is for two TRAINERS\nwith two or more POKÈMON each.\pEach TRAINER will send out two\nPOKÈMON in battle at a time.\pMULTI BATTLE is for four TRAINERS\nwith one or more POKÈMON each.\pEach TRAINER can have one POKÈMON\nin battle at a time.
+
+#org 0x@link_5_5_2_1
+= To use the BERRY CRUSH service,\nyou must have at least one BERRY.
+
+#org 0x1BC590
+= Please enter.
+
+#org 0x1BC5C0
+= Someone is not ready to link.\pPlease come back after everyone\nhas made preparations.
+
+#org 0x1BC64E
+= The link partners appear to have\nmade different selections.
+
+#org 0x1BC6A1
+= The number of participants is\nincorrect.
+
+#org 0x1BC615
+= Sorry, we have a link error[.]\nPlease reset and try again.
+
+#org 0x1BC95C
+= I'm awfully sorry.\pWe're not set up to conduct trades\nwith TRAINERS far away in another\lregion yet[.]
+
+#org 0x1BC9C0
+= The other TRAINER is not ready.
+
+#org 0x1BC442
+= For trading, you must have at\nleast two POKÈMON with you.
+
+#org 0x1BC47C
+= A POKÈMON holding the [buffer1]\nBERRY can't be traded.
+
+#org 0x1BD51B
+= Please decide which of you two\nwill become the LEADER.\pThe other player must then choose\n["]JOIN GROUP."
+
+#org 0x1BD582
+= Please decide which of you four\nwill become the GROUP LEADER.\pThe other players must then choose\n["]JOIN GROUP."
+
+#org 0x1BD5F1
+= Please decide which of you will\nbecome the GROUP LEADER.\pThe other players must then choose\n["]JOIN GROUP."
+
+#org 0x1BC409
+= For a DOUBLE BATTLE, you must\nhave at least two POKÈMON.
+
+#org 0x1BC59E
+= I'll direct you to your room now.
+
+#org 0x1BC6CA
+= The SINGLE BATTLE Mode can't be\nplayed by [buffer1] players.
+
+#org 0x1BC700
+= The DOUBLE BATTLE Mode can't be\nplayed by [buffer1] players.
+
+#org 0x1BC736
+= There must be four players to play\nthis Battle Mode.
+
+#org 0x1BC76B
+= Please confirm the number of\nplayers and start again.
+
+
+'-----------
+' Movements
+'-----------
+#org 0x1BB88F
+#raw 0x2 'Face Left
+#raw 0xFE 'End of Movements
+
+#org 0x1BB898
+#raw 0x12 'Step Left (Normal)
+#raw 0x11 'Step Up (Normal)
+#raw 0x11 'Step Up (Normal)
+#raw 0xFE 'End of Movements
+
+#org 0x1BB89C
+#raw 0x11 'Step Up (Normal)
+#raw 0xFE 'End of Movements

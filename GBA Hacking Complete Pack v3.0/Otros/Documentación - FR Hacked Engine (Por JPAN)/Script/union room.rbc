@@ -1,0 +1,195 @@
+#org @union_start
+special 0x187
+compare LASTRESULT 0x2
+if 0x1 goto @error
+special 0x188
+lock
+faceplayer
+checkflag 0x829
+if 0x0 goto @no_pokedex
+special2 LASTRESULT 0x1AE
+compare LASTRESULT 0x1
+if 0x1 goto @illegal_pokes
+copyvar 0x8007 LASTTALKED
+special2 LASTRESULT 0x16A
+compare LASTRESULT 0x0
+if 0x1 goto @no_wireless
+preparemsg @welcome_msg '"Welcome to the POKÈMON WIRELESS\nC..."
+waitmsg
+goto @choices
+
+'---------------
+#org @error
+release
+end
+
+'---------------
+#org @no_pokedex
+msgbox 0x81A561A MSG_KEEPOPEN '"I'm terribly sorry.\nThe POKÈMON W..."
+release
+end
+
+'---------------
+#org @illegal_pokes
+special 0x1F
+special 0x199
+msgbox 0x81BC9E0 MSG_KEEPOPEN '"You have at least one POKÈMON\ntha..."
+release
+end
+
+'---------------
+#org @no_wireless
+msgbox 0x81BCC3A MSG_KEEPOPEN '"This is the POKÈMON WIRELESS CLUB\..."
+release
+return
+
+'---------------
+#org @choices
+multichoice 0x12 0x6 0x10 0x0
+copyvar 0x8000 LASTRESULT
+compare 0x8000 0x0
+if 0x1 goto 0x81BBA94
+compare 0x8000 0x1
+if 0x1 goto @quit
+compare 0x8000 0x2
+if 0x1 goto 0x81BBA88
+compare 0x8000 0x7F
+if 0x1 goto 0x81BB82F
+end
+
+'---------------
+#org 0x1BBA94
+call 0x81BBB1E
+compare LASTRESULT 0x0
+if 0x1 goto 0x81BB82F
+call 0x81A4EAF
+compare LASTRESULT 0x0
+if 0x1 goto 0x81BB82F
+msgbox 0x81BD86A MSG_KEEPOPEN '"I hope you enjoy your time in\nthe..."
+closeonkeypress
+special 0x0
+setvar 0x8004 0x6
+copyvar 0x406F 0x8004
+special 0x198
+call @open_door
+special 0x8E
+sound 0x1E
+pause 0x3C
+applymovement LASTTALKED 0x81BB88F
+waitmovement 0x0
+applymovement MOVE_PLAYER 0x81BB898
+waitmovement 0x0
+setdooropened 0x5 0x1
+doorchange
+applymovement MOVE_PLAYER 0x81BB89C
+waitmovement 0x0
+spriteinvisible 0xFF 0x0 0x0
+setdoorclosed 0x5 0x1
+doorchange
+special 0x1B3
+special 0x1
+warpteleport2 0x0 0x4 0xFF 0x7 0xB
+waitstate
+special 0x16D
+waitstate
+end
+
+'---------------
+#org @quit
+special 0x1F
+special 0x199
+msgbox 0x81BC68A MSG_KEEPOPEN '"Please do visit again."
+release
+end
+
+'---------------
+#org 0x1BBA88
+preparemsg 0x81BD706 '"The TRAINERS in the UNION ROOM\nwi..."
+waitmsg
+goto 0x81BBA51
+
+'---------------
+#org 0x1BBB1E
+special2 LASTRESULT 0x84
+compare LASTRESULT 0x2
+if 0x0 goto @not_enough_pokes
+special2 LASTRESULT 0x153
+compare LASTRESULT 0x1
+if 0x1 goto @no_good_berry
+setvar LASTRESULT 0x1
+return
+
+'---------------
+#org 0x1A4EAF
+special 0x5D
+waitstate
+return
+
+'---------------
+#org @open_door
+setmaptile 0x5 0x3 0x2C5 0x0
+return
+
+'---------------
+#org @not_enough_pokes
+msgbox 0x81BCBC3 MSG_KEEPOPEN '"To enter the UNION ROOM, you must\..."
+goto @go_back
+
+'---------------
+#org @no_good_berry
+msgbox 0x81BCC00 MSG_KEEPOPEN '"No POKÈMON holding the [buffer1]\n..."
+goto @go_back
+
+'---------------
+#org @go_back
+setvar LASTRESULT 0x0
+return
+
+
+'---------
+' Strings
+'---------
+#org @welcome_msg
+= Welcome to the POKÈMON WIRELESS\nCLUB UNION ROOM.\pYou may interact directly with\nother TRAINERS here, some of\lwhom you may not even know.\pWould you like to enter the ROOM?
+
+#org 0x1A561A
+= I'm terribly sorry.\nThe POKÈMON WIRELESS CLUB is\lundergoing adjustments now.
+
+#org 0x1BC9E0
+= You have at least one POKÈMON\nthat can't be taken.
+
+#org 0x1BCC3A
+= This is the POKÈMON WIRELESS CLUB\nUNION ROOM.\pUnfortunately, your Wireless\nAdapter is not connected properly.\pPlease do come again.
+
+#org 0x1BD86A
+= I hope you enjoy your time in\nthe UNION ROOM.
+
+#org 0x1BC68A
+= Please do visit again.
+
+#org 0x1BD706
+= The TRAINERS in the UNION ROOM\nwill be those players around you\lwho have also entered the ROOM.\pYou may do all sorts of things\nhere, such as exchanging greetings.\pYou may enter two POKÈMON up to\nLv. 30 for a one-on-one battle.\pYou may take part in a chat with\ntwo to five people.\pOr, you may register a POKÈMON for\ntrade.\pWould you like to enter the ROOM?
+
+#org 0x1BCBC3
+= To enter the UNION ROOM, you must\nhave at least two POKÈMON.
+
+#org 0x1BCC00
+= No POKÈMON holding the [buffer1]\nBERRY may enter the UNION ROOM.
+
+
+'-----------
+' Movements
+'-----------
+#org 0x1BB88F
+#raw 0x2 'Face Left
+#raw 0xFE 'End of Movements
+
+#org 0x1BB898
+#raw 0x12 'Step Left (Normal)
+#raw 0x11 'Step Up (Normal)
+#raw 0x11 'Step Up (Normal)
+#raw 0xFE 'End of Movements
+
+#org 0x1BB89C
+#raw 0x11 'Step Up (Normal)
+#raw 0xFE 'End of Movements

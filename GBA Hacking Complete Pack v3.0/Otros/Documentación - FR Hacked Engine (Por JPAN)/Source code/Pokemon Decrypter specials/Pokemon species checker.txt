@@ -1,0 +1,9 @@
+.align 2
+.thumb
+/*Special 0x18 tells you the Poke species*/
+Special_18: 	ldr r0, NMB_grow_addr
+		ldr r0, [r0]
+		ldrh r0, [r0]
+		mov pc, lr
+
+NMB_grow_addr:	.word 0x0203f464

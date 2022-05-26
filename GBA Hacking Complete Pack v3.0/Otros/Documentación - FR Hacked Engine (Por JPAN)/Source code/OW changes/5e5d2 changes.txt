@@ -1,0 +1,21 @@
+.align 2
+.thumb
+/*at 0x0805e5d4, place bx r1.
+08 47
+
+and at 0805e5f4 place the pointer to this routine
+
+Then, install this somewhere*/
+e5d2_changes:	ldr r1, char_dump
+		add r5, r0, r1
+		ldrb r0, [r5, #0x5] 
+		ldrb r1, [r5, #0x1a]
+		lsl r1, r1, #0x8
+		orr r0, r1
+		ldr r1, exit_location
+		mov lr, r1
+		ldr r1, loader_location
+		bx r1
+char_dump: .word 0x02036e38
+exit_location: .word 0x0805e5dd 
+loader_location: .word 0x0805F2C9

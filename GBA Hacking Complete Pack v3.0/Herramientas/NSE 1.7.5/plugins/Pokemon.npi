@@ -1,0 +1,369 @@
+//Loads and displays the pokemon from the rom
+//Version 1.2
+
+//Pokemon Firered All versions
+[BPR]
+Imax(440)
+Fmax(3)
+//Load frame to memroy
+Append(F#)
+// Load image differently depending on frame
+If(0)
+	{
+	dump(0)
+	Read(&H128, 3)
+	Flip(3)
+	Append(8)
+	Multiply(I#)
+	Add(mem(1))
+	dump(1)
+	Read(mem(0), 3)
+	Flip(3)
+
+	
+	Read(&H130, 3)
+	Flip(3)
+	Append(8)
+	Multiply(I#)
+	Add(mem(1))
+	dump(1)
+	}
+If(1)
+	{
+	dump(0)
+	Read(&H12C, 3)
+	Flip(3)
+	Append(8)
+	Multiply(I#)
+	Add(mem(1))
+	dump(1)
+	Read(mem(0), 3)
+	Flip(3)
+	
+	Read(&H130, 3)
+	Flip(3)
+	Append(8)
+	Multiply(I#)
+	Add(mem(1))
+	dump(1)
+	}
+If(2)
+	{
+	dump(0)
+	Read(&H128, 3)
+	Flip(3)
+	Append(8)
+	Multiply(I#)
+	Add(mem(1))
+	dump(1)
+	Read(mem(0), 3)
+	Flip(3)
+	
+	Read(&H134, 3)
+	Flip(3)
+	Append(8)
+	Multiply(I#)
+	Add(mem(1))
+	dump(1)
+	}
+If(3)
+	{
+	dump(0)
+	Read(&H12C, 3)
+	Flip(3)
+	Append(8)
+	Multiply(I#)
+	Add(mem(1))
+	dump(1)
+	Read(mem(0), 3)
+	Flip(3)
+	
+	Read(&H134, 3)
+	Flip(3)
+	Append(8)
+	Multiply(I#)
+	Add(mem(1))
+	dump(1)
+	}
+Read(mem(0),3)
+Flip(3)
+Append(I#)
+//Check if drawing deyoxes or castform
+If!(410)
+	{
+	If!(385)
+		{
+		Image(mem(3), mem(1), 00400040)
+		}
+	}
+If(410)
+	{
+	Image(mem(3), mem(1), 00400080)
+	}
+If(385)
+	{
+	Image(mem(3), grayscale, 00400100)
+	}
+[/BPR]
+
+//Leaf Green All versions
+[BPG]
+Imax(440)
+Fmax(3)
+//Load frame to memroy
+Append(F#)
+// Load image differently depending on frame
+If(0)
+	{
+	dump(0)
+	Read(&H128, 3)
+	Flip(3)
+	Append(8)
+	Multiply(I#)
+	Add(mem(1))
+	dump(1)
+	Read(mem(0), 3)
+	Flip(3)
+	
+	Read(&H130, 3)
+	Flip(3)
+	Append(8)
+	Multiply(I#)
+	Add(mem(1))
+	dump(1)
+	}
+If(1)
+	{
+	dump(0)
+	Read(&H12C, 3)
+	Flip(3)
+	Append(8)
+	Multiply(I#)
+	Add(mem(1))
+	dump(1)
+	Read(mem(0), 3)
+	Flip(3)
+	
+	Read(&H130, 3)
+	Flip(3)
+	Append(8)
+	Multiply(I#)
+	Add(mem(1))
+	dump(1)
+	}
+If(2)
+	{
+	dump(0)
+	Read(&H128, 3)
+	Flip(3)
+	Append(8)
+	Multiply(I#)
+	Add(mem(1))
+	dump(1)
+	Read(mem(0), 3)
+	Flip(3)
+	
+	Read(&H134, 3)
+	Flip(3)
+	Append(8)
+	Multiply(I#)
+	Add(mem(1))
+	dump(1)
+	}
+If(3)
+	{
+	dump(0)
+	Read(&H12C, 3)
+	Flip(3)
+	Append(8)
+	Multiply(I#)
+	Add(mem(1))
+	dump(1)
+	Read(mem(0), 3)
+	Flip(3)
+	
+	Read(&H134, 3)
+	Flip(3)
+	Append(8)
+	Multiply(I#)
+	Add(mem(1))
+	dump(1)
+	}
+Read(mem(0),3)
+Flip(3)
+Append(I#)
+//Check if drawing deyoxes or castform
+If!(410)
+	{
+	If!(385)
+		{
+		Image(mem(3), mem(1), 00400040)
+		}
+	}
+If(410)
+	{
+	Image(mem(3), mem(1), 00400080)
+	}
+If(385)
+	{
+	Image(mem(3), grayscale, 00400100)
+	}
+[/BPG]
+
+
+//Ruby Pokemon English
+[AXVE]
+Imax(439)
+Fmax(3)
+Append(F#)
+If(0)
+{
+dump(0)
+Append(8)
+Multiply(I#)
+Add(&h1e835c)
+Read(mem(0), 3)
+Flip(3)
+Append(8)
+Multiply(I#)
+Add(&H1ea5bc)
+}
+If(1)
+{
+dump(0)
+Append(8)
+Multiply(I#)
+Add(&h1e97fc)
+Read(mem(0), 3)
+Flip(3)
+Append(8)
+Multiply(I#)
+Add(&H1ea5bc)
+}
+If(2)
+{
+dump(0)
+Append(8)
+Multiply(I#)
+Add(&h1e835c)
+Read(mem(0), 3)
+Flip(3)
+Append(8)
+Multiply(I#)
+Add(&H1eb37c)
+}
+If(3)
+{
+dump(0)
+Append(8)
+Multiply(I#)
+Add(&h1e97fc)
+Read(mem(0), 3)
+Flip(3)
+Append(8)
+Multiply(I#)
+Add(&H1eb37c)
+}
+Read(mem(0),3)
+Flip(3)
+Append(I#)
+If!(384)
+{
+Image(mem(3), mem(1), 00400040)
+}
+If(384)
+{
+Image(mem(3), grayscale, 00400100)
+}
+[/AXVE]
+
+
+//Emerald Pokemon English
+[BPEE]
+Imax(440)
+Fmax(3)
+Append(F#)
+If(0)
+{
+dump(0)
+Append(8)
+Multiply(I#)
+Add(&h301418)
+Read(mem(0), 3)
+Flip(3)
+Append(8)
+Multiply(I#)
+Add(&H303678)
+}
+If(1)
+{
+dump(0)
+Append(8)
+Multiply(I#)
+Add(&h3028b8)
+Read(mem(0), 3)
+Flip(3)
+Append(8)
+Multiply(I#)
+Add(&H303678)
+}
+If(2)
+{
+dump(0)
+Append(8)
+Multiply(I#)
+Add(&h301418)
+Read(mem(0), 3)
+Flip(3)
+Append(8)
+Multiply(I#)
+Add(&H304438)
+}
+If(3)
+{
+dump(0)
+Append(8)
+Multiply(I#)
+Add(&h3028b8)
+Read(mem(0), 3)
+Flip(3)
+Append(8)
+Multiply(I#)
+Add(&H304438)
+}
+Read(mem(0),3)
+Flip(3)
+Append(I#)
+If!(384)
+{
+If!(410)
+{
+Image(mem(3), mem(1), 00400040)
+}
+}
+If(384)
+{
+Image(mem(3), grayscale, 00400100)
+}
+If(410)
+{
+Append(F#)
+If!(1)
+{
+If!(3)
+dump(0)
+Image(mem(3), mem(1), 00400040)
+}
+}
+If(1)
+{
+dump(0)
+Image(mem(3), mem(1), 00400080)
+}
+If(3)
+{
+dump(0)
+Image(mem(3), mem(1), 00400080)
+}
+}
+[/BPEE]

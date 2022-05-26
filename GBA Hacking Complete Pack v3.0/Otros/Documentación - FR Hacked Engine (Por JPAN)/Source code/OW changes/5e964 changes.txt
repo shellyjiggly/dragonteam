@@ -1,0 +1,41 @@
+.align 2
+.thumb
+
+/*this code must be placed somewhere in the rom, and at 
+0805e964, this branch must be placed
+
+get_info_change: ldr r4, get_new_info	
+		 bx r4
+
+get_new_info: 	Location of new routine + 1
+
+or, already compiled
+00 4c 20 47 Pointer
+*/
+
+new_info_change: add r4, r0, #0x0
+		 add r5, r1, #0x0
+		 add r3, r2, #0x0
+		 ldrb r0, [r4, #0x1]
+		 lsl r0, r0, #0x18
+		 lsr r0, r0, #0x18
+		 ldrb r1, [r4, #0x3]
+		 lsl r1, r1, #0x18
+		 lsr r1, r1, #0x10
+		 orr r0, r0, r1
+		 ldrb r1, [r4, #0x9]
+		 add r2, r5, #0x0
+		 ldr r4, continue_info
+		 bx r4
+continue_info: .word 0x0805e96f
+
+/*as a side note, you also need to place
+
+lsl r0, r0, #0x10
+lsr r0, r0, #0x10
+
+replacing the existing cleanups at 0x0805e8f0
+or, compiled,
+
+00 04 00 0c
+*/

@@ -1,0 +1,10 @@
+.thumb
+.align 2
+
+/*Special 0x4a Reads the timer and returns it*/
+special_4a: 	push {lr}
+		ldr r1, timer_5
+		ldrh r0, [r1, #0x4]
+		pop {pc}
+
+timer_5: .word 0x04000108

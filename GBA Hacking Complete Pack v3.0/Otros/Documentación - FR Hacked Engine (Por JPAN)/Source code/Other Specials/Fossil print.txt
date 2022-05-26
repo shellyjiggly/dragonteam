@@ -1,0 +1,49 @@
+		.align 2
+		.thumb 
+/*replaces special 0x18b function, allows for bigger
+image usage (255 images stored in a 2kb index mode)*/
+/*starts at the second compare, at 9d504*/
+
+.org 0x9d504
+Replacer:	push {r4-r6, lr}
+		mov r6, r8
+		push {r6}
+		ldr r0, Place_d6d5
+		bl 0x1119d4
+		lsl r0, r0, #0x18
+		lsr r0, r0, #0x18
+		cmp r0, #0x1
+		beq 0x9d5f2
+		ldr r0, Place_d495
+		bl 0x77688
+		lsl r0, r0, #0x18
+		lsr r0, r0, #0x18
+		cmp r0, #0xff
+		bne end
+		ldr r0, var_8004
+		ldrh r0, [r0, #0x0]
+		ldr r1, table_index
+		mov r2, #0x2
+		lsl r2, r2, #0x8
+		cmp r0, r2
+		bgt 0x9d5f4
+		lsl r0, r0, #0x3
+		add r1, r0, r1
+		ldr r0, [r1, #0x0]
+		push {r1}
+		bl 0x8720
+		pop {r1}
+		add r1, #0x4
+		ldr r0, [r1, #0x0]
+		mov r1, #0xe8
+		lsl r1, r1, #0x1
+		mov r2, #0x20
+		bl 0x703ec
+		b 0x9d572
+end:		mov r0, #0x0
+		b 0x9d5f4
+.hword 0x0000
+Place_d6d5: 	.word 0x0809d6d5
+Place_d495: 	.word 0x0809d495
+var_8004:	.word 0x020370c0
+table_index:	.word 0x08c00000

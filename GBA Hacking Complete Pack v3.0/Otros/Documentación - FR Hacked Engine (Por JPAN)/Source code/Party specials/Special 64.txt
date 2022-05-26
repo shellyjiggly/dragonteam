@@ -1,0 +1,34 @@
+.thumb
+.align 2
+
+/*Special 0x64 is the inflict status to pokemon special. Simply use the status
+key at 0x8005 to inflict it to the pokemon in slot 0x8004, or to all if 0x8004
+is 0xf*/
+
+Special_64:	push {r1-r4, lr}
+		ldr r1, var_8004
+		ldrh r0, [r1,#0x2]
+		ldrh r1, [r1]
+		cmp r1, #0xf
+		beq apply_all
+		
+		cmp r1, #0x5
+		bgt end_64
+		
+		mov r2, #0x64
+		mul r2, r1
+		ldr r1, party_status_address
+		add r1, r2, r1
+		strb r0, [r1, #0x0]
+end_64:		pop {r1-r4, pc}
+
+apply_all:	mov r2, #0x6
+		ldr r1, party_status_address
+loop:		strb r0, [r1, #0x0]
+		sub r2, #0x1
+		add r1, #0x64
+		cmp r2, #0x0
+		bne loop
+		pop {r1-r4, pc}
+var_8004: .word 0x020370c0
+party_status_address: .word 0x020242d4

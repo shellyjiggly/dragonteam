@@ -1,0 +1,47 @@
+.align 2
+.thumb
+
+/*Special 0x4c updates player time without
+stopping the timer. Using afterwards this 
+special or 0x4a will cause inaccuracy in
+play time.*/
+
+special_4c:	push {r4, lr}
+		ldr r1, timer_7
+		ldrh r0, [r1, #0x4]
+		ldr r1, player_data2
+		mov r2, #0x0
+		mov r3, #0x0
+		ldr r1, [r1]
+make_time2:	cmp r0, #0x3b
+		bgt make_minute2
+		cmp r2, #0x3b
+		bgt make_hour2
+		ldrb r4, [r1, #0x11]
+		add r4, r4, r0
+		cmp r4, #0x3c
+		blt cont_min2
+		sub r4, #0x3c
+		add r2, #0x1
+cont_min2:	strb r0, [r1, #0x11]
+		ldrb r4, [r1, #0x10]
+		add r4, r4, r2
+		cmp r4, #0x3c
+		blt cont_hour2
+		sub r4, #0x3c
+		add r3, #0x1
+cont_hour2:	strb r4, [r1, #0x10]
+		ldrb r4, [r1, #0xe]
+		add r4, r4, r3
+		strh r4, [r1, #0xe]
+		pop {r4,pc}
+make_minute2:	add r2, #0x1
+		sub r0, #0x3c
+		b make_time2
+make_hour2:	sub r2, #0x3c
+		add r3, #0x1
+		b make_time2
+
+.hword 0x0000
+timer_7: .word 0x04000108
+player_data2: .word 0x0300500c

@@ -1,0 +1,177 @@
+.align 2
+.thumb
+/*Vars to be calculated must be loaded manually into
+places 0x0203f4d8(1st) and 0x0203f4dA.*/
+
+
+/*Special 0x3e is the add two vars operation. returns
+to the 1st var the result and 0x0 or 0x1 to a
+given variable if overflow happened.*/
+
+special_3e: 	push {r1-r4, lr}
+		ldr r3, pointer
+		ldrh r0, [r3]
+		ldrh r4, [r3, #0x2]
+		bl call_var_decrypt
+		add r3, r0, #0x0
+		add r0, r4, #0x0
+		add r4, r3, #0x0
+		bl call_var_decrypt
+		ldrh r1, [r0]
+		ldrh r2, [r4]
+		add r1, r1, r2
+		mov r2, #0x1
+		mov r0, #0x0
+		lsl r2, r2, #0x10
+		cmp r1, r2
+		blt store_add
+		mov r0, #0x1
+store_add:	lsl r1, r1, #0x10
+		lsr r1, r1, #0x10
+		strh r1, [r4]	
+		pop {r1-r4, pc}
+
+pointer: .word 0x0203f4d8
+
+/*Special 0x3f is the subtract two vars operation.
+2nd var will be subtracted from 1st var, the result
+put in the 1st var and returned to a given variable
+if the result was a negative value or 0*/
+
+special_3f: 	push {r1-r4, lr}
+		ldr r3, pointer2
+		ldrh r0, [r3]
+		ldrh r4, [r3, #0x2]
+		bl call_var_decrypt
+		add r3, r0, #0x0
+		add r0, r4, #0x0
+		add r4, r3, #0x0
+		bl call_var_decrypt
+		ldrh r2, [r0]
+		ldrh r1, [r4]
+		sub r1, r1, r2
+		mov r0, #0x0
+		cmp r0, r1
+		blt store_sub
+		mov r0, #0x1
+store_sub:	lsl r1, r1, #0x10
+		lsr r1, r1, #0x10
+		strh r1, [r4]	
+		pop {r1-r4, pc}
+
+pointer2: .word 0x0203f4d8
+
+
+
+/*Special 0x40 is the multiply two vars operation.
+1st var will be the result of the multiplication.
+returns 0x1 if there was overflow.*/
+
+special_40: 	push {r1-r4, lr}
+		ldr r3, pointer3
+		ldrh r0, [r3]
+		ldrh r4, [r3, #0x2]
+		bl call_var_decrypt
+		add r3, r0, #0x0
+		add r0, r4, #0x0
+		add r4, r3, #0x0
+		bl call_var_decrypt
+		ldrh r1, [r0]
+		ldrh r2, [r4]
+		mul r1, r1, r2
+		mov r2, #0x1
+		mov r0, #0x0
+		lsl r2, r2, #0x10
+		cmp r1, r2
+		blt store_mul
+		mov r0, #0x1
+store_mul:	lsl r1, r1, #0x10
+		lsr r1, r1, #0x10
+		strh r1, [r4]	
+		pop {r1-r4, pc}
+
+pointer3: .word 0x0203f4d8
+
+/*Special 0x41 is the divison operation.
+stored result in the 1st var. If the content of the
+2nd var is 0, the 1st var will be unaltered. Returns
+the remainder.*/
+
+special_41: 	push {r1-r4, lr}
+		ldr r3, pointer4
+		ldrh r0, [r3]
+		ldrh r4, [r3, #0x2]
+		bl call_var_decrypt
+		add r3, r0, #0x0
+		add r0, r4, #0x0
+		add r4, r3, #0x0
+		bl call_var_decrypt
+		ldrh r1, [r0]
+		ldrh r0, [r4]
+		cmp r1, #0x0
+		beq div_0
+		swi #0x6
+		strh r0, [r4]
+		lsl r0, r1, #0x10
+		lsr r0, r0, #0x10	
+div_0:		pop {r1-r4, pc}
+pointer4: .word 0x0203f4d8
+
+/*Special 0x42 is the Logical AND operation. 
+returns 1st && 2nd. Doesn't change the originals*/
+special_42: 	push {r1-r4, lr}
+		ldr r3, pointer5
+		ldrh r0, [r3]
+		ldrh r4, [r3, #0x2]
+		bl call_var_decrypt
+		add r3, r0, #0x0
+		add r0, r4, #0x0
+		add r4, r3, #0x0
+		bl call_var_decrypt
+		ldrh r0, [r0]
+		ldrh r2, [r4]
+		and r0, r2
+		pop {r1-r4, pc}
+.hword 0x0000
+pointer5: .word 0x0203f4d8
+
+/*Special 0x43 is the Logical OR operation. 
+returns 1st || 2nd. Doesn't change the originals*/
+special_43: 	push {r1-r4, lr}
+		ldr r3, pointer6
+		ldrh r0, [r3]
+		ldrh r4, [r3, #0x2]
+		bl call_var_decrypt
+		add r3, r0, #0x0
+		add r0, r4, #0x0
+		add r4, r3, #0x0
+		bl call_var_decrypt
+		ldrh r0, [r0]
+		ldrh r2, [r4]
+		orr r0, r2
+		pop {r1-r4, pc}
+.hword 0x000
+pointer6: .word 0x0203f4d8
+
+/*Special 0x44 is the Logical XOR operation. 
+returns 1st ^^ 2nd. Doesn't change the originals*/
+special_44: 	push {r1-r4, lr}
+		ldr r3, pointer7
+		ldrh r0, [r3]
+		ldrh r4, [r3, #0x2]
+		bl call_var_decrypt
+		add r3, r0, #0x0
+		add r0, r4, #0x0
+		add r4, r3, #0x0
+		bl call_var_decrypt
+		ldrh r0, [r0]
+		ldrh r2, [r4]
+		EOR r0, r2
+		pop {r1-r4, pc}
+.hword 0x0000
+pointer7: .word 0x0203f4d8
+
+call_var_decrypt: ldr r1, var_decrypt
+		  bx r1
+var_decrypt:	.word 0x0806E455
+

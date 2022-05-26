@@ -1,0 +1,32 @@
+.align 2
+.thumb
+
+/*this code, similarly to the Shiny one, must be place at the pokemon
+manager code at 0x0804039c.*/
+
+Status:		ldr r1, Flags
+		ldrb r0, [r1, #0x0]
+		mov r4, #0x44
+		and r0, r4
+		cmp r0, #0x0
+		beq old_code
+simple_store:	ldrb r4, [r1, #0x1]
+	 	strb r4, [r2, #0x0]
+		ldrb r4, [r1, #0x2]
+		cmp r0, #0x40
+		bne old_code
+		sub r4, #0x1
+		strb r4, [r1, #0x2]
+		cmp r4, #0x0
+		bne old_code
+		mov r0, #0x44
+		mvn r0, r0
+		ldrb r4, [r1, #0x0]
+		and r0, r4
+		strb r0, [r1, #0x0]
+old_code:	ldr 	r0, end_code       
+		bx 	r0
+Flags: .word 0x0203f480
+end_code : .word 0x08040425
+
+

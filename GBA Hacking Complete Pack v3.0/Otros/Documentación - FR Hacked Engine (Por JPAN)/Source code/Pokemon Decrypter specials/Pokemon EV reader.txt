@@ -1,0 +1,36 @@
+.thumb
+.align 2
+
+/*Special 0x7 is a pokemon EV reader. Prints a particular EV or contest stat in 0x8005.
+Returns content to given variable.*/
+
+/*key for returns
+8005	retuned
+0x0	HP
+0x1	Attack
+0x2	Defense
+0x3	Speed
+0x4	Special Attack
+0x5	Special Deffense
+0x6	Coolness
+0x7	Beauty
+0x8	Cuteness
+0x9	Smartness
+0xa	Toughness
+0xb	Luster
+anything else -> f400*/
+
+Special_07:	push {r1,r2,lr}
+		ldr r2, var_8005
+		ldrH r1, [r2, #0x0]
+		ldr r0, new_addr
+		cmp r1, #0xb
+		bgt end_07
+		add r0, #0x6c
+		ldr r0, [r0, #0x0]
+		add r0, r0, r1
+		ldrb r0, [r0, #0x0]
+end_07:		pop {r1,r2,pc} 
+.hword 0x0000
+var_8005: .word 0x020370c2
+new_addr: .word 0x0203f400

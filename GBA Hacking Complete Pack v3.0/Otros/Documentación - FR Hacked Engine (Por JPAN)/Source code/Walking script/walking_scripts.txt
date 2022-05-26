@@ -1,0 +1,55 @@
+.thumb
+.align 2
+
+/*This hack, when placed at 0x0806d720 (safari walking routine) will
+allow to load a script that has been placed at a specific RAM location to
+be used every time the player takes a step.
+
+replacer: 	ldr r1, new_function
+		bx r1
+new_function:   .word 0x00000000
+
+aka:
+00 49 08 47 pointer
+*/
+
+start:		bl call_safari
+		cmp r0, #0x1
+		beq ender
+		ldr r1, script_to_RAM
+		ldr r0, [r1]
+		cmp r0, #0x0
+		bne to_execute
+		ldr r0, var_407e
+		bl call_var_loader
+		cmp r0, #0x0
+		beq almost_ender
+		ldr r1, ROM_table
+		cmp r0, #0x4
+		bgt almost_ender
+		lsl r0, r0, #0x2
+		add r0, r0, r1
+		ldr r0, [r0]
+		cmp r0, #0x0
+		beq almost_ender
+to_execute:	bl call_script_loader
+		b ender
+almost_ender:	mov r0, #0x0
+		pop {r4, pc}
+ender:		mov r0, #0x1
+		pop {r4, pc}
+call_safari:	ldr r1, safari_pedometer
+		bx r1 
+
+call_var_loader: ldr r1, var_load
+		bx r1
+
+call_script_loader: ldr r1, script_loader
+		    bx r1
+
+script_to_RAM:	.word 0x0203f4f0
+var_407e:	.word 0x0000407e
+ROM_table:	.word 0x00000000 /*actual table - 4, 081a4e2c start*/
+safari_pedometer: .word 0x080A0F0D
+var_load:	.word 0x0806E569
+script_loader: .word 0x08069AE5

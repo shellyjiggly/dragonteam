@@ -1,0 +1,11 @@
+.thumb
+.align 2
+/*Special 0xc checks the location a pokemon was
+captured or hatched in. returns the location.*/
+
+Special_0c: 	ldr r0, new_addr2
+		ldr r0 , [r0]
+		ldrb r0, [r0, #0x1]
+		bx lr
+
+new_addr2: .word 0x0203f470

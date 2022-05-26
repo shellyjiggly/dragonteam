@@ -1,0 +1,21 @@
+.align 2
+.thumb
+/*Special 0x75 is the buffer measured pokemon name*/
+/*must place pokemon in 0x8006 and variable in 0x8005*/
+special_75: 	push {r4-r5, lr}
+		ldr r4, var_8005_1
+		ldrh r0, [r4]
+		bl call_var_decrypt
+		add r1, r0, #0x0
+		ldrh r0, [r4, #0x2]
+		bl call_buffer_name
+		pop {r4-r5, pc}
+var_8005_1: .word 0x020370c2
+
+call_var_decrypt: ldr r5, var_decrypt
+		  bx r5
+var_decrypt:	.word 0x0806E455
+
+call_buffer_name: ldr r5, buffer_name
+		  bx r5
+buffer_name:	.word 0x080a08cd

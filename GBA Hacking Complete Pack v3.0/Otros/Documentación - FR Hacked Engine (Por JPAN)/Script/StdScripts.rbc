@@ -1,0 +1,319 @@
+'---------------
+#org @std_1
+copyvar 0x8013 0x8012
+textcolor 0x3
+additem 0x8000 0x8001
+copyvar 0x8007 LASTRESULT
+call @std_1_1
+copyvar 0x8012 0x8013
+return
+
+#org @std_1_1
+bufferitems 0x1 0x8000 0x8001
+checkitemtype 0x8000
+call @std_1_1_1
+compare 0x8007 0x1
+if 0x1 call @std_1_1_2
+compare 0x8007 0x0
+if 0x1 call @std_1_1_3
+return
+
+#org @std_1_1_1
+copyvar 0x8000 LASTRESULT
+compare 0x8000 0x1
+if 0x1 goto @std_1_1_1_1
+compare 0x8000 0x2
+if 0x1 goto @std_1_1_1_2
+compare 0x8000 0x3
+if 0x1 goto @std_1_1_1_3
+compare 0x8000 0x4
+if 0x1 goto @std_1_1_1_4
+compare 0x8000 0x5
+if 0x1 goto @std_1_1_1_5
+end
+
+#org @std_1_1_2
+preparemsg @std_1_1_2_1 '"Obtained the [buffer2]!"
+waitfanfare
+waitmsg
+msgbox @std_1_1_2_2 MSG_KEEPOPEN '"[player] put the [buffer2]\nin the..."
+setvar LASTRESULT 0x1
+return
+
+#org @std_1_1_3
+setvar LASTRESULT 0x0
+return
+
+#org @std_1_1_1_1
+bufferstd 0x2 0x18
+compare 0x8007 0x1
+if 0x1 call @std_1_1_1_1_1
+return
+
+#org @std_1_1_1_2
+bufferstd 0x2 0x19
+compare 0x8007 0x1
+if 0x1 call @std_1_1_1_1_1
+return
+
+#org @std_1_1_1_3
+bufferstd 0x2 0x1A
+compare 0x8007 0x1
+if 0x1 call @std_1_1_1_1_1
+return
+
+#org @std_1_1_1_4
+bufferstd 0x2 0x1B
+compare 0x8007 0x1
+if 0x1 call @std_1_1_1_1_1
+return
+
+#org @std_1_1_1_5
+bufferstd 0x2 0x1C
+compare 0x8007 0x1
+if 0x1 call @std_1_1_1_1_1
+return
+
+#org @std_1_1_1_1_1
+fanfare 0x101
+return
+
+'---------
+' Strings
+'---------
+#org @std_1_1_2_1
+= Obtained the [buffer2]!
+
+#org @std_1_1_2_2
+= [player] put the [buffer2]\nin the [buffer3].
+
+'---------------
+#org @std_2
+lock
+faceplayer
+checksound
+copyvar 0x8004 0x8000
+copyvar 0x8005 0x8001
+checkitemroom 0x8000 0x8001
+copyvar 0x8007 LASTRESULT
+bufferitem 0x1 0x8000
+checkitemtype 0x8000
+call @std_1_1_1
+compare 0x8007 0x1
+if 0x1 call @std_2_1
+compare 0x8007 0x0
+if 0x1 call @std_2_2
+release
+return
+
+'---------------
+#org @std_2_1
+hidesprite LASTTALKED
+additem 0x8004 0x8005
+special2 LASTRESULT 0x196
+copyvar 0x8008 LASTRESULT
+compare 0x8008 0x1
+if 0x1 call @std_2_1_2
+compare 0x8008 0x0
+if 0x1 call @std_2_1_1
+waitfanfare
+waitmsg
+msgbox @std_1_1_2_2 MSG_KEEPOPEN '"[player] put the [buffer2]\nin the..."
+return
+
+'---------------
+#org @std_2_2
+msgbox @std_1_1_2_1 MSG_KEEPOPEN '"Obtained the [buffer2]!"
+msgbox @std_2_2_1 MSG_KEEPOPEN '"Too bad!\nThe BAG is full[.]"
+setvar LASTRESULT 0x0
+return
+
+
+'---------------
+#org @std_2_1_2
+preparemsg @std_2_1_2_1 '"[player] found a [buffer2]!\nIt co..."
+return
+
+'---------------
+#org @std_2_1_1
+preparemsg @std_2_1_1_1 '"[player] found one [buffer2]!"
+return
+
+'---------
+' Strings
+'---------
+
+#org @std_2_2_1
+= Too bad!\nThe BAG is full[.]
+
+#org @std_2_1_2_1
+= [player] found a [buffer2]!\nIt contains [buffer1].
+
+#org @std_2_1_1_1
+= [player] found one [buffer2]!
+
+#org @std_3
+lock
+faceplayer
+preparemsg 0x0
+waitmsg
+waitkeypress
+release
+return
+
+'---------------
+#org @std_4
+lockall
+preparemsg 0x0
+waitmsg
+waitkeypress
+releaseall
+return
+
+'---------------
+#org @std_5
+preparemsg 0x0
+waitmsg
+waitkeypress
+return
+
+'---------------
+#org @std_6
+preparemsg 0x0
+waitmsg
+yesnobox 0x14 0x8
+return
+
+'---------------
+#org @std_7
+preparemsg 0x0
+waitmsg
+waitkeypress
+release
+return
+
+'---------------
+#org @std_8
+adddecoration 0x8000
+copyvar 0x8007 LASTRESULT
+call @std_8_1
+return
+
+'---------------
+#org @std_8_1
+bufferdecoration 0x1 0x8000
+compare 0x8007 0x1
+if 0x1 call @std_8_1_1
+compare 0x8007 0x0
+if 0x1 call @std_8_1_2
+return
+
+'---------------
+#org @std_8_1_1
+fanfare 0x102
+preparemsg @std_8_1_1_1 '"Obtained the [buffer2]!"
+waitfanfare
+waitmsg
+msgbox @std_8_1_1_2 MSG_KEEPOPEN '"The [buffer2] was transferred\nto ..."
+setvar LASTRESULT 0x1
+return
+
+'---------------
+#org @std_8_1_2
+setvar LASTRESULT 0x0
+return
+
+
+'---------
+' Strings
+'---------
+#org @std_8_1_1_1
+= Obtained the [buffer2]!
+
+#org @std_8_1_1_2
+= The [buffer2] was transferred\nto the PC.
+
+
+'---------------
+#org @std_9
+bufferitems 0x1 0x8000 0x8001
+checkitemtype 0x8000
+call @std_9_1
+msgbox @std_1_1_2_2 MSG_KEEPOPEN '"[player] put the [buffer2]\nin the..."
+return
+
+'---------------
+#org @std_9_1
+copyvar 0x8000 LASTRESULT
+compare 0x8000 0x1
+if 0x1 goto @std_9_1_1
+compare 0x8000 0x2
+if 0x1 goto @std_9_1_2
+compare 0x8000 0x3
+if 0x1 goto @std_9_1_3
+compare 0x8000 0x4
+if 0x1 goto @std_9_1_4
+compare 0x8000 0x5
+if 0x1 goto @std_9_1_5
+end
+
+'---------------
+#org @std_9_1_1
+bufferstd 0x2 0x18
+return
+
+'---------------
+#org @std_9_1_2
+bufferstd 0x2 0x19
+return
+
+'---------------
+#org @std_9_1_3
+bufferstd 0x2 0x1A
+return
+
+'---------------
+#org @std_9_1_4
+bufferstd 0x2 0x1B
+return
+
+'---------------
+#org @std_9_1_5
+bufferstd 0x2 0x1C
+return
+
+'---------------
+#org @std_10
+textcolor 0x3
+compare 0x8002 0x101
+if 0x1 call @std_10_1
+compare 0x8002 0x13E
+if 0x1 call @std_10_2
+preparemsg 0x0
+waitmsg
+waitfanfare
+compare 0x8002 0x101
+if 0x1 call @std_10_3
+giveitem 0x8000 0x8001 0x8
+call @std_10_4
+return
+
+'---------------
+#org @std_10_1
+fanfare 0x101
+return
+
+'---------------
+#org @std_10_2
+fanfare 0x13E
+return
+
+'---------------
+#org @std_10_3
+pause 0x32
+return
+
+'---------------
+#org @std_10_4
+copyvar 0x8012 0x8013
+return

@@ -1,0 +1,33 @@
+.align 2
+.thumb
+
+/*special 0x7f is the Tile attribute getter. It returns to var 0x8004 the value
+of that tile behaviour bytes and 0x8005 is the tile's back bytes. Designed to
+be used with special 0x8f before it (to get the positions) and to be possible to
+use the required wild battle randomizer afterwards.
+0x8004 will then keep the background byte and 0x8005 will keep the upper bytes
+will return to a given variable the background bytes */
+
+Special_7f:	push {r1-r4, lr}
+		ldr r4, var_8004_2
+		ldrh r0, [r4]
+		ldrh r1, [r4, #0x2]
+		add r1, #0x7	/*long story, but it's mainly because that's*/
+		add r0, #0x7	/*how the game makes the access, anyway*/
+		mov r2, #0xFF
+		bl call_tile_evaluator
+		lsl r1, r0, #0x10 /*the behaviour bytes*/
+		lsr r0, r0, #0x18 /*the background byte*/
+		lsr r1, r1, #0x10
+		strh r0,[r4,#0x0]
+		strh r1,[r4,#0x2]
+		mov r1, #0x3
+		and r0, r1
+		pop {r1-r4, pc}
+
+call_tile_evaluator:	ldr r3, evaluator
+			bx r3
+.hword 0x0000
+evaluator:	.word 0x08058F49
+var_8004_2: .word 0x020370c0
+

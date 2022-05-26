@@ -1,0 +1,29 @@
+=========================
+HGSS Golden Version 1.0
+=========================
+
+Esta base reemplaza el 100% de las canciones regulares de
+Fire Red por las de HGSS, solo se excluyen algunas melodias
+necesarias como la música de intro y algunas fanfares.
+
+RECUERDA: No me hago responsable si aplicas este parche a tu
+ROM y lo jodes, aunque es compatible con hacks en progreso.
+
+
+=================
+Para instalarlo:
+=================
+
+1. Aplica el parche .ips a tu ROM
+2. abre el archivo "build.bin" en HxD, selecciona todo el archivo y cópialo
+3. en HXD abre tu ROM y dirigete a 0x1000000, pega ahi el contenido copiado,
+te preguntará que ess acción cabia el tamaño del archivo, le damos que si, guarda y disfruta!
+
+============
+Créditos
+============
+
+si se usa dar créditos a:
+GoGoJJtech - Autor original del parche en el que me basé
+Wobbu - Autor de algunas melodías
+Gold/Crystal Kaktus: Portear las melodías e insertarlas

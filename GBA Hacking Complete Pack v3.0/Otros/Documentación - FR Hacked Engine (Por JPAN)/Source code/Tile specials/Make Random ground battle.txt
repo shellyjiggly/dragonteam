@@ -1,0 +1,19 @@
+.align 2
+.thumb
+
+/*Special 0x97 will start a random wild battle, such as those in the grass. Made
+to reverse the shortcomming of the "Walking script hack", that disables wild 
+battles on land and at sea. This special deals with land battles*/
+
+Special_97: push {r4-r7, lr}
+	    mov r7, r8
+	    push {r7}
+	    sub SP, SP, #0x8
+	    ldr r0, grass_data
+	    lsl r4, r0, #0x18
+	    lsr r4, r4, #0x18
+	    ldr r1, wild_generator
+	    bx r1
+.hword 0x0000
+grass_data: .word 0x01000202 /*a normal grass block data. any data would do*/
+wild_generator: .word 0x0806cbe5

@@ -1,0 +1,55 @@
+.align 2
+.thumb
+
+/*Special 0x2c checks for the D-pad. Returns
+0x0 if no direction is pressed
+0x1 if up is pressed
+0x2 if left is pressed 
+0x3 if down is pressed
+0x4 if right is pressed
+0x5 if up-left is pressed
+0x6 if up-right is pressed
+0x7 if down-left is pressed
+0x8 if down-right is pressed*/
+
+special_2c:	ldr r0, key_reg1
+		ldrh r0, [r0]
+		mvn r0, r0
+		lsl r0, r0, #0x18
+		lsr r0, r0, #0x1c
+		cmp r0, #0x1
+		beq right
+		cmp r0, #0x2
+		beq left
+		cmp r0, #0x4
+		beq up
+		cmp r0, #0x8
+		beq down
+		cmp r0, #0x6
+		beq up_left
+		cmp r0, #0x5
+		beq up_right
+		cmp r0, #0xa
+		beq down_left
+		cmp r0, #0x9
+		beq down_right
+		mov r0, #0x0
+		bx lr
+up:		mov r0, #0x1
+		bx lr
+left:		mov r0, #0x2
+		bx lr
+down:		mov r0, #0x3
+		bx lr
+right:		mov r0, #0x4
+		bx lr
+up_left:	mov r0, #0x5
+		bx lr
+up_right:	mov r0, #0x6
+		bx lr
+down_left:	mov r0, #0x7
+		bx lr
+down_right:	mov r0, #0x8
+		bx lr
+.hword .0x0000
+key_reg1: .word 0x04000130

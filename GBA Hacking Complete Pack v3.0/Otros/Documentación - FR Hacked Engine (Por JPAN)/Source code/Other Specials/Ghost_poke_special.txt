@@ -1,0 +1,35 @@
+.align 2
+.thumb
+
+/*change the push {lr} to push {r4, lr}
+change pop{r0}, bx r0 to pop{r4, pc}, 0x0000*/
+/*to change at 0807f92a*/
+modded:		ldr r1, new_location
+		bx r1
+
+new_location: .word 0x00000000 /*put new addr here*/
+
+/*modded code. reads from 0x8004, 0x8005 and 0x8006
+number, level and held item respectively.*/
+
+Old_code: 	mov r1, #0xfe
+		str r1, [SP]
+		mov r1, #0xc
+		str r1, [sp, #0x4]
+		mov r1, #0x0
+		str r1, [sp, #0x8]
+		ldr r3, var_8004
+		ldrh r1, [r3]
+		ldr r4, return_addr
+		cmp r1, #0x0
+		beq old_marowak
+		ldrh r2, [r3, #0x2]
+		cmp r2, #0x64
+		bgt old_marowak
+		ldr r3, [r3, #0x4]
+		bx r4
+old_marowak: 	sub r4, #0x6
+		bx r4
+
+var_8004: .word 0x020370c0
+return_addr: .word 0x0807f93d

@@ -1,0 +1,97 @@
+______               _                
+| ___ \             | |               
+| |_/ /___  __ _  __| |_ __ ___   ___ 
+|    // _ \/ _` |/ _` | '_ ` _ \ / _ \
+| |\ \  __/ (_| | (_| | | | | | |  __/
+\_| \_\___|\__,_|\__,_|_| |_| |_|\___|
+
+Type Resistance Editor
+Version 1.32
+By FinalZero
+March 9th, 2010
+
+// About
+//---------------------------------------------------------------------------
+
+This program edits the resistances of the types in a generation III Pokémon game. Only English language games are supported at the moment.
+ 
+If you would like for support for generation III games in other languages to be added, contact me at FinalZero_17@hotmail.com and I'll try to work something out with you.
+
+Thanks goes to Coolboyman for providing the information on how to edit strengths and weaknesses of the types, and to Darthatron for making his own program to edit type strengths and weaknesses which insipered me to make a better version which could add entries that were previously given a multiplication factor of 1 (normal damage).
+
+// Operation
+//---------------------------------------------------------------------------
+
+A) Menu Buttons
+    1) Open - Opens a file to edit the type strengths and weaknesses of.
+    2) Save - Saves the changes made to the file.
+    3) Close - Closes the file.
+    4) Exit - Exits the program.
+    5) Language - Changes the language of the interface, which includes the language used in the list box.
+    6) About - Shows general info about the program
+    7) Versions Compatible - Shows the versions compatible with the program.
+
+B) Main Buttons
+    1) Change Entry - Changes the entry selected to what is chosen by the drop down boxes and radio button.
+    2) Insert Entry - Inserts an entry of what is chosen into the list. Deletes the final entry of the list because I don't know if it's possible to expand the length of the list of strengths and weaknesses.
+    3) Change to Foresight Entry - Within the list of strengths and weaknesses is a Foresight entry. This entry signifies that any entries below it will be nullified after the move foresight is used in battle. The two standards entries after the Foresight entry are Normal vs Ghost and Fighting vs Ghost. Both are nullified after foresight is used, thus allowing normal and fighting type moves affect ghost types. The list of strengths and weaknesses does not require a Foresight entry, but more than one is superfluous. The program warns the user if the list has more than one Foresight entry and if adding one would bring the total beyond just one. Changes the entry selected into the Foresight entry.
+    4) Insert Foresight Entry - Inserts a Foresight entry into the list. Deletes the final entry of the list.
+    5) Delete Entry - Deletes the selected entry. Since I don't know if the length of the list can be changed, it then adds a placeholder entry of Normal vs Normal = 1 (Normal) at the end of the list.
+
+c) List Box
+    1) The first type listed is the attacking type, the second the defending type. The number after the equals sign is the multiplication value. It is the number which the damage is multiplied by to calculate the total damage. A standard Pokémon game's strength and weakness list only includes the multiplication values of 0 (not effective at all), 0.5 (not very effective), and 2 (super effective). 1 (normal damage) is conveyed by lacking an entry. Multiplication values can be from 0 to 25.5 by 0.1 intervals.
+
+// Errors
+//---------------------------------------------------------------------------
+
+You may get an error about a .dll missing. Four .dll files are needed for this program to run; They aren't included with Windows by default, but can be downloaded at my website http://jc.tech-galaxy.com/. They should be placed in the C:\WINDOWS\system32 directory of your computer.
+
+The files needed are the following...
+1) vcl100.bpl
+2) rtl100.bpl
+3) borlndmm.dll
+4) cc3280mt.dll
+
+// Contact
+//---------------------------------------------------------------------------
+
+New versions of this program (and old ones too) can be found at http://jc.tech-galaxy.com/.
+
+I may be contacted at FinalZero_17@hotmail.com with any questions and/or concerns regarding this program and/or any related material.
+
+// Version Log
+//---------------------------------------------------------------------------
+
+Version 1.32 - March 9th, 2009
+-------------------------------
+- Because of problems with Vista, I made it so that the .bpl and .dll files are no longer needed to run the program.
+
+Version 1.31 - January 8th, 2009
+---------------------------------
+- Fixed the custom multiplication factor.
+
+Version 1.30 - November 20th, 2009
+-----------------------------------
+- Changed internal workings of the program.
+- Changed the icon to a Pokéball.
+
+Version 1.22 - November 11th, 2009
+-----------------------------------
+- Renamed the program from Type Strength Weakness Editor to Type Resistance Editor.
+- Changed the layout of the program.
+- Added a close option to the menu.
+- Fixed an error when using the program with desktop that spans more than one monitor.
+
+Version 1.20 - August 10th, 2009
+---------------------------------
+- Fixed a few French language errors.
+
+Version 1.10 - August 9th, 2009
+--------------------------------
+- Support for all French language generation III games was added.
+- Fixed the program window resizing issue.
+- Made the program window wider to fit the French text of the buttons.
+
+Version 1.00 - July 29th, 2009
+-------------------------------
+- Support for all English language generation III games is present.

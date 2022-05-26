@@ -1,0 +1,51 @@
+.align 2
+.thumb
+
+/*this code is to be applied by replacing the second code accessed by the poke-decrypt
+routine, by placing the pointer to this at 08040568 (not adding + 1)*/
+
+Shiny:		ldr r1, Flags
+		ldrb r0, [r1, #0x0]
+		mov r5, #0x80
+		and r5, r0
+		cmp r5, #0x0
+		beq old_code
+				
+		mvn r5, r5		/*cleans flag*/
+		and r0, r5
+		strb r0, [r1, #0x0]	
+
+		ldr r5, [r4, #0x0]	/*loads the original PID*/
+		ldr r0, player_data
+		ldr r0, [r0, #0x0]
+		ldrh r1, [r0, #0xc]	/*loads the TrainerID*/
+		lsl r1, r1, #0x10
+		ldrh r0, [r0, #0xa]	/*loads the secretID*/
+		add r0, r0, r1
+		add r1, r0, #0x0	/*adds both ids together*/
+		eor r0, r5		/*encryption key*/
+					/*r0= encryption key
+					r1 = OTIDs
+					r5 = Original PID*/
+
+		lsl r6, r0, #0x10	/*lower half*/
+		lsr r6, r6, #0x10
+		lsr r0, r0, #0x10	/*upper half*/
+		add r5, r0, #0x0
+		eor r5, r6
+		cmp r5, #0x8		/*if already shiny, quit*/
+		blt old_code
+		lsr r5, r0, #0x3	/*shiny formula: make the encryption key*/
+		lsl r0, r0, #0x10	/*be someting on the shape of "0xabcXabcY"*/
+		lsl r5, r5, #0x3
+		orr r0, r5
+		eor r0, r1		/*new PID*/
+		str r0, [r4, #0x0]
+old_code:	ldr r0, end_place
+		bx r0
+.hword 0x0000
+Flags:		.word 0x0203f480
+player_data:	.word 0x0300500c
+end_place:	.word 0x080406ad
+
+

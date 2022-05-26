@@ -1,0 +1,8 @@
+.align 2
+.thumb
+/*Overworld preloader for map code: first change at 0805e152*/
+start_changes:	mov r1, #0x5
+		orr r0, r1
+		strb r0, [r4]
+		ldrb r0, [r5, #0x3]
+		strb r0, [r4, #0x1a]

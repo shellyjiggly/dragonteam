@@ -1,0 +1,28 @@
+Heres a Small tool Created By X-Buster(me) and Darthatron... This tool Allows you to repoint TileSet and TileMaps of The WorldMap in FR/LG ROM...Introducing WRAP RE (WoRldmAP REpoiner)...
+
+
+How to Use:
+
+    What you need:
+	-FireRed/LeafGreen ROM
+	-WRAP RE
+	-Unlz.gba
+	-Free Space Finder
+	-Your TileSet and TileBase
+	-Your Brain and you Computer
+
+    Steps:
+	Step 1: Load your ROM in Free Space Finder..
+	Step 2: Search for atleast 1000 Bytes..
+	Step 3: Copy the Offset..
+	Step 4: Load your ROM in Unlz.gba..
+	Step 5: Click Import and select your TileSet..
+	Step 6: Click Write to ROM..
+	Step 7: Enter the offset in the Image Offset and Check Export Image and Uncheck the other three then Hit OK..
+	Step 8: Load your ROM in WRAP RE..
+	Step 9: Now Enter the same offset in the TileSet in the TextBox.. Note: Dont change the two Zeros..
+	Step 10: Go back to Free Space Finder and hit Next Search..
+	Step 11: Now repeat Steps 3-9 for the TileBases..
+	Step 12: Hit Save...
+	Step 13: Load your ROM and Test it..
+	Step 14: Done...

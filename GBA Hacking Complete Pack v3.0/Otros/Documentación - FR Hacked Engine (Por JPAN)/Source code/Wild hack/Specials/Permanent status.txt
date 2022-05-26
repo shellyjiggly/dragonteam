@@ -1,0 +1,24 @@
+.align 2
+.thumb
+
+/*Special 0x54 is the permanent status flag
+this code will continue working for as long
+as the next special isn't called.
+Warning: this code will even affect your
+pokemon if you call special 0x0
+0x8004 is the status byte*/
+
+special_54:	push {lr}
+		ldr r2, var_8004_2
+		ldrh r0, [r2]
+		ldr r3, flags4
+		strb r0, [r3, #0x1]
+		strb r0, [r3, #0x2]
+		mov r0, #0x04
+		ldrb r1, [r3]
+		orr r0, r1
+		strb r0, [r3]
+		pop {pc}
+.hword 0x0000
+var_8004_2: .word 0x020370c0	
+flags4: .word 0x0203f480

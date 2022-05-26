@@ -1,0 +1,272 @@
+.align 2
+.thumb
+
+/*Special 0x51 is the make_shiny flag set*/
+special_051:	push {lr}
+		ldr r2, flags1
+		ldrb r1, [r2]
+		mov r0, #0x80
+		orr r1, r0
+		strb r1, [r2]
+		pop {pc}
+.hword 0x0000
+flags1:	.word 0x0203f480
+
+/*Special 0x52 is the Status flag set.
+0x8004 is the status flags, 
+0x8005 is the duration of the code (nº of battles)
+
+0x8004 key:
+0-2: Sleep bits.
+3: Poison 
+4: Burned 
+5: Frozen 
+6: Paralysis 
+7: Badly poison 
+
+0x8005 key:
+0x7 * number of battles for several wild battles
+0x7 + (0x4*number of pokemon-1) for trainers
+*/
+
+special_52:	push {lr}
+		ldr r2, var_8004
+		ldrh r0, [r2]
+		ldr r3, flags2
+		ldrh r1, [r2, #0x2]
+		strb r0, [r3, #0x1]
+		strb r1, [r3, #0x2]
+		mov r0, #0x40
+		ldrb r1, [r3]
+		orr r0, r1
+		strb r0, [r3]
+		pop {pc}
+var_8004: .word 0x020370c0	
+flags2: .word 0x0203f480
+
+/*Special 0x53 is the Status flag clear.*/
+special_53:	push {lr}
+		ldr r2, flags3
+		mov r0, #0x0
+		strb r0, [r2, #0x1]
+		strb r0, [r2, #0x2]
+		mov r0, #0xbf
+		ldrb r1, [r2]
+		and r0, r1
+		strb r0, [r2]
+		pop {pc}
+	
+flags3: .word 0x0203f480
+
+
+/*Special 0x54 is the permanent status flag
+this code will continue working for as long
+as the next special isn't called.
+Warning: this code will even affect your
+pokemon if you call special 0x0
+0x8004 is the status byte*/
+
+special_54:	push {lr}
+		ldr r2, var_8004_2
+		ldrh r0, [r2]
+		ldr r3, flags4
+		strb r0, [r3, #0x1]
+		strb r0, [r3, #0x2]
+		mov r0, #0x04
+		ldrb r1, [r3]
+		orr r0, r1
+		strb r0, [r3]
+		pop {pc}
+.hword 0x0000
+var_8004_2: .word 0x020370c0	
+flags4: .word 0x0203f480
+
+/*Special 0x55 clears the last special*/
+
+special_55:	push {lr}
+		ldr r2, flags5
+		mov r0, #0x0
+		strb r0, [r2, #0x1]
+		strb r0, [r2, #0x2]
+		mov r0, #0xfb
+		ldrb r1, [r2]
+		and r0, r1
+		strb r0, [r2]
+		pop {pc}
+	
+flags5: .word 0x0203f480
+
+
+/*Special 0x56 makes a chance that a pokemon other than the 
+normal kind appears.
+var 0x8004 tells the pokemon number
+var 0x8005 tells the chances of appearence
+var 0x8006 tells if it's one of a kind
+chances is the number of times that a pokemon
+would appear in 65536 encounters. 0 is the lowest
+and 0xffff is always. 0x7fff is the 50% chance it
+will be the designed pokemon.
+var 0x8007 keeps the place the pokemon is to appear on
+0x8006 is 0, pokemon will appear indefinetly
+0x8006 > 1, pokemon will appear that number of times
+0x8004 key:
+0 -> 0x3fff: faced as pokemon number
+0x4000-> 0x8015: faced as pokemon number IN variable
+0x8000-> 0xfffc: not defined
+0xfffd-> specific pokemon stored at a pointer kept in 
+	 two variables 0x8008 0x8009
+	 eg: 0x08800100 would be stored 0100 in 0x8008 and
+	 0880 in 0x8009
+0xfffe-> specific pokemon stored at a pointer, that must be 
+	 placed by hand in 0x0203f488
+0xffff-> specific pokemon stored at the LoadPointer location
+0x8007 key:(by bit) (0 is still all)
+0 -> grass only
+1 -> water only
+2 -> rocksmash\tree event only
+3 -> fishing rod only
+8-16 -> pokemon level
+*/
+
+special_56: 	push {r4-r7, lr}
+		ldr r7, var_8004_3
+		ldrh r0, [r7]
+		ldr r6, flags6
+		ldrh r1, [r7, #0x2]
+		ldrh r2, [r7, #0x4]
+		ldrh r3, [r7, #0x6]
+		mov r4, #0x1
+		lsl r4, r4, #0x10
+		sub r4, #0x1
+		cmp r0, r4
+		beq pokemon_loaded
+		sub r4, #0x1
+		cmp r0, r4
+		beq no_pokemon
+		sub r4, #0x1
+		cmp r0, r4
+		beq pokemon_at_8008
+		mov r4, #0x40
+		lsl r4, r4, #0x8
+		cmp r0, r4
+		bge var_decode
+		lsl r0, r0, #0x10
+		lsr r0, r0, #0x10
+		b store_pokemon
+.hword 0x0000
+var_8004_3: .word 0x020370c0	
+flags6: .word 0x0203f480
+		
+var_decode:	push {r1-r3}
+		bl call_var_decrypt
+		pop {r1-r3}
+		ldrh r0, [r0]
+		lsl r0, r0, #0x10
+		lsr r0, r0, #0x10
+		b store_pokemon
+ 
+pokemon_loaded:	ldr r0, load_pointer
+		ldr r0, [r0]
+		b store_pokemon
+.hword 0x0000
+load_pointer: .word 0x03000f14
+
+pokemon_at_8008: ldr r0, [r7, #0x8]
+		 b store_pokemon
+
+store_pokemon:	str r0, [r6, #0x8]
+no_pokemon:	strh r1, [r6, #0x4]
+		strb r2, [r6, #0x3]
+		strh r3, [r6, #0x6]
+		mov r0, #0x20
+		ldrb r1, [r6]
+		orr r0, r1
+		strb r0, [r6]
+end_56:		pop {r4-r7, pc}
+
+
+
+
+/*Special 0x57 clears the wild pokemon chance
+special above*/
+
+special_57:	push {lr}
+		ldr r2, flags7
+		mov r0, #0x0
+		str r0, [r2, #0x8]
+		strh r0, [r2, #0x4]
+		strb r0, [r2, #0x3]
+		strb r0, [r2, #0x6]
+		mov r0, #0xdf
+		ldrb r1, [r2]
+		and r0, r1
+		strb r0, [r2]
+		pop {pc}
+.hword 0x0000
+flags7: .word 0x0203f480
+
+
+/*Special 0x58 allows for a different wild pokemon map to be loaded.
+Var 0x8005 keeps the location where it will appear
+var 0x8006 states where the new wild pokemon data is stored
+0x8005 key:
+0x1 -> grass 
+0x2 -> water 
+0x3 -> rocksmash\tree event
+0x4 -> fishing rod
+0x8006 key:
+0x0 -> loaded with LoadPointer
+0x1 -> at vars 0x8008 and 0x8009, like special 0x56
+0x2 -> put at hand or already there.
+*/
+
+special_58: 	push {r4, lr}
+	    	ldr r3, var_8004_8
+	    	ldrh r2, [r3, #0x2]
+	    	ldr r4, flags8
+	    	ldrh r1, [r3, #0x4]
+		cmp r2, #0x4
+		bgt end_58
+		cmp r1, #0x2
+		bgt end_58
+		cmp r1, #0x0
+		beq loaded
+		cmp r1, #0x1
+		beq at_8008
+		b dont_place
+var_8004_8: .word 0x020370c0
+flags8: .word 0x0203f480
+
+loaded:		ldr r0, load_pointer2
+		ldr r0, [r0]
+		b store_wild
+.hword 0x0000
+load_pointer2: .word 0x03000f14
+
+at_8008: 	ldr r0, [r3, #0x8]
+store_wild:	lsl r2, r2, #0x2
+		add r1, r4, r2
+		add r1, #0x8
+		str r0, [r1]	
+dont_place:	mov r0, #0x10
+		ldrb r1, [r4]
+		orr r0, r1
+		strb r0, [r4] 
+end_58: 	pop {r4, pc}
+
+/*Special 0x59 disables the new wild data special*/
+
+special_59:	push {lr}
+		ldr r2, flags9
+		mov r0, #0xef
+		ldrb r1, [r2]
+		and r0, r1
+		strb r0, [r2]
+		pop {pc}
+.hword 0x0000
+flags9: .word 0x0203f480
+
+
+call_var_decrypt: ldr r4, var_decrypt
+		  bx r4
+var_decrypt:	.word 0x0806E455

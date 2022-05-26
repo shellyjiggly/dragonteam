@@ -1,0 +1,11 @@
+#dynamic 0x800000
+
+#org @inicio
+lock
+faceplayer
+msgbox @algo 0x6
+release
+end
+
+#org @algo
+(Apretar Ctrl + T para escribir texto)

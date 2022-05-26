@@ -1,0 +1,17 @@
+.thumb
+.align 2
+
+/*one more needed change is in the overworld decrypter access at the 
+map loading screen, at 0x0805e744*/
+map_ow_change: 	lsl r4, r4, #0x10
+		lsr r4, r4, #0x10
+		lsl r5, r5, #0x10
+		lsr r5, r5, #0x10
+		mov r0, #0x0
+		str r0, [SP, #0x20] 
+		mov r1, r9
+		ldrb r0, [r1, #0x1]
+		ldrb r1, [r1, #0x3]
+		lsl r1, r1, #0x18
+		lsr r1, r1, #0x10
+		orr r0, r1

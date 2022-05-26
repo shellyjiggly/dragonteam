@@ -1,0 +1,34 @@
+.align 2
+.thumb
+
+/*Special 0x52 is the Status flag set.
+0x8004 is the status flags, 
+0x8005 is the duration of the code (nº of battles)
+
+0x8004 key:
+0-2: Sleep bits.
+3: Poison 
+4: Burned 
+5: Frozen 
+6: Paralysis 
+7: Badly poison 
+
+0x8005 key:
+0x7 * number of battles for several wild battles
+0x7 + (0x4*number of pokemon-1) for trainers
+*/
+
+special_52:	push {lr}
+		ldr r2, var_8004
+		ldrh r0, [r2]
+		ldr r3, flags2
+		ldrh r1, [r2, #0x2]
+		strb r0, [r3, #0x1]
+		strb r1, [r3, #0x2]
+		mov r0, #0x40
+		ldrb r1, [r3]
+		orr r0, r1
+		strb r0, [r3]
+		pop {pc}
+var_8004: .word 0x020370c0	
+flags2: .word 0x0203f480

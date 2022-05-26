@@ -1,0 +1,15 @@
+.align 2
+.thumb
+
+/*Special 0x48 Resumes the timer*/
+special_48: 	push {lr}
+		ldr r0, timer_3
+		ldrh r1, [r0, #0x4]
+		strh r1, [r0, #0x4]
+		mov r1, #0x84
+		strb r1, [r0, #0x6]
+		mov r1, #0x83
+		strb r1, [r0, #0x2]
+		pop {pc}
+.hword 0x0000
+timer_3: .word 0x04000108

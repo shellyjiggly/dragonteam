@@ -1,0 +1,58 @@
+.align 2
+.thumb
+
+/*Special 0x87 is a increase\decrease safari balls code. It's use is to make it easier
+to change the number of safari balls the player has.
+uses 0x8004 as the number to increase or decrease the balls by. 0x1aa decreases the 
+balls by aa, and 0x0aa increases them by aa. This code doesn't allow people to go over
+the 100 (0x64) max balls in aa (safety measure).*/
+
+Special_87:	push {lr}
+		ldr r1, var_8004
+		ldrh r0, [r1]
+		ldr r1, safari_balls
+		cmp r0, #0xff
+		bgt decrease
+		cmp r0, #0x64
+		bgt end_87
+
+		ldrb r2, [r1]
+		add r0, r0, r2
+		cmp r0, #0x63
+		ble store_val
+
+		ldrb r3, [r1, #0x1]
+		cmp r3, #0xff
+		bne add_one_slot
+
+		mov r0, #0x63		/*max reached*/
+		add r2, r3, #0x0
+		b store_extra
+
+add_one_slot:	add r2, r3, #0x1
+		sub r0, #0x64
+store_extra:	strb r2, [r1]
+store_val:	strb r0, [r1]
+end_87:		pop {pc}
+
+decrease:	lsl r0, r0, #0x18
+		lsr r0, r0, #0x18
+		cmp r0, #0x64
+		bgt end_87
+		ldrb r2, [r1]
+		sub r2, r2, r0
+		cmp r2, #0x0
+		bge store_val
+		ldrb r2, [r1, #0x1]
+		sub r2, #0x1
+		cmp r2, #0x0
+		blt end_87
+		strb r2, [r1, #0x1]
+		ldrb r2, [r1]
+		add r2, #0x64
+		sub r0, r2, r0
+		b store_val
+	 
+var_8004:	.word 0x020370c0
+safari_balls:	.word 0x02039994
+

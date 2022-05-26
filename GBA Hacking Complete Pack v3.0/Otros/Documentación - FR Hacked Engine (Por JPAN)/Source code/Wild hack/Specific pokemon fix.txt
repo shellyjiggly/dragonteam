@@ -1,0 +1,43 @@
+.align 2
+.thumb
+
+/*this code is supposed to fix the major error in the specific pokemon code
+where the pokemon ends up being a bad egg because of the "correction" the game
+makes to the IDs, to make them match.*/
+
+/*the code should be called instead of 0x080406C4, at 0x0804056c*/
+
+New_start:	ldr r1, flags
+		ldrb r0, [r1]
+		mov r2, #0x20
+		and r0, r2
+		cmp r2, #0x0
+		beq true_code
+		lsl r2, r2, #0x14
+		ldr r0, [r1, #0x8]
+		cmp r2, r0
+		bgt true_code
+		ldr r3, [r0, #0x0]
+		ldr r2, [r7, #0x0]
+		cmp r3, r2
+		bne true_code
+		ldr r0, [r0, #0x4]
+		str r0, [r7, #0x4]
+	 	mov r2, #0x20
+		mvn r2, r2
+		ldrb r0, [r1]
+		and r2, r0
+		strb r2, [r1]
+		mov r2, #0x0
+		strb r2, [r1, #0x3]
+		str r2, [r1, #0x4]
+		str r2, [r1, #0x8]
+		ldr r0, return_addr
+		bx r0
+.hword 0x0000
+flags:	.word 0x0203f480
+return_addr: .word 0x08040adb
+
+true_code:	ldr r0, true_addr
+		bx r0
+true_addr: .word 0x080406c5

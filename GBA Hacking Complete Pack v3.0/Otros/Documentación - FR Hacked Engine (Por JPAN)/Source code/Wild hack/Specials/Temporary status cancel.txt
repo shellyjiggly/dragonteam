@@ -1,0 +1,16 @@
+.align 2
+.thumb
+
+/*Special 0x53 is the Status flag clear.*/
+special_53:	push {lr}
+		ldr r2, flags3
+		mov r0, #0x0
+		strb r0, [r2, #0x1]
+		strb r0, [r2, #0x2]
+		mov r0, #0xbf
+		ldrb r1, [r2]
+		and r0, r1
+		strb r0, [r2]
+		pop {pc}
+	
+flags3: .word 0x0203f480

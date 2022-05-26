@@ -1,0 +1,15 @@
+.align 2
+.thumb
+
+/*Special 0x59 disables the new wild data special*/
+
+special_59:	push {lr}
+		ldr r2, flags9
+		mov r0, #0xef
+		ldrb r1, [r2]
+		and r0, r1
+		strb r0, [r2]
+		pop {pc}
+.hword 0x0000
+flags9: .word 0x0203f480
+

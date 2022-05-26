@@ -1,0 +1,48 @@
+.align 2
+.thumb
+
+/*this code loads a key to check for, and sets a script to execute if it's in the OW map
+and no scripts are loaded yet. Use together with the ignore key special for the best 
+results (ex: disable R and set this to react to R button)
+Because the code is run before any other of the key ones, this one detects the real keys
+pressed.
+
+Special cb receives:
+0x8004 is the keys to check for
+loaded with loadpointer 0x0 is the script to use
+returns nothing
+
+There is no clear code. If you want the game to ignore the script, you need to use
+this code with 0x0 on 0x8004.
+*/
+
+
+Special_cB:		push {r0-r2, lr}
+			ldr r0, key_store_addr
+
+			ldr r2, var_8004
+			ldrh r1, [r2]
+			strh r1, [r0, #0x2]
+			cmp r1, #0x0
+			beq clear_all
+			ldr r2, load_pointer
+			ldr r1, [r2]
+			str r1, [r2, #0x8]
+
+			ldrb r1, [r0]
+			mov r2, #0x4
+			orr r1, r2
+			strb r1, [r0]
+			pop {r0-r2, pc}
+
+clear_all:		str r1, [r0, #0x8]
+			ldrb r1, [r0]
+			mov r2, #0xfb
+			and r1, r2
+			strb r1, [r0]
+			pop {r0-r2, pc}
+.hword 0x0000
+
+key_store_addr:	.word 0x0203f4ec
+var_8004: .word 0x020370c0
+load_pointer: .word 0x03000f14
